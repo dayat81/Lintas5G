@@ -1,0 +1,26 @@
+apiVersion: 1
+
+# Pola umum (grafana-clickhouse-datasource, HTTP 8123),
+# tetapi host=clickhouse (jaringan compose), kredensial dari env container (.env), Grafana mengekspansi ${VAR}.
+datasources:
+  - name: ClickHouse
+    uid: clickhouse
+    type: grafana-clickhouse-datasource
+    access: proxy
+    isDefault: true
+    editable: true
+    jsonData:
+      defaultDatabase: ${CLICKHOUSE_DB}
+      host: clickhouse
+      port: 8123
+      protocol: http
+      username: ${CLICKHOUSE_USER}
+      logs:
+        defaultDatabase: ${CLICKHOUSE_DB}
+        defaultTable: pkt_latency
+        otelEnabled: false
+      traces:
+        defaultDatabase: ${CLICKHOUSE_DB}
+        otelEnabled: false
+    secureJsonData:
+      password: ${CLICKHOUSE_PASSWORD}

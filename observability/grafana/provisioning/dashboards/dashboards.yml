@@ -1,0 +1,11 @@
+apiVersion: 1
+
+providers:
+  - name: PoC Latency
+    orgId: 1
+    folder: PoC Latency
+    type: file
+    disableDeletion: false
+    editable: true
+    options:
+      path: /var/lib/grafana/dashboards

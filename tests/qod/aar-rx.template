@@ -1,0 +1,26 @@
+# Varian 4G: Rx AAR (Diameter, 3GPP TS 29.214) dari AF ke PCRF Open5GS.
+# Template AVP (dikirim lewat klien Diameter, mis. freeDiameter test_app / seagull / pyDiameter).
+# Semua nilai PLACEHOLDER.
+Command: AA-Request (Code 265, Application-Id 16777236 Rx)
+  Session-Id              = <af-host>;<random>
+  Auth-Application-Id     = 16777236
+  Origin-Host             = af.lintas5g.example
+  Origin-Realm            = lintas5g.example
+  Destination-Realm       = <realm-pcrf-lab>
+  Framed-IP-Address       = <UE_IPV4 dalam hex 4 byte>
+  Subscription-Id         = { Subscription-Id-Type=END_USER_IMSI(1), Subscription-Id-Data=001010000000001 }  # DUMMY
+  Media-Component-Description = {
+    Media-Component-Number = 1
+    Media-Type             = VIDEO(1)
+    Max-Requested-Bandwidth-DL = 5000000
+    Max-Requested-Bandwidth-UL = 2000000
+    Min-Requested-Bandwidth-DL = 5000000     # -> GBR, QCI 2 (video) atau QCI 3 (game) tergantung kebijakan PCRF
+    Flow-Status            = ENABLED(2)
+    Media-Sub-Component    = {
+      Flow-Number      = 1
+      Flow-Description = "permit out 17 from <APP_SERVER_IPV4> <PORT> to <UE_IPV4>"
+      Flow-Description = "permit out 17 from <UE_IPV4> to <APP_SERVER_IPV4> <PORT>"
+    }
+  }
+# Verifikasi: Gx RAR PCRF->PGW-C dengan Charging-Rule-Install (QCI, GBR), lalu Create Bearer Request (S5/S11)
+# dan dedicated bearer baru (EBI) di S1-U. Hapus: STR (Session-Termination-Request, Code 275).

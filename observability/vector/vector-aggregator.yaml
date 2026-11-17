@@ -1,0 +1,86 @@
+# USULAN (belum diuji end-to-end): Vector aggregator di vm-obs.
+# Menerima dari vector-agent (:6000, hanya dari subnet lab), parse JSON Zeek,
+# lalu insert ke ClickHouse poc_latency (skema: ../clickhouse/init.sql).
+# Variabel env: CLICKHOUSE_URL, CLICKHOUSE_DB, CLICKHOUSE_USER, CLICKHOUSE_PASSWORD (dari .env, jangan di-commit).
+data_dir: /var/lib/vector
+
+sources:
+  from_core:
+    type: vector
+    address: "0.0.0.0:6000"
+
+transforms:
+  route:
+    type: route
+    inputs: [from_core]
+    route:
+      pktlat: '.stream == "pktlat"'
+      stats: '.stream == "pktlat_stats"'
+
+  pktlat_rows:
+    type: remap
+    inputs: [route.pktlat]
+    drop_on_error: true
+    source: |
+      z = object!(parse_json!(string!(.message)))
+      ow = z.one_way
+      if ow == null { ow = z.ow_sgi }
+      . = {
+        "run_id": z.run_id || "live",
+        "ts": format_timestamp!(from_unix_timestamp!(to_int(float!(z.ts) * 1000000), unit: "microseconds"), "%Y-%m-%d %H:%M:%S%.6f"),
+        "flow": z.flow || z.fid || "",
+        "dir": z.dir || "",
+        "seg": z.seg || "sgi",
+        "proto": z.proto || "",
+        "hash": z.qhash || "",
+        "off": z.off || 0,
+        "len": z.len || 0,
+        "one_way_ms": ow,
+        "source": "rt",
+        "status": z.status || "",
+        "wire": z.wire || "",
+        "kind": z.kind || ""
+      }
+
+  stats_rows:
+    type: remap
+    inputs: [route.stats]
+    drop_on_error: true
+    source: |
+      z = object!(parse_json!(string!(.message)))
+      ts = format_timestamp!(from_unix_timestamp!(to_int(float!(z.ts) * 1000000), unit: "microseconds"), "%Y-%m-%d %H:%M:%S%.6f")
+      extra = encode_json(z)
+      . = z
+      .ts = ts
+      .run_id = z.run_id || "live"
+      .source = "rt"
+      .extra = extra
+
+sinks:
+  ch_pkt_latency:
+    type: clickhouse
+    inputs: [pktlat_rows]
+    endpoint: "${CLICKHOUSE_URL:-http://clickhouse:8123}"
+    database: "${CLICKHOUSE_DB:-poc_latency}"
+    table: pkt_latency
+    skip_unknown_fields: true
+    auth:
+      strategy: basic
+      user: "${CLICKHOUSE_USER:-poc}"
+      password: "${CLICKHOUSE_PASSWORD}"
+    batch:
+      timeout_secs: 2
+
+  ch_pktlat_stats:
+    type: clickhouse
+    inputs: [stats_rows]
+    endpoint: "${CLICKHOUSE_URL:-http://clickhouse:8123}"
+    database: "${CLICKHOUSE_DB:-poc_latency}"
+    table: pktlat_stats
+    skip_unknown_fields: true
+    auth:
+      strategy: basic
+      user: "${CLICKHOUSE_USER:-poc}"
+      password: "${CLICKHOUSE_PASSWORD}"
+    batch:
+      timeout_secs: 5

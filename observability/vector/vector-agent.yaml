@@ -1,0 +1,39 @@
+# USULAN (belum diuji end-to-end): Vector agent di vm-core-ran.
+# Membaca log JSON Zeek (pktlat2.zeek, LogAscii::use_json=T) dan mengirim ke vm-obs.
+# Variabel env: ZEEK_LOG_DIR, OBS_VECTOR_ADDR (mis. <ip-internal-vm-obs>:6000).
+data_dir: /var/lib/vector
+
+sources:
+  zeek_pktlat:
+    type: file
+    include:
+      - "${ZEEK_LOG_DIR:-/var/log/lab5g/zeek}/pktlat*.log"
+    exclude:
+      - "${ZEEK_LOG_DIR:-/var/log/lab5g/zeek}/pktlat_stats*.log"
+    read_from: beginning
+  zeek_stats:
+    type: file
+    include:
+      - "${ZEEK_LOG_DIR:-/var/log/lab5g/zeek}/pktlat_stats*.log"
+    read_from: beginning
+
+transforms:
+  tag_pktlat:
+    type: remap
+    inputs: [zeek_pktlat]
+    source: |
+      .stream = "pktlat"
+  tag_stats:
+    type: remap
+    inputs: [zeek_stats]
+    source: |
+      .stream = "pktlat_stats"
+
+sinks:
+  to_obs:
+    type: vector
+    inputs: [tag_pktlat, tag_stats]
+    address: "${OBS_VECTOR_ADDR:-127.0.0.1:6000}"
+    buffer:
+      type: disk
+      max_size: 268435488

@@ -1,0 +1,4 @@
+# Config framework file (tab-separated). Ditulis ulang oleh tooling skew (chrony/NTP offset VM - UE).
+# Nilai contoh; ukur ulang per run.
+PKTLAT2::skew_s	0.0
+PKTLAT2::run_id	live

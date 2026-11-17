@@ -1,0 +1,35 @@
+# Mapping profil CAMARA QoD -> parameter 5G (5QI/GBR/MBR) dan 4G (QCI).
+# USULAN awal untuk demo; sesuaikan dengan kebijakan PCF/PCRF lab.
+profiles:
+  QOS_E:   # latency rendah (game/interaktif)
+    5qi: 80          # non-GBR low latency (eMBB) ; alternatif GBR 3
+    qci: 3
+    gbr_dl_kbps: 0
+    gbr_ul_kbps: 0
+    mbr_dl_kbps: 10000
+    mbr_ul_kbps: 5000
+    dscp: 46         # EF
+  QOS_S:
+    5qi: 2
+    qci: 2
+    gbr_dl_kbps: 2000
+    gbr_ul_kbps: 500
+    mbr_dl_kbps: 4000
+    mbr_ul_kbps: 1000
+    dscp: 34         # AF41
+  QOS_M:   # video streaming bitrate terjamin
+    5qi: 2
+    qci: 2
+    gbr_dl_kbps: 5000
+    gbr_ul_kbps: 1000
+    mbr_dl_kbps: 10000
+    mbr_ul_kbps: 2000
+    dscp: 34
+  QOS_L:
+    5qi: 4
+    qci: 4
+    gbr_dl_kbps: 10000
+    gbr_ul_kbps: 2000
+    mbr_dl_kbps: 20000
+    mbr_ul_kbps: 5000
+    dscp: 34
