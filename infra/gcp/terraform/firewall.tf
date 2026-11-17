@@ -4,13 +4,13 @@
 resource "google_compute_firewall" "allow_iap" {
   name        = "lab5g-allow-iap"
   network     = google_compute_network.lab5g.id
-  description = "SSH, VNC, dan Grafana hanya dari rentang IAP."
+  description = "SSH, VNC/noVNC, dan Grafana hanya dari rentang IAP."
   direction   = "INGRESS"
   priority    = 1000
 
   allow {
     protocol = "tcp"
-    ports    = ["22", "5900", "3000"]
+    ports    = ["22", "5900", "6080", "3000"]
   }
 
   source_ranges = ["35.235.240.0/20"]
@@ -20,13 +20,22 @@ resource "google_compute_firewall" "allow_iap" {
 resource "google_compute_firewall" "allow_internal_lab" {
   name        = "lab5g-allow-internal"
   network     = google_compute_network.lab5g.id
-  description = "Lalu lintas antar-VM: proxy CONNECT, ClickHouse, Vector, SSH internal, ICMP."
+  description = "Lalu lintas antar-VM: proxy CONNECT, ClickHouse, Vector, SSH internal, ICMP, GRE/VXLAN (CE-PE MPLS)."
   direction   = "INGRESS"
   priority    = 1000
 
   allow {
     protocol = "tcp"
     ports    = ["22", "18080", "8123", "9000", "6000"]
+  }
+
+  allow {
+    protocol = "udp"
+    ports    = ["4789"] # VXLAN CE↔PE
+  }
+
+  allow {
+    protocol = "47" # GRE (IANA) untuk gretap CE↔PE
   }
 
   allow {

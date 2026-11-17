@@ -111,3 +111,55 @@ variable "disk_type" {
     error_message = "disk_type harus pd-balanced, pd-standard, atau pd-ssd."
   }
 }
+
+variable "core_disk_gb" {
+  description = "Ukuran boot disk vm-core-ran (GB). Minimal 80."
+  type        = number
+  default     = 100
+}
+
+variable "emu_disk_gb" {
+  description = "Ukuran boot disk vm-emu (GB). Minimal 100."
+  type        = number
+  default     = 150
+}
+
+variable "obs_disk_gb" {
+  description = "Ukuran boot disk vm-obs (GB). Minimal 80."
+  type        = number
+  default     = 200
+}
+
+variable "mpls_disk_gb" {
+  description = "Ukuran boot disk vm-mpls (GB). Default 20."
+  type        = number
+  default     = 20
+}
+
+variable "enable_mpls" {
+  description = "Jika true, buat vm-mpls (FRR PE/P di netns) dan skrip terowongan GRE/VXLAN ke vm-core-ran. Default false."
+  type        = bool
+  default     = false
+}
+
+variable "mpls_machine_type" {
+  description = "Tipe mesin vm-mpls. Default e2-medium (4 GB) agar 4 instansi FRR longgar. e2-small (2 GB) juga muat kuota 2 vCPU."
+  type        = string
+  default     = "e2-medium"
+
+  validation {
+    condition     = can(regex("^e2-(small|medium|standard-[0-9]+)$", var.mpls_machine_type))
+    error_message = "mpls_machine_type harus e2-small, e2-medium, atau e2-standard-N."
+  }
+}
+
+variable "mpls_tunnel_mode" {
+  description = "Jenis terowongan CE (vm-core-ran) ke PE (vm-mpls): gre (gretap) atau vxlan. Label MPLS hanya di dalam vm-mpls."
+  type        = string
+  default     = "gre"
+
+  validation {
+    condition     = contains(["gre", "vxlan"], var.mpls_tunnel_mode)
+    error_message = "mpls_tunnel_mode harus gre atau vxlan."
+  }
+}

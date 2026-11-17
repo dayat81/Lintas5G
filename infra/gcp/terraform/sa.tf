@@ -16,12 +16,22 @@ resource "google_service_account" "obs" {
   description  = "SA minimal untuk ClickHouse/Grafana dan baca objek hasil run."
 }
 
+resource "google_service_account" "mpls" {
+  count        = var.enable_mpls ? 1 : 0
+  account_id   = "lab5g-mpls"
+  display_name = "lab5g vm-mpls"
+  description  = "SA minimal untuk backhaul MPLS (FRR di netns) dan unggah log run."
+}
+
 resource "google_project_iam_member" "log_writer" {
-  for_each = {
-    core = google_service_account.core.email
-    emu  = google_service_account.emu.email
-    obs  = google_service_account.obs.email
-  }
+  for_each = merge(
+    {
+      core = google_service_account.core.email
+      emu  = google_service_account.emu.email
+      obs  = google_service_account.obs.email
+    },
+    var.enable_mpls ? { mpls = google_service_account.mpls[0].email } : {}
+  )
 
   project = var.project_id
   role    = "roles/logging.logWriter"
@@ -29,11 +39,14 @@ resource "google_project_iam_member" "log_writer" {
 }
 
 resource "google_project_iam_member" "metric_writer" {
-  for_each = {
-    core = google_service_account.core.email
-    emu  = google_service_account.emu.email
-    obs  = google_service_account.obs.email
-  }
+  for_each = merge(
+    {
+      core = google_service_account.core.email
+      emu  = google_service_account.emu.email
+      obs  = google_service_account.obs.email
+    },
+    var.enable_mpls ? { mpls = google_service_account.mpls[0].email } : {}
+  )
 
   project = var.project_id
   role    = "roles/monitoring.metricWriter"

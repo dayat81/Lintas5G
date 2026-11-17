@@ -12,11 +12,16 @@ output "network" {
 
 output "vm_internal_ips" {
   description = "IP internal VM. Tidak ada IP publik."
-  value = {
-    vm-core-ran = google_compute_instance.core.network_interface[0].network_ip
-    vm-emu      = google_compute_instance.emu.network_interface[0].network_ip
-    vm-obs      = google_compute_instance.obs.network_interface[0].network_ip
-  }
+  value = merge(
+    {
+      vm-core-ran = google_compute_instance.core.network_interface[0].network_ip
+      vm-emu      = google_compute_instance.emu.network_interface[0].network_ip
+      vm-obs      = google_compute_instance.obs.network_interface[0].network_ip
+    },
+    var.enable_mpls ? {
+      vm-mpls = google_compute_instance.mpls[0].network_interface[0].network_ip
+    } : {}
+  )
 }
 
 output "nat_ip" {
@@ -38,9 +43,14 @@ output "iap_tunnel_commands" {
     gcloud compute ssh vm-core-ran --project=${var.project_id} --zone=${var.zone} --tunnel-through-iap
     gcloud compute ssh vm-emu --project=${var.project_id} --zone=${var.zone} --tunnel-through-iap
     gcloud compute ssh vm-obs --project=${var.project_id} --zone=${var.zone} --tunnel-through-iap
+    # vm-mpls hanya ada jika enable_mpls = true
+    gcloud compute ssh vm-mpls --project=${var.project_id} --zone=${var.zone} --tunnel-through-iap
 
     # VNC emulator (lalu buka klien VNC ke localhost:5900)
     gcloud compute start-iap-tunnel vm-emu 5900 --local-host-port=localhost:5900 --project=${var.project_id} --zone=${var.zone}
+
+    # noVNC emulator (lalu buka http://127.0.0.1:6080)
+    gcloud compute start-iap-tunnel vm-emu 6080 --local-host-port=localhost:6080 --project=${var.project_id} --zone=${var.zone}
 
     # Grafana (lalu buka http://127.0.0.1:3000)
     gcloud compute start-iap-tunnel vm-obs 3000 --local-host-port=localhost:3000 --project=${var.project_id} --zone=${var.zone}
@@ -51,12 +61,21 @@ output "next_steps" {
   value = "Lanjut ke ../scripts/test-run-day1.sh setelah terraform apply selesai. Jangan simpan kredensial di repo ini."
 }
 
+output "enable_mpls" {
+  value = var.enable_mpls
+}
+
 output "mpls_backhaul" {
-  description = "USULAN: skrip backhaul MPLS S1 (tidak di-setup otomatis)."
-  value       = <<-EOT
-    Di vm-core-ran: sudo /opt/lab5g/scripts/mpls-backhaul.sh setup
-    Verifikasi:     sudo /opt/lab5g/scripts/mpls-backhaul.sh verify
-    Salinan GCS:    gs://${google_storage_bucket.runs.name}/scripts/mpls-backhaul.sh
-    Naikkan mesin:  core_machine_type = "n2-standard-8" jika CPU steal tinggi.
-  EOT
+  description = "USULAN: backhaul MPLS di vm-mpls (tidak di-setup otomatis)."
+  value = var.enable_mpls ? join("\n", [
+    "1) Di vm-mpls:      sudo /opt/lab5g/scripts/mpls-backhaul.sh setup",
+    "2) Di vm-core-ran:  sudo /opt/lab5g/scripts/mpls-ce-tunnels.sh setup",
+    "3) Verifikasi PE:   sudo /opt/lab5g/scripts/mpls-backhaul.sh verify",
+    "4) Verifikasi CE:   sudo /opt/lab5g/scripts/mpls-ce-tunnels.sh verify",
+    "   (ping/traceroute ce-enb 10.255.10.2 -> ce-sgw 10.255.20.2 lewat VRF S1)",
+    "Salinan GCS: gs://${google_storage_bucket.runs.name}/scripts/mpls-backhaul.sh",
+    "             gs://${google_storage_bucket.runs.name}/scripts/mpls-ce-tunnels.sh",
+    "MTU: VPC 1460, gretap+key ~28 B + Ethernet 14 B -> MTU terowongan 1400;",
+    "     GTP-U (~36 B) + inner IP -> tun aplikasi 1360-1400.",
+  ]) : "enable_mpls=false; vm-mpls tidak dibuat."
 }

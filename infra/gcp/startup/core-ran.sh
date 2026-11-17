@@ -47,26 +47,19 @@ fi
 systemctl enable --now docker
 
 # IP forwarding untuk netns UE / SNAT SGi di dalam host.
-# Modul MPLS dimuat sekarang; topologi FRR tidak di-setup otomatis
-# (USULAN: jalankan /opt/lab5g/scripts/mpls-backhaul.sh setup saat test run).
-modprobe mpls_router 2>/dev/null || true
-modprobe mpls_iptunnel 2>/dev/null || true
-cat >/etc/modules-load.d/lab5g-mpls.conf <<'MOD'
-mpls_router
-mpls_iptunnel
-MOD
+# Backhaul MPLS (FRR PE/P + label) pindah ke vm-mpls (enable_mpls=true).
+# VM ini hanya sisi CE: terowongan GRE/VXLAN tanpa label ke vm-mpls.
 cat >/etc/sysctl.d/99-lab5g.conf <<'SYSCTL'
 net.ipv4.ip_forward=1
 net.ipv6.conf.all.forwarding=0
-net.mpls.platform_labels=65535
 SYSCTL
 sysctl --system || true
 
-META=http://metadata.google.internal/computeMetadata/v1/instance/attributes/mpls-backhaul-script
-if curl -fsS -H "Metadata-Flavor: Google" "${META}" -o /opt/lab5g/scripts/mpls-backhaul.sh; then
-  chmod 0755 /opt/lab5g/scripts/mpls-backhaul.sh
+META=http://metadata.google.internal/computeMetadata/v1/instance/attributes
+if curl -fsS -H "Metadata-Flavor: Google" "${META}/mpls-ce-script" -o /opt/lab5g/scripts/mpls-ce-tunnels.sh; then
+  chmod 0755 /opt/lab5g/scripts/mpls-ce-tunnels.sh
 else
-  echo "mpls-backhaul-script metadata belum ada; salin manual dari paket Terraform" >>/var/log/lab5g/startup.log
+  echo "mpls-ce-script metadata belum ada; salin manual dari paket Terraform" >>/var/log/lab5g/startup.log
 fi
 
 # Catatan peran. Secret tidak disimpan di sini.
@@ -77,8 +70,10 @@ Isi yang diharapkan (dipasang saat test run, bukan oleh startup ini):
   Zeek tap bridge S1-U/SGi, proxy HTTP CONNECT :18080 di netns UE,
   keepalive ping dari UE (wajib, UE tidak boleh idle), Vector ke vm-obs:6000.
 
-  USULAN backhaul MPLS S1: /opt/lab5g/scripts/mpls-backhaul.sh setup
-  (tidak dijalankan otomatis). Default: netns di VM ini, OSPF+LDP+L3VPN VRF S1.
+  USULAN backhaul MPLS S1 (jika enable_mpls=true): FRR di vm-mpls.
+  Sisi CE di VM ini: /opt/lab5g/scripts/mpls-ce-tunnels.sh setup
+  (GRE/VXLAN tanpa label ke PE1/PE2; tidak dijalankan otomatis).
+  MTU terowongan 1400; tun aplikasi 1360-1400 (VPC 1460 - GRE - GTP-U).
 
 Proxy harus bind di netns UE dan keluar lewat tun_srsue.
 NOTE

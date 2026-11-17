@@ -76,7 +76,7 @@ resource "google_compute_disk" "core" {
   name   = "vm-core-ran-boot"
   type   = var.disk_type
   zone   = var.zone
-  size   = 100
+  size   = var.core_disk_gb
   image  = "ubuntu-os-cloud/ubuntu-2204-lts"
   labels = merge(var.labels, { role = "core-ran" })
 }
@@ -85,7 +85,7 @@ resource "google_compute_disk" "emu" {
   name   = "vm-emu-boot"
   type   = var.disk_type
   zone   = var.zone
-  size   = 150
+  size   = var.emu_disk_gb
   image  = "ubuntu-os-cloud/ubuntu-2204-lts"
   labels = merge(var.labels, { role = "emu" })
 }
@@ -94,7 +94,7 @@ resource "google_compute_disk" "obs" {
   name   = "vm-obs-boot"
   type   = var.disk_type
   zone   = var.zone
-  size   = 200
+  size   = var.obs_disk_gb
   image  = "ubuntu-os-cloud/ubuntu-2204-lts"
   labels = merge(var.labels, { role = "obs" })
 }
@@ -120,7 +120,38 @@ resource "google_compute_disk_resource_policy_attachment" "obs" {
 resource "google_storage_bucket_object" "mpls_backhaul" {
   name   = "scripts/mpls-backhaul.sh"
   bucket = google_storage_bucket.runs.name
-  source = "${path.module}/../../mpls/mpls-backhaul.sh"
+  source = "${path.module}/../startup/mpls-backhaul.sh"
 
+  content_type = "text/x-shellscript"
+}
+
+resource "google_compute_disk" "mpls" {
+  count  = var.enable_mpls ? 1 : 0
+  name   = "vm-mpls-boot"
+  type   = var.disk_type
+  zone   = var.zone
+  size   = var.mpls_disk_gb
+  image  = "ubuntu-os-cloud/ubuntu-2204-lts"
+  labels = merge(var.labels, { role = "mpls" })
+}
+
+resource "google_compute_disk_resource_policy_attachment" "mpls" {
+  count = var.enable_mpls ? 1 : 0
+  name  = google_compute_resource_policy.daily_snapshot.name
+  disk  = google_compute_disk.mpls[0].name
+  zone  = var.zone
+}
+
+resource "google_storage_bucket_iam_member" "mpls_writer" {
+  count  = var.enable_mpls ? 1 : 0
+  bucket = google_storage_bucket.runs.name
+  role   = "roles/storage.objectAdmin"
+  member = "serviceAccount:${google_service_account.mpls[0].email}"
+}
+
+resource "google_storage_bucket_object" "mpls_ce_tunnels" {
+  name         = "scripts/mpls-ce-tunnels.sh"
+  bucket       = google_storage_bucket.runs.name
+  source       = "${path.module}/../startup/mpls-ce-tunnels.sh"
   content_type = "text/x-shellscript"
 }

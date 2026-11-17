@@ -1,6 +1,9 @@
 locals {
-  startup_core = file("${path.module}/../startup/core-ran.sh")
-  startup_obs  = file("${path.module}/../startup/obs.sh")
+  core_internal_dns = "vm-core-ran.${var.zone}.c.${var.project_id}.internal"
+  mpls_internal_dns = "vm-mpls.${var.zone}.c.${var.project_id}.internal"
+  startup_core      = file("${path.module}/../startup/core-ran.sh")
+  startup_obs       = file("${path.module}/../startup/obs.sh")
+  startup_mpls      = file("${path.module}/../startup/mpls.sh")
   startup_emu = templatefile("${path.module}/../startup/emu.sh", {
     core_proxy_host = "vm-core-ran.${var.zone}.c.${var.project_id}.internal"
     core_proxy_port = 18080
@@ -34,7 +37,10 @@ resource "google_compute_instance" "core" {
     serial-port-enable     = "TRUE"
     lab-role               = "core-ran"
     startup-script         = local.startup_core
-    mpls-backhaul-script   = file("${path.module}/../../mpls/mpls-backhaul.sh")
+    mpls-enabled           = var.enable_mpls ? "true" : "false"
+    mpls-peer-host         = var.enable_mpls ? local.mpls_internal_dns : ""
+    mpls-tunnel-mode       = var.mpls_tunnel_mode
+    mpls-ce-script         = file("${path.module}/../startup/mpls-ce-tunnels.sh")
   }
 
   service_account {
@@ -139,6 +145,56 @@ resource "google_compute_instance" "obs" {
 
   service_account {
     email  = google_service_account.obs.email
+    scopes = ["https://www.googleapis.com/auth/cloud-platform"]
+  }
+
+  shielded_instance_config {
+    enable_secure_boot          = false
+    enable_vtpm                 = true
+    enable_integrity_monitoring = true
+  }
+
+  scheduling {
+    automatic_restart   = true
+    on_host_maintenance = "MIGRATE"
+    provisioning_model  = "STANDARD"
+  }
+}
+
+resource "google_compute_instance" "mpls" {
+  count        = var.enable_mpls ? 1 : 0
+  name         = "vm-mpls"
+  machine_type = var.mpls_machine_type
+  zone         = var.zone
+  tags         = ["lab5g", "lab5g-mpls"]
+  labels       = merge(var.labels, { role = "mpls" })
+
+  allow_stopping_for_update = true
+  can_ip_forward            = true
+  deletion_protection       = false
+
+  boot_disk {
+    source      = google_compute_disk.mpls[0].id
+    auto_delete = false
+  }
+
+  network_interface {
+    subnetwork = google_compute_subnetwork.lab.id
+  }
+
+  metadata = {
+    enable-oslogin         = "TRUE"
+    block-project-ssh-keys = "TRUE"
+    serial-port-enable     = "TRUE"
+    lab-role               = "mpls"
+    startup-script         = local.startup_mpls
+    core-peer-host         = local.core_internal_dns
+    mpls-tunnel-mode       = var.mpls_tunnel_mode
+    mpls-backhaul-script   = file("${path.module}/../startup/mpls-backhaul.sh")
+  }
+
+  service_account {
+    email  = google_service_account.mpls[0].email
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]
   }
 

@@ -1,14 +1,21 @@
-# infra/mpls — backhaul MPLS S1 (USULAN)
+# infra/mpls — rujukan backhaul MPLS S1
 
-`mpls-backhaul.sh setup|status|verify|netem|rollback|hint` membangun eNB — PE1 — (P1 | P2) — PE2 — SGW-U/MME di dalam satu VM (netns + veth), FRR OSPF + LDP, BGP VPNv4, VRF `S1`. Alamat hanya internal host (`10.255.0.0/16`).
+Skrip kanonis ada di `infra/gcp/startup/`, bukan di folder ini:
 
-Terraform memuat skrip ini ke metadata `vm-core-ran` dan ke bucket GCS; startup **tidak** menjalankannya.
+- `infra/gcp/startup/mpls-backhaul.sh` — FRR PE1 / P1 / P2 / PE2 di netns pada `vm-mpls` (opsional, `enable_mpls`, default false)
+- `infra/gcp/startup/mpls-ce-tunnels.sh` — sisi CE GRE atau VXLAN di `vm-core-ran`, tanpa label MPLS
+- `infra/gcp/startup/mpls.sh` — bootstrap modul kernel di `vm-mpls`
+
+`mpls-backhaul.sh` di folder ini hanya meneruskan ke salinan kanonis supaya tidak ada dua skrip yang berbeda.
+
+Label MPLS hanya di dalam `vm-mpls` (`net.mpls.platform_labels` per netns). Antar-VM memakai GRE (protokol 47) atau VXLAN (UDP 4789) karena VPC tidak meneruskan frame berlabel. Startup tidak menjalankan topologi.
 
 ```bash
+# di vm-mpls
 sudo /opt/lab5g/scripts/mpls-backhaul.sh setup
+# di vm-core-ran
+sudo /opt/lab5g/scripts/mpls-ce-tunnels.sh setup
 sudo /opt/lab5g/scripts/mpls-backhaul.sh verify
-sudo /opt/lab5g/scripts/mpls-backhaul.sh netem set p1 delay 20ms jitter 5ms loss 0.1%
-sudo /opt/lab5g/scripts/mpls-backhaul.sh rollback
 ```
 
-Catatan: kernel GCP Ubuntu default mungkin tidak memuat `mpls_router`; skrip mencoba `linux-modules-extra-$(uname -r)`. VM `vm-mpls` opsional menyusul di commit berikutnya.
+Uji 17 Nov: modul dan GRE PASS. L3VPN end-to-end FAIL karena LDP neighbor tidak terbentuk (known issue). Detail ada di `infra/gcp/README.md`.

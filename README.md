@@ -2,15 +2,15 @@
 
 Open lab 5G/4G berbasis open source untuk partner: pengukuran **latency per paket end-to-end** (UE → RAN → transport MPLS → core → internet) dan uji **telco API CAMARA Quality-on-Demand** di atas Open5GS + srsRAN.
 
-> Status: **fase 1, tahap awal**. IaC GCP sudah diuji apply → smoke → destroy (17 Nov 2026). Pipeline latency berasal dari PoC di lab on-prem. Adapter QoD masih **SKELETON**. Belum ada yang di-deploy dari repo ini.
+> Status: **fase 1, tahap awal**. IaC GCP sudah diuji apply → smoke → destroy (17 Nov 2026). `vm-mpls` opsional diuji terpisah: modul dan GRE lolos, L3VPN end-to-end belum (LDP neighbor). Pipeline latency berasal dari PoC di lab on-prem. Adapter QoD masih **SKELETON**. Belum ada yang di-deploy dari repo ini.
 
 ## Peta folder
 
 | Folder | Isi |
 |---|---|
 | [`docs/`](docs/) | [arsitektur](docs/architecture.md), [lab GCP](docs/gcp-lab.md), [PoC latency](docs/latency-poc.md), [uji QoD](docs/qod-feasibility-test.md), [lisensi](docs/licensing.md) |
-| [`infra/gcp/`](infra/gcp/) | Terraform (VPC, 3 VM tanpa IP publik, IAP, Cloud NAT, GCS, snapshot), startup script, checklist test run |
-| [`infra/mpls/`](infra/mpls/) | Backhaul MPLS S1 (netns + FRR LDP/L3VPN) — USULAN |
+| [`infra/gcp/`](infra/gcp/) | Terraform (VPC, 3 VM tanpa IP publik, IAP, Cloud NAT, GCS, snapshot; `vm-mpls` opsional), startup, checklist test run |
+| [`infra/mpls/`](infra/mpls/) | Rujukan backhaul MPLS S1. Skrip kanonis ada di `infra/gcp/startup/` |
 | [`observability/`](observability/) | Zeek `pktlat2.zeek` v2.1, Vector, skema ClickHouse, dashboard Grafana, docker-compose vm-obs |
 | [`tests/latency/`](tests/latency/) | Generator QUIC sisi UE dan pembanding hasil |
 | [`tests/qod/`](tests/qod/) | Template app-session N5, Rx AAR, `tc` bottleneck, matriks iperf3, evaluasi kriteria |
@@ -29,7 +29,7 @@ terraform apply                                  # butuh billing + kuota (lihat 
 terraform destroy                                # selalu destroy di luar jam tes
 ```
 
-Akses VM hanya lewat IAP (`gcloud compute ssh --tunnel-through-iap`, `gcloud compute start-iap-tunnel`).
+Akses VM hanya lewat IAP (`gcloud compute ssh --tunnel-through-iap`, `gcloud compute start-iap-tunnel`). VNC yang bind ke loopback memakai `gcloud compute ssh -L`.
 
 ## Lisensi
 

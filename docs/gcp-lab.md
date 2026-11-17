@@ -8,7 +8,8 @@ Implementasi: [`infra/gcp/`](../infra/gcp/) (Terraform + startup) dan [`infra/mp
 flowchart LR
   subgraph GCP[GCP asia-southeast2 / VPC lab5g / tanpa IP publik]
     subgraph SUBLAB[subnet lab 10.10.0.0/24]
-      CORE[vm-core-ran: Open5GS + srsRAN ZMQ + Zeek + proxy :18080 + MPLS S1]
+      CORE[vm-core-ran: Open5GS + srsRAN ZMQ + Zeek + proxy :18080 + CE GRE/VXLAN]
+      MPLS[vm-mpls opsional: FRR PE/P di netns]
       EMU[vm-emu: Android + nested virt + swiftshader + x11vnc 127.0.0.1]
     end
     subgraph SUBOBS[subnet obs 10.10.1.0/24]
@@ -18,8 +19,9 @@ flowchart LR
     IAP[IAP TCP forwarding]
     NTP[metadata.google.internal]
   end
-  OP[Operator] -->|IAP 22 / 5900 / 3000| IAP
-  IAP --> CORE & EMU & OBS
+  OP[Operator] -->|IAP 22 / 5900 / 6080 / 3000| IAP
+  IAP --> CORE & EMU & OBS & MPLS
+  CORE -.->|GRE atau VXLAN| MPLS
   EMU -->|HTTP CONNECT :18080| CORE
   CORE -->|SGi| NAT
   CORE -->|Vector :6000| OBS
@@ -28,7 +30,7 @@ flowchart LR
   OBS -.-> NTP
 ```
 
-- **Tanpa IP publik.** Ingress hanya dari rentang IAP `35.235.240.0/20` ke port 22, 5900, 3000. OS Login aktif.
+- **Tanpa IP publik.** Ingress hanya dari rentang IAP `35.235.240.0/20` ke port 22, 5900, 6080, dan 3000. OS Login aktif. VNC yang bind ke loopback dijangkau dengan `gcloud compute ssh -L`, bukan `start-iap-tunnel`.
 - **Egress** lewat Cloud NAT. DNS UE 8.8.8.8.
 - **Jam**: chrony ke `metadata.google.internal` di semua VM.
 - **Penyimpanan**: pd-balanced (atau pd-standard), snapshot harian, bucket GCS untuk hasil/pcap (jangan publik).
@@ -41,7 +43,9 @@ flowchart LR
 | vm-core-ran | n2-standard-4, 80–100 GB | n2-standard-8, 100 GB |
 | vm-emu | n2-standard-4, 100 GB | n2-standard-8, 150 GB |
 | vm-obs | e2-standard-2, 80 GB | e2-standard-4, 200 GB |
+| vm-mpls (opsional) | e2-medium, disk 20 GB | sama, atau e2-standard-2 |
 | Total | 10 vCPU / 40 GB | 20 vCPU / 80 GB |
+| Total + vm-mpls | 12 vCPU / 44 GB | 22 vCPU / 84 GB |
 
 Estimasi on-demand Jakarta (agregator harga, belum diverifikasi resmi): minimal ~USD 0,61/jam, optimal ~USD 1,22/jam. Matikan/destroy di luar jam tes.
 
@@ -51,7 +55,16 @@ Estimasi on-demand Jakarta (agregator harga, belum diverifikasi resmi): minimal 
 
 ## Status uji IaC (FAKTA, 17 Nov 2026)
 
-`terraform apply` (ukuran diperkecil) → smoke test PASS (3 VM tanpa IP publik, IAP SSH, Docker, chrony, NAT egress, ping internal, `/dev/kvm` di vm-emu, firewall, bucket) → `terraform destroy` bersih. Stack 5G/emulator penuh belum dipasang di GCP. Setup MPLS gagal karena modul `mpls_router` tidak ada di kernel default; skrip kini memasang `linux-modules-extra-$(uname -r)`.
+`terraform apply` (ukuran diperkecil) → smoke test PASS (3 VM tanpa IP publik, IAP SSH, Docker, chrony, NAT egress, ping internal, `/dev/kvm` di vm-emu, firewall, bucket) → `terraform destroy` bersih.
+
+Hasil tambahan, tanpa project ID atau identitas:
+
+- Emulator di `n2-standard-4`: boot 135,9 s, ANR systemui saat Chrome dibuka.
+- Emulator di `n2-standard-8`: boot 121,5 s, tanpa ANR. RAM sekitar 3,9 GB.
+- Cloud NAT OK. tinyproxy OK.
+- VNC lewat IAP SSH `-L`. `start-iap-tunnel` gagal karena port VNC bind ke loopback.
+- MPLS: modul dan GRE PASS. L3VPN end-to-end FAIL karena LDP neighbor tidak terbentuk (known issue).
+- Rekomendasi: `n2-standard-4` minimal, `n2-standard-8` untuk UI mulus.
 
 ## Backhaul MPLS S1 (USULAN)
 
@@ -65,9 +78,9 @@ flowchart LR
   Z2[Zeek pe2-ce] --- PE2
 ```
 
-Netns + veth di dalam vm-core-ran (VPC GCP tidak meneruskan frame MPLS antar-VM). FRR OSPF + LDP, BGP VPNv4 PE1–PE2, VRF `S1`. `tc netem` per link untuk injeksi delay/jitter/loss. Multi-VM hanya lewat GRE/VXLAN (penalti MTU; turunkan MTU tun ke ≤1400).
+`enable_mpls` default false. Jika true, Terraform membuat `vm-mpls` (e2-medium, disk 20 GB, `can_ip_forward = true`) di subnet lab. FRR PE/P berjalan di netns di `vm-mpls`. `net.mpls.platform_labels` diset per netns. Sisi CE di `vm-core-ran` memakai GRE (protokol 47) atau VXLAN (UDP 4789), tanpa label, karena VPC tidak meneruskan frame MPLS. Firewall internal mengizinkan kedua protokol itu. Startup tidak menjalankan topologi. `tc netem` tetap ada di skrip backhaul. MTU terowongan 1400.
 
-> VM `vm-mpls` opsional (`enable_mpls`) sedang disiapkan dan akan menyusul di commit berikutnya.
+Skrip kanonis: `infra/gcp/startup/mpls-backhaul.sh` dan `infra/gcp/startup/mpls-ce-tunnels.sh`. `infra/mpls/mpls-backhaul.sh` hanya rujukan.
 
 ## Risiko
 
