@@ -1,0 +1,7 @@
+2026-11-18 03:53:03 UTC(lama) lab5g-ue tidak aktif
+2026-11-18 03:53:03 UTC(lama) REATTACH mulai
+11/18 03:53:42.420: [emm] INFO: [IMSI_REDACTED] Attach complete (../src/mme/emm-sm.c:1603)
+11/18 03:53:42.150: [smf] INFO: UE IMSI[IMSI_REDACTED] APN[internet] IPv4[10.45.0.3] IPv6[] (../src/smf/s5c-handler.c:312)
+11/18 03:53:42.156: [upf] INFO: UE F-SEID[UP:0x287 CP:0x5e7] APN[internet] PDN-Type[1] IPv4[10.45.0.3] IPv6[] (../src/upf/context.c:498)
+tun_srsue        UNKNOWN        10.45.0.3/24 
+2026-11-18 03:53:43 UTC(lama) REATTACH selesai

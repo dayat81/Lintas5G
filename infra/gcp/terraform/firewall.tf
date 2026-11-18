@@ -20,13 +20,13 @@ resource "google_compute_firewall" "allow_iap" {
 resource "google_compute_firewall" "allow_internal_lab" {
   name        = "lab5g-allow-internal"
   network     = google_compute_network.lab5g.id
-  description = "Lalu lintas antar-VM: proxy CONNECT, ClickHouse, Vector, SSH internal, ICMP, GRE/VXLAN (CE-PE MPLS)."
+  description = "Lalu lintas antar-VM: proxy CONNECT, collector dashboard 8099, ClickHouse, Vector, SSH internal, ICMP, GRE/VXLAN (CE-PE MPLS)."
   direction   = "INGRESS"
   priority    = 1000
 
   allow {
     protocol = "tcp"
-    ports    = ["22", "18080", "8123", "9000", "6000"]
+    ports    = ["22", "18080", "8123", "9000", "6000", "8099"] # 8099: collector dashboard (vm-core-ran -> vm-emu)
   }
 
   allow {

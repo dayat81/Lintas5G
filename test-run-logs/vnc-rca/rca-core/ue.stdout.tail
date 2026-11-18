@@ -1,0 +1,26 @@
+Active RF plugins: libsrsran_rf_zmq.so
+Inactive RF plugins: 
+Reading configuration file /opt/lab5g/srsran/conf/ue.conf...
+
+Built in Release mode using commit eea87b1 on branch HEAD.
+
+Opening 1 channels in RF device=zmq with args=tx_port=tcp://*:2001,rx_port=tcp://localhost:2000,id=ue,base_srate=11.52e6
+Supported RF device list: zmq file
+CHx base_srate=11.52e6
+CHx id=ue
+Current sample rate is 1.92 MHz with a base rate of 11.52 MHz (x6 decimation)
+CH0 rx_port=tcp://localhost:2000
+CH0 tx_port=tcp://*:2001
+Waiting PHY to initialize ... done!
+Attaching UE...
+Closing stdin thread.
+Current sample rate is 11.52 MHz with a base rate of 11.52 MHz (x1 decimation)
+Current sample rate is 11.52 MHz with a base rate of 11.52 MHz (x1 decimation)
+.
+Found Cell:  Mode=FDD, PCI=1, PRB=50, Ports=1, CP=Normal, CFO=0.0 KHz
+Found PLMN:  Id=00101, TAC=1
+Random Access Transmission: seq=45, tti=1781, ra-rnti=0x2
+RRC Connected
+Random Access Complete.     c-rnti=0x46, ta=0
+Network attach successful. IP: 10.45.0.3
+ nTp) ((t) 18/11/2026 3:53:42 TZ:0

@@ -1,0 +1,33 @@
+Open5GS daemon v2.8.0
+
+11/18 03:40:45.356: [app] INFO: Configuration: '/etc/open5gs/pcrf.yaml' (../lib/app/ogs-init.c:144)
+11/18 03:40:45.356: [app] INFO: File Logging: '/var/log/open5gs/pcrf.log' (../lib/app/ogs-init.c:147)
+11/18 03:40:45.357: [metrics] INFO: metrics_server() [http://127.0.0.9]:9090 (../lib/metrics/prometheus/context.c:392)
+11/18 03:40:45.360: [dbi] INFO: MongoDB URI: 'mongodb://localhost/open5gs' (../lib/dbi/ogs-mongoc.c:128)
+11/18 03:40:45.483: [app] INFO: Polling freeDiameter stats every 60000000 usecs (../lib/diameter/common/stats.c:77)
+11/18 03:40:45.483: [app] INFO: PCRF initialize...done (../src/pcrf/app-init.c:31)
+11/18 03:40:51.546: [diam] INFO: CONNECTED TO 'smf.localdomain' (SCTP,soc#14): (../lib/diameter/common/logger.c:81)
+11/18 03:49:29.222: [app] INFO: SIGTERM received (../src/main.c:54)
+11/18 03:49:29.222: [app] INFO: Open5GS daemon terminating... (../src/main.c:231)
+11/18 03:49:29.340: [app] INFO: PCRF terminate...done (../src/pcrf/app-init.c:39)
+Open5GS daemon v2.8.0
+
+11/18 03:49:29.400: [app] INFO: Configuration: '/etc/open5gs/pcrf.yaml' (../lib/app/ogs-init.c:144)
+11/18 03:49:29.400: [app] INFO: File Logging: '/var/log/open5gs/pcrf.log' (../lib/app/ogs-init.c:147)
+11/18 03:49:29.403: [metrics] INFO: metrics_server() [http://127.0.0.9]:9090 (../lib/metrics/prometheus/context.c:392)
+11/18 03:49:29.406: [dbi] INFO: MongoDB URI: 'mongodb://localhost/open5gs' (../lib/dbi/ogs-mongoc.c:128)
+11/18 03:49:29.516: [app] INFO: Polling freeDiameter stats every 60000000 usecs (../lib/diameter/common/stats.c:77)
+11/18 03:49:29.517: [app] INFO: PCRF initialize...done (../src/pcrf/app-init.c:31)
+11/18 03:49:29.553: [diam] INFO: CONNECTED TO 'smf.localdomain' (SCTP,soc#10): (../lib/diameter/common/logger.c:81)
+11/18 03:49:30.754: [app] INFO: SIGTERM received (../src/main.c:54)
+11/18 03:49:30.754: [app] INFO: Open5GS daemon terminating... (../src/main.c:231)
+11/18 03:49:30.866: [app] INFO: PCRF terminate...done (../src/pcrf/app-init.c:39)
+Open5GS daemon v2.8.0
+
+11/18 03:49:30.903: [app] INFO: Configuration: '/etc/open5gs/pcrf.yaml' (../lib/app/ogs-init.c:144)
+11/18 03:49:30.903: [app] INFO: File Logging: '/var/log/open5gs/pcrf.log' (../lib/app/ogs-init.c:147)
+11/18 03:49:30.904: [metrics] INFO: metrics_server() [http://127.0.0.9]:9090 (../lib/metrics/prometheus/context.c:392)
+11/18 03:49:30.906: [dbi] INFO: MongoDB URI: 'mongodb://localhost/open5gs' (../lib/dbi/ogs-mongoc.c:128)
+11/18 03:49:30.965: [app] INFO: Polling freeDiameter stats every 60000000 usecs (../lib/diameter/common/stats.c:77)
+11/18 03:49:30.966: [app] INFO: PCRF initialize...done (../src/pcrf/app-init.c:31)
+11/18 03:49:30.968: [diam] INFO: CONNECTED TO 'smf.localdomain' (SCTP,soc#17): (../lib/diameter/common/logger.c:81)

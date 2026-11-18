@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Lintas5G lab - emulator + dashboard</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+ body{margin:0;font:13px/1.35 system-ui,sans-serif;background:#0f1419;color:#d8dee9;display:flex;height:100vh}
+ #vnc{flex:1 1 62%;border:0;background:#000;min-width:300px}
+ #panel{flex:0 0 380px;overflow:auto;padding:10px 12px;border-left:1px solid #2b3440}
+ h1{font-size:15px;margin:0 0 6px} h2{font-size:12px;margin:12px 0 4px;color:#88c0d0;text-transform:uppercase;letter-spacing:.04em}
+ .row{display:flex;justify-content:space-between;gap:8px} .k{color:#8a96a8} .ok{color:#a3be8c} .bad{color:#bf616a} .warn{color:#ebcb8b}
+ .pill{display:inline-block;padding:1px 6px;margin:2px;border-radius:9px;background:#1d252f;font-size:11px}
+ canvas{width:100%;height:60px;background:#151b22;border-radius:4px} pre{white-space:pre-wrap;font-size:11px;margin:0;color:#b8c2d0;max-height:140px;overflow:auto}
+ #stale{display:none;background:#5c2a2a;padding:4px 6px;border-radius:4px;margin-bottom:6px}
+</style></head><body>
+<iframe id="vnc" src="vnc.html?autoconnect=1&resize=scale&reconnect=1&reconnect_delay=2000" allow="clipboard-read; clipboard-write"></iframe>
+<div id="panel">
+ <h1>Lintas5G lab <span class="k" id="upd"></span></h1>
+ <div id="stale">Data dashboard basi / core collector tidak terjangkau</div>
+ <h2>UE</h2>
+ <div class="row"><span class="k">Attach</span><span id="att">-</span></div>
+ <div class="row"><span class="k">IP / MTU</span><span id="ueip">-</span></div>
+ <div class="row"><span class="k">Fase core</span><span id="phase">-</span></div>
+ <h2>Ping UE &rarr; 8.8.8.8</h2>
+ <div class="row"><span class="k">p50 / max (60 s)</span><span id="rtt">-</span></div>
+ <div class="row"><span class="k">Loss (jendela)</span><span id="loss">-</span></div>
+ <canvas id="spark" width="356" height="60"></canvas>
+ <h2>Throughput ogstun</h2>
+ <div class="row"><span class="k">DL / UL</span><span id="thr">-</span></div>
+ <canvas id="tspark" width="356" height="40" style="height:40px"></canvas>
+ <h2>Proxy (jalur emulator)</h2>
+ <div class="row"><span class="k">vm-emu &rarr; core:18080</span><span id="pemu">-</span></div>
+ <div class="row"><span class="k">core &rarr; gost (UE)</span><span id="pcore">-</span></div>
+ <div class="row"><span class="k">Android http_proxy</span><span id="aproxy">-</span></div>
+ <h2>Service</h2><div id="units"></div>
+ <h2>Watchdog <span class="k" id="reat"></span></h2><pre id="wd">-</pre>
+ <h2>VM</h2>
+ <div class="row"><span class="k">core CPU / steal / load</span><span id="ccpu">-</span></div>
+ <div class="row"><span class="k">emu CPU / steal / load</span><span id="ecpu">-</span></div>
+ <div class="row"><span class="k">Emulator</span><span id="emu">-</span></div>
+ <div class="row"><span class="k">GPU (util / mem / suhu)</span><span id="gpu">-</span></div>
+ <div class="row"><span class="k">Renderer Android</span><span id="rend" style="font-size:11px">-</span></div>
+ <h2>Lab</h2>
+ <div class="row"><span class="k">Uptime</span><span id="uptime">-</span></div>
+ <div class="row"><span class="k">Biaya s/d kini (estimasi)</span><span id="cost">-</span></div>
+ <p class="k" style="font-size:11px">Refresh 3 s. Collector 2 s (core, emu). Biaya = uptime vm-emu &times; tarif/jam (estimasi harga list GCP, bukan tagihan).</p>
+</div>
+<script>
+const $=id=>document.getElementById(id), thrHist=[];
+const cls=(el,c)=>{el.className=c};
+function fmtDur(s){s=Math.max(0,s|0);const h=s/3600|0,m=(s%3600)/60|0;return h+'j '+m+'m'}
+function spark(cv,data,color,maxFixed){const c=cv.getContext('2d'),w=cv.width,h=cv.height;c.clearRect(0,0,w,h);
+ if(!data.length)return;const mx=maxFixed||Math.max(...data)*1.15||1;c.strokeStyle=color;c.lineWidth=1.5;c.beginPath();
+ data.forEach((v,i)=>{const x=i*(w-2)/Math.max(1,data.length-1)+1,y=h-2-(v/mx)*(h-4);i?c.lineTo(x,y):c.moveTo(x,y)});c.stroke();
+ c.fillStyle='#8a96a8';c.font='10px sans-serif';c.fillText(mx.toFixed(0),2,10)}
+async function j(u){const r=await fetch(u,{cache:'no-store',credentials:'same-origin'});if(!r.ok)throw new Error(r.status);return r.json()}
+async function tick(){
+ let core=null,emu=null;
+ try{core=await j('api/core.json')}catch(e){}
+ try{emu=await j('api/emu.json')}catch(e){}
+ const now=Date.now()/1000;$('upd').textContent=new Date().toLocaleTimeString();
+ $('stale').style.display=(!core||now-core.ts>15)?'block':'none';
+ if(core){
+  $('att').textContent=core.ue.attached?'ATTACHED':'DETACHED';cls($('att'),core.ue.attached?'ok':'bad');
+  $('ueip').textContent=(core.ue.ip||'-')+' / '+(core.ue.tun_mtu||'-');$('phase').textContent=core.phase;
+  const r=core.ping.rtt_ms.slice().sort((a,b)=>a-b);
+  $('rtt').textContent=r.length?(r[r.length>>1].toFixed(1)+' / '+r[r.length-1].toFixed(1)+' ms'):'-';
+  const l=core.ping.loss_pct_window;$('loss').textContent=(l==null?'-':l+' %')+(core.ping.last_reply_age_s>3?' (reply terakhir '+core.ping.last_reply_age_s+' s lalu)':'');
+  cls($('loss'),l>1||core.ping.last_reply_age_s>3?'bad':'ok');spark($('spark'),core.ping.rtt_ms,'#88c0d0');
+  const t=core.throughput_ogstun;$('thr').textContent=t.dl_mbps==null?'-':(t.dl_mbps.toFixed(2)+' / '+t.ul_mbps.toFixed(2)+' Mbit/s');
+  if(t.dl_mbps!=null){thrHist.push(t.dl_mbps);if(thrHist.length>60)thrHist.shift();spark($('tspark'),thrHist,'#a3be8c')}
+  const p=core.proxy;$('pcore').textContent=p.code?(p.code+' '+(p.ttfb_ms??'-')+' ms'):'gagal';cls($('pcore'),p.code==204?'ok':'bad');
+  $('units').innerHTML=Object.entries(core.units).map(([u,s])=>`<span class="pill ${s=='active'?'ok':'bad'}">${u.replace('lab5g-','').replace('open5gs-','')}: ${s}</span>`).join('');
+  $('wd').textContent=core.watchdog.recent.join('\n')||'(belum ada event)';$('reat').textContent='reattach total: '+core.watchdog.reattach_total;
+  $('ccpu').textContent=core.cpu.busy_pct+' % / '+core.cpu.steal_pct+' % / '+core.load[0].toFixed(2);
+ }
+ if(emu){
+  const p=emu.proxy_probe;$('pemu').textContent=p.code?(p.code+' '+(p.ttfb_ms??'-')+' ms  ('+p.ok+'/'+p.n+' ok)'):'gagal';cls($('pemu'),p.code==204?'ok':'bad');
+  $('aproxy').textContent=emu.emulator.android_proxy||'-';
+  $('ecpu').textContent=emu.cpu.busy_pct+' % / '+emu.cpu.steal_pct+' % / '+emu.load[0].toFixed(2);
+  $('emu').textContent=(emu.emulator.container||'-')+(emu.emulator.boot_completed?' / booted':' / booting');
+  const g=emu.gpu||{};$('gpu').textContent=g.name?(g.name+' ('+(g.mode||'-')+') '+g.util_pct+' % / '+g.mem_used_mib+' MiB / '+g.temp_c+' C'):('tanpa GPU ('+(g.mode||'-')+')');
+  $('rend').textContent=g.renderer||'-';cls($('rend'),(g.renderer||'').match(/NVIDIA|Tesla|T4/i)?'ok':((g.renderer||'').match(/SwiftShader/i)&&g.name?'bad':''));
+  $('uptime').textContent=fmtDur(emu.uptime_s);$('cost').textContent='USD '+emu.cost_so_far_usd_est.toFixed(2)+' @ '+emu.cost_per_hour_usd+'/jam';
+ }
+}
+tick();setInterval(tick,3000);
+</script></body></html>

@@ -14,25 +14,24 @@ emu_spot = false
 # dan role IAP/OS Login belum diberikan di luar Terraform.
 my_iap_users = [
   "user:YOU@example.com",
-  # "serviceAccount:OPERATOR_SA_EMAIL",
+  # "serviceAccount:lab5g-tf@YOUR_PROJECT_ID.iam.gserviceaccount.com",
 ]
 
 grant_os_admin_login = true
 enable_apis          = true
 nat_min_ports_per_vm = 256
 
-# Sizing:
-#   Profil Hari 1, 12 vCPU (contoh di bawah): core n2-standard-4, emu n2-standard-8,
-#     enable_obs=false, enable_mpls=false. Pas dengan CPUS_ALL_REGIONS=12.
-#   Minimal 3 VM: core n2-standard-4, emu n2-standard-4, obs e2-standard-2.
-#   Optimal: core n2-standard-8, emu n2-standard-8, obs e2-standard-4.
+# Sizing (17 Nov 2026):
+#   Minimal (lab jalan, 1 UE, test fungsional):
+#     core n2-standard-4, emu n2-standard-4, obs e2-standard-2, disk 80/100/80 GB
+#   Optimal (stabil, emulator lancar, ruang MPLS + 5G SA):
+#     core n2-standard-8, emu n2-standard-8, obs e2-standard-4, disk 100/150/200 GB
+# Default di bawah = optimal. Untuk smoke test kuota (CPUS_ALL_REGIONS tipis),
+# kecilkan ke n2-standard-2 / n2-standard-4 / e2-standard-2.
 # enable_mpls = true menambah e2-medium (2 vCPU) di subnet lab.
-core_machine_type = "n2-standard-4"
+core_machine_type = "n2-standard-8"
 emu_machine_type  = "n2-standard-8"
-obs_machine_type  = "e2-standard-2"
-
-# Profil 12 vCPU: tanpa vm-obs. Default variabel enable_obs tetap true.
-enable_obs = false
+obs_machine_type  = "e2-standard-4"
 
 # true = terraform destroy menghapus objek di bucket (skrip MPLS diunggah ke bucket).
 bucket_force_destroy = true
@@ -51,3 +50,15 @@ enable_mpls        = false
 mpls_machine_type  = "e2-medium"
 mpls_disk_gb       = 20
 mpls_tunnel_mode   = "gre"   # atau "vxlan"
+
+# Sesi GUI (remote emulator VNC/noVNC + dashboard lab di sebelahnya). Lihat ../vnc/README.md.
+# gui_session       = true
+# gui_public_tunnel = false   # OPT-IN: Cloudflare Quick Tunnel publik (tanpa SLA)
+# gui_emu_egress    = "ue-l3"   # ue-l3 | ue-proxy | quic-block | off
+# gui_emu_api       = "36"      # 36 | 35 | budtmo
+# gui_emu_img_type  = "google_apis_playstore"
+# gui_emu_device    = "Pixel C"
+# gui_emu_screen    = "1920x1080"
+# gui_emu_gpu       = "none"    # none | t4 (n1-standard-8 + T4, zona a/b, butuh kuota GPU)
+# gui_emu_userdata_uri = ""     # gs://<bucket-privat>/emu/session-api36-pixelc.tar.zst (SENSITIF, bucket di luar terraform)
+# gui_cost_per_hour = "0.80"

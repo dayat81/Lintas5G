@@ -1,0 +1,21 @@
+Open5GS daemon v2.8.0
+
+11/18 03:40:49.452: [app] INFO: Configuration: '/etc/open5gs/hss.yaml' (../lib/app/ogs-init.c:144)
+11/18 03:40:49.452: [app] INFO: File Logging: '/var/log/open5gs/hss.log' (../lib/app/ogs-init.c:147)
+11/18 03:40:49.453: [metrics] INFO: metrics_server() [http://127.0.0.8]:9090 (../lib/metrics/prometheus/context.c:392)
+11/18 03:40:49.455: [dbi] INFO: MongoDB URI: 'mongodb://localhost/open5gs' (../lib/dbi/ogs-mongoc.c:128)
+11/18 03:40:49.501: [app] INFO: Polling freeDiameter stats every 60000000 usecs (../lib/diameter/common/stats.c:77)
+11/18 03:40:49.501: [app] INFO: HSS initialize...done (../src/hss/app-init.c:31)
+11/18 03:40:54.154: [diam] INFO: CONNECTED TO 'mme.localdomain' (SCTP,soc#9): (../lib/diameter/common/logger.c:81)
+11/18 03:49:29.213: [app] INFO: SIGTERM received (../src/main.c:54)
+11/18 03:49:29.213: [app] INFO: Open5GS daemon terminating... (../src/main.c:231)
+11/18 03:49:29.331: [app] INFO: HSS terminate...done (../src/hss/app-init.c:39)
+Open5GS daemon v2.8.0
+
+11/18 03:49:29.412: [app] INFO: Configuration: '/etc/open5gs/hss.yaml' (../lib/app/ogs-init.c:144)
+11/18 03:49:29.412: [app] INFO: File Logging: '/var/log/open5gs/hss.log' (../lib/app/ogs-init.c:147)
+11/18 03:49:29.417: [metrics] INFO: metrics_server() [http://127.0.0.8]:9090 (../lib/metrics/prometheus/context.c:392)
+11/18 03:49:29.420: [dbi] INFO: MongoDB URI: 'mongodb://localhost/open5gs' (../lib/dbi/ogs-mongoc.c:128)
+11/18 03:49:29.477: [app] INFO: Polling freeDiameter stats every 60000000 usecs (../lib/diameter/common/stats.c:77)
+11/18 03:49:29.478: [app] INFO: HSS initialize...done (../src/hss/app-init.c:31)
+11/18 03:49:29.482: [diam] INFO: CONNECTED TO 'mme.localdomain' (SCTP,soc#15): (../lib/diameter/common/logger.c:81)

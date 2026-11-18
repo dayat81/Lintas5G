@@ -78,5 +78,35 @@ Isi yang diharapkan (dipasang saat test run, bukan oleh startup ini):
 Proxy harus bind di netns UE dan keluar lewat tun_srsue.
 NOTE
 
+# --- Sesi GUI (gui_session=true): ambil skrip dari bucket runs, pasang unit systemd core, start non-blocking. ---
+# Idempotent: startup-script jalan di setiap boot; unit juga enabled sehingga bring-up ulang setelah reboot.
+GUI_MD=http://metadata.google.internal/computeMetadata/v1/instance/attributes
+if [ "$(curl -fsS -H 'Metadata-Flavor: Google' "$GUI_MD/gui-session" 2>/dev/null || echo false)" = "true" ]; then
+  GUI_BUCKET=$(curl -fsS -H 'Metadata-Flavor: Google' "$GUI_MD/lab5g-bucket" 2>/dev/null || true)
+  GCLOUD=$(command -v gcloud || echo /snap/bin/gcloud)
+  for i in $(seq 1 30); do
+    "$GCLOUD" storage cp -r "gs://$GUI_BUCKET/gui/*" /opt/lab5g/ >>/var/log/lab5g/startup.log 2>&1 && break
+    sleep 10
+  done
+  chmod 0755 /opt/lab5g/vnc/*.sh /opt/lab5g/vnc/*.py /opt/lab5g/sesi-c/*.sh /opt/lab5g/sesi-c/*.py 2>/dev/null || true
+  cat >/etc/systemd/system/lab5g-gui-core.service <<'UNIT'
+[Unit]
+Description=Lab5G GUI session bring-up (core)
+After=network-online.target docker.service
+Wants=network-online.target
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+TimeoutStartSec=infinity
+ExecStart=/bin/bash /opt/lab5g/vnc/gui-core-up.sh
+[Install]
+WantedBy=multi-user.target
+UNIT
+  systemctl daemon-reload
+  systemctl enable lab5g-gui-core.service
+  systemctl start --no-block lab5g-gui-core.service
+  echo "gui session: lab5g-gui-core.service started" >>/var/log/lab5g/startup.log
+fi
+
 touch /opt/lab5g/.bootstrap-complete
 date -u +"bootstrap complete %FT%TZ" >>/var/log/lab5g/startup.log

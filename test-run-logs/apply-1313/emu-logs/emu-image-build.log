@@ -1,0 +1,160 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 3.17kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/budtmo/docker-android:emulator_14.0
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM docker.io/budtmo/docker-android:emulator_14.0@sha256:5e4011a46f05010456ecf19dd97fb75c2dff84f95f4c84fdabb0f8555d5a4f43
+#4 resolve docker.io/budtmo/docker-android:emulator_14.0@sha256:5e4011a46f05010456ecf19dd97fb75c2dff84f95f4c84fdabb0f8555d5a4f43 0.0s done
+#4 CACHED
+
+#5 [2/3] RUN apt-get update -q && DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends       libglvnd0 libgl1 libegl1 libgles2 libglx0 libvulkan1 mesa-utils curl ca-certificates  && curl -fsSL -o /tmp/vgl.deb https://github.com/VirtualGL/virtualgl/releases/download/3.1.5/virtualgl_3.1.5_amd64.deb  && (dpkg -i /tmp/vgl.deb || DEBIAN_FRONTEND=noninteractive apt-get install -y -q -f)  && rm -rf /tmp/vgl.deb /var/lib/apt/lists/*  && test -x /opt/VirtualGL/bin/vglrun
+#5 0.529 Get:1 http://archive.ubuntu.com/ubuntu resolute InRelease [136 kB]
+#5 0.586 Get:2 http://security.ubuntu.com/ubuntu resolute-security InRelease [137 kB]
+#5 1.500 Get:3 http://archive.ubuntu.com/ubuntu resolute-updates InRelease [137 kB]
+#5 1.704 Get:4 http://security.ubuntu.com/ubuntu resolute-security/multiverse amd64 Packages [24.6 kB]
+#5 1.863 Get:5 http://archive.ubuntu.com/ubuntu resolute-backports InRelease [137 kB]
+#5 1.981 Get:6 http://security.ubuntu.com/ubuntu resolute-security/universe amd64 Packages [276 kB]
+#5 2.200 Get:7 http://archive.ubuntu.com/ubuntu resolute/universe amd64 Packages [20.1 MB]
+#5 2.402 Get:8 http://security.ubuntu.com/ubuntu resolute-security/main amd64 Packages [883 kB]
+#5 2.870 Get:9 http://security.ubuntu.com/ubuntu resolute-security/restricted amd64 Packages [723 kB]
+#5 4.064 Get:10 http://archive.ubuntu.com/ubuntu resolute/main amd64 Packages [1874 kB]
+#5 4.158 Get:11 http://archive.ubuntu.com/ubuntu resolute/multiverse amd64 Packages [352 kB]
+#5 4.175 Get:12 http://archive.ubuntu.com/ubuntu resolute/restricted amd64 Packages [189 kB]
+#5 4.188 Get:13 http://archive.ubuntu.com/ubuntu resolute-updates/restricted amd64 Packages [743 kB]
+#5 4.221 Get:14 http://archive.ubuntu.com/ubuntu resolute-updates/main amd64 Packages [1077 kB]
+#5 4.280 Get:15 http://archive.ubuntu.com/ubuntu resolute-updates/universe amd64 Packages [494 kB]
+#5 4.301 Get:16 http://archive.ubuntu.com/ubuntu resolute-updates/multiverse amd64 Packages [26.1 kB]
+#5 4.302 Get:17 http://archive.ubuntu.com/ubuntu resolute-backports/universe amd64 Packages [3308 B]
+#5 5.155 Fetched 27.3 MB in 5s (5407 kB/s)
+#5 5.155 Reading package lists...
+#5 6.045 Reading package lists...
+#5 6.977 Building dependency tree...
+#5 7.197 Reading state information...
+#5 7.251 libglvnd0 is already the newest version (1.7.0-3).
+#5 7.251 libglvnd0 set to manually installed.
+#5 7.251 libgl1 is already the newest version (1.7.0-3).
+#5 7.251 libgl1 set to manually installed.
+#5 7.251 libglx0 is already the newest version (1.7.0-3).
+#5 7.251 libglx0 set to manually installed.
+#5 7.251 libvulkan1 is already the newest version (1.4.341.0-1).
+#5 7.251 libvulkan1 set to manually installed.
+#5 7.251 ca-certificates is already the newest version (20260816ubuntu0.26.04.2).
+#5 7.251 Solving dependencies...
+#5 7.477 The following additional packages will be installed:
+#5 7.479   libegl-mesa0 libxcb-xkb1 libxkbcommon-x11-0 mesa-utils-bin
+#5 7.481 Recommended packages:
+#5 7.481   bash-completion
+#5 7.547 The following NEW packages will be installed:
+#5 7.548   curl libegl-mesa0 libegl1 libgles2 libxcb-xkb1 libxkbcommon-x11-0 mesa-utils
+#5 7.549   mesa-utils-bin
+#5 8.083 0 upgraded, 8 newly installed, 0 to remove and 9 not upgraded.
+#5 8.083 Need to get 1714 kB of archives.
+#5 8.083 After this operation, 4529 kB of additional disk space will be used.
+#5 8.083 Get:1 http://archive.ubuntu.com/ubuntu resolute-updates/main amd64 curl amd64 8.18.0-1ubuntu2.8 [273 kB]
+#5 9.511 Get:2 http://archive.ubuntu.com/ubuntu resolute-updates/main amd64 libegl-mesa0 amd64 26.0.8-1ubuntu0.3 [134 kB]
+#5 9.603 Get:3 http://archive.ubuntu.com/ubuntu resolute/main amd64 libxcb-xkb1 amd64 1.17.0-2ubuntu1 [32.7 kB]
+#5 9.627 Get:4 http://archive.ubuntu.com/ubuntu resolute/main amd64 libxkbcommon-x11-0 amd64 1.13.1-1 [15.0 kB]
+#5 9.637 Get:5 http://archive.ubuntu.com/ubuntu resolute/main amd64 libegl1 amd64 1.7.0-3 [29.7 kB]
+#5 9.658 Get:6 http://archive.ubuntu.com/ubuntu resolute/main amd64 libgles2 amd64 1.7.0-3 [17.5 kB]
+#5 9.672 Get:7 http://archive.ubuntu.com/ubuntu resolute/universe amd64 mesa-utils-bin amd64 9.0.0-2build1 [163 kB]
+#5 9.838 Get:8 http://archive.ubuntu.com/ubuntu resolute/universe amd64 mesa-utils amd64 9.0.0-2build1 [1050 kB]
+#5 11.33 Fetched 1714 kB in 3s (638 kB/s)
+#5 11.35 Selecting previously unselected package curl.
+#5 11.35 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 19763 files and directories currently installed.)
+#5 11.38 Preparing to unpack .../0-curl_8.18.0-1ubuntu2.8_amd64.deb ...
+#5 11.38 Unpacking curl (8.18.0-1ubuntu2.8) ...
+#5 11.41 Selecting previously unselected package libegl-mesa0:amd64.
+#5 11.41 Preparing to unpack .../1-libegl-mesa0_26.0.8-1ubuntu0.3_amd64.deb ...
+#5 11.42 Unpacking libegl-mesa0:amd64 (26.0.8-1ubuntu0.3) ...
+#5 11.45 Selecting previously unselected package libxcb-xkb1:amd64.
+#5 11.45 Preparing to unpack .../2-libxcb-xkb1_1.17.0-2ubuntu1_amd64.deb ...
+#5 11.46 Unpacking libxcb-xkb1:amd64 (1.17.0-2ubuntu1) ...
+#5 11.49 Selecting previously unselected package libxkbcommon-x11-0:amd64.
+#5 11.49 Preparing to unpack .../3-libxkbcommon-x11-0_1.13.1-1_amd64.deb ...
+#5 11.49 Unpacking libxkbcommon-x11-0:amd64 (1.13.1-1) ...
+#5 11.52 Selecting previously unselected package libegl1:amd64.
+#5 11.53 Preparing to unpack .../4-libegl1_1.7.0-3_amd64.deb ...
+#5 11.53 Unpacking libegl1:amd64 (1.7.0-3) ...
+#5 11.56 Selecting previously unselected package libgles2:amd64.
+#5 11.56 Preparing to unpack .../5-libgles2_1.7.0-3_amd64.deb ...
+#5 11.57 Unpacking libgles2:amd64 (1.7.0-3) ...
+#5 11.59 Selecting previously unselected package mesa-utils-bin:amd64.
+#5 11.59 Preparing to unpack .../6-mesa-utils-bin_9.0.0-2build1_amd64.deb ...
+#5 11.60 Unpacking mesa-utils-bin:amd64 (9.0.0-2build1) ...
+#5 11.63 Selecting previously unselected package mesa-utils.
+#5 11.63 Preparing to unpack .../7-mesa-utils_9.0.0-2build1_amd64.deb ...
+#5 11.63 Unpacking mesa-utils (9.0.0-2build1) ...
+#5 11.69 Setting up libxcb-xkb1:amd64 (1.17.0-2ubuntu1) ...
+#5 11.70 Setting up libegl-mesa0:amd64 (26.0.8-1ubuntu0.3) ...
+#5 11.71 Setting up libgles2:amd64 (1.7.0-3) ...
+#5 11.71 Setting up libxkbcommon-x11-0:amd64 (1.13.1-1) ...
+#5 11.72 Setting up libegl1:amd64 (1.7.0-3) ...
+#5 11.73 Setting up curl (8.18.0-1ubuntu2.8) ...
+#5 11.74 Setting up mesa-utils-bin:amd64 (9.0.0-2build1) ...
+#5 11.75 Setting up mesa-utils (9.0.0-2build1) ...
+#5 11.76 Processing triggers for libc-bin (2.43-2ubuntu2.4) ...
+#5 12.34 Selecting previously unselected package virtualgl.
+#5 12.36 (Reading database ... 19873 files and directories currently installed.)
+#5 12.36 Preparing to unpack /tmp/vgl.deb ...
+#5 12.36 Unpacking virtualgl (3.1.5-20260814) ...
+#5 12.47 dpkg: dependency problems prevent configuration of virtualgl:
+#5 12.47  virtualgl depends on libglu1-mesa:amd64; however:
+#5 12.47   Package libglu1-mesa is not installed.
+#5 12.47 
+#5 12.47 dpkg: error processing package virtualgl (--install):
+#5 12.47  dependency problems - leaving unconfigured
+#5 12.48 Errors were encountered while processing:
+#5 12.48  virtualgl
+#5 12.49 Reading package lists...
+#5 13.38 Building dependency tree...
+#5 13.60 Reading state information...
+#5 13.60 Correcting dependencies... Done
+#5 13.77 Solving dependencies...
+#5 14.01 The following additional packages will be installed:
+#5 14.02   libglu1-mesa libopengl0
+#5 14.05 The following NEW packages will be installed:
+#5 14.05   libglu1-mesa libopengl0
+#5 14.57 0 upgraded, 2 newly installed, 0 to remove and 9 not upgraded.
+#5 14.57 1 not fully installed or removed.
+#5 14.57 Need to get 192 kB of archives.
+#5 14.57 After this operation, 615 kB of additional disk space will be used.
+#5 14.57 Get:1 http://archive.ubuntu.com/ubuntu resolute/main amd64 libopengl0 amd64 1.7.0-3 [32.8 kB]
+#5 15.14 Get:2 http://archive.ubuntu.com/ubuntu resolute/universe amd64 libglu1-mesa amd64 9.0.2-1.1build2 [159 kB]
+#5 16.80 Fetched 192 kB in 2s (114 kB/s)
+#5 16.82 Selecting previously unselected package libopengl0:amd64.
+#5 16.82 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 19924 files and directories currently installed.)
+#5 16.84 Preparing to unpack .../libopengl0_1.7.0-3_amd64.deb ...
+#5 16.84 Unpacking libopengl0:amd64 (1.7.0-3) ...
+#5 16.87 Selecting previously unselected package libglu1-mesa:amd64.
+#5 16.87 Preparing to unpack .../libglu1-mesa_9.0.2-1.1build2_amd64.deb ...
+#5 16.87 Unpacking libglu1-mesa:amd64 (9.0.2-1.1build2) ...
+#5 16.91 Setting up libopengl0:amd64 (1.7.0-3) ...
+#5 16.92 Setting up libglu1-mesa:amd64 (9.0.2-1.1build2) ...
+#5 16.93 Setting up virtualgl (3.1.5-20260814) ...
+#5 16.94 Processing triggers for libc-bin (2.43-2ubuntu2.4) ...
+#5 DONE 17.0s
+
+#6 [3/3] RUN yes | sdkmanager --licenses >/dev/null  && sdkmanager "platforms;android-36" "system-images;android-36;google_apis_playstore;x86_64" "emulator"  && rm -rf /tmp/*  && sed -i 's/"14.0": "34"/"14.0": "34",\n        "15.0": "35",\n        "16.0": "36",\n        "17.0": "37"/' /home/androidusr/docker-android/cli/src/device/emulator.py  && sed -i 's/basic_args = f"-gpu {self.gpu} -accel on -writable-system -verbose"/basic_args = f"-gpu {self.gpu} -accel on {\x27-writable-system\x27 if os.getenv(\x27EMULATOR_WRITABLE_SYSTEM\x27) == \x271\x27 else \x27\x27} -verbose"/' /home/androidusr/docker-android/cli/src/device/emulator.py  && sed -i 's/basic_cmd = "emulator @{n}".format(n=self.name)/basic_cmd = (os.getenv("EMULATOR_LAUNCH_PREFIX", "") + " emulator @{n}").strip().format(n=self.name)/' /home/androidusr/docker-android/cli/src/device/emulator.py  && grep -q '"16.0": "36"' /home/androidusr/docker-android/cli/src/device/emulator.py  && grep -q "EMULATOR_LAUNCH_PREFIX" /home/androidusr/docker-android/cli/src/device/emulator.py  && grep -q "EMULATOR_WRITABLE_SYSTEM" /home/androidusr/docker-android/cli/src/device/emulator.py
+#6 2.829 Loading package information...                                                  Loading local repository...                                                     [                                       ] 3% Loading local repository...        [                                       ] 3% Fetch remote repository...         [=                                      ] 3% Fetch remote repository...         [=                                      ] 4% Fetch remote repository...         [=                                      ] 5% Fetch remote repository...         [==                                     ] 5% Fetch remote repository...         [==                                     ] 6% Fetch remote repository...         [==                                     ] 7% Fetch remote repository...         [==                                     ] 7% Computing updates...               [===                                    ] 8% Computing updates...               [===                                    ] 10% Computing updates...              [===                                    ] 10% Installing Google Play Intel x86_6[===                                    ] 10% Downloading x86_64-36_r07.zip...  [====                                   ] 10% Downloading x86_64-36_r07.zip...  [====                                   ] 11% Downloading x86_64-36_r07.zip...  [====                                   ] 12% Downloading x86_64-36_r07.zip...  [=====                                  ] 13% Downloading x86_64-36_r07.zip...  [=====                                  ] 14% Downloading x86_64-36_r07.zip...  [=====                                  ] 15% Downloading x86_64-36_r07.zip...  [======                                 ] 15% Downloading x86_64-36_r07.zip...  [======                                 ] 16% Downloading x86_64-36_r07.zip...  [======                                 ] 17% Downloading x86_64-36_r07.zip...  [=======                                ] 18% Downloading x86_64-36_r07.zip...  [=======                                ] 19% Downloading x86_64-36_r07.zip...  [=======                                ] 20% Downloading x86_64-36_r07.zip...  [========                               ] 20% Downloading x86_64-36_r07.zip...  [========                               ] 21% Downloading x86_64-36_r07.zip...  [========                               ] 21% Unzipping...                      [========                               ] 21% Unzipping... x86_64/NOTICE.txt    [========                               ] 21% Unzipping... x86_64/VerifiedBootPa[========                               ] 21% Unzipping... x86_64/advancedFeatur[========                               ] 21% Unzipping... x86_64/build.prop    [========                               ] 21% Unzipping... x86_64/data/         [========                               ] 21% Unzipping... x86_64/data/empty_dat[========                               ] 21% Unzipping... x86_64/data/local.pro[========                               ] 21% Unzipping... x86_64/data/misc/    [========                               ] 21% Unzipping... x86_64/data/misc/Gold[========                               ] 21% Unzipping... x86_64/data/misc/emul[========                               ] 21% Unzipping... x86_64/data/misc/mode[========                               ] 21% Unzipping... x86_64/data/misc/pixe[========                               ] 21% Unzipping... x86_64/encryptionkey.[========                               ] 21% Unzipping... x86_64/kernel-ranchu [========                               ] 21% Unzipping... x86_64/kernel_cmdline[========                               ] 21% Unzipping... x86_64/ramdisk.img   [========                               ] 21% Unzipping... x86_64/source.propert[========                               ] 21% Unzipping... x86_64/system.img    [========                               ] 22% Unzipping... x86_64/system.img    [=========                              ] 23% Unzipping... x86_64/system.img    [=========                              ] 24% Unzipping... x86_64/system.img    [=========                              ] 25% Unzipping... x86_64/system.img    [==========                             ] 25% Unzipping... x86_64/system.img    [==========                             ] 26% Unzipping... x86_64/system.img    [==========                             ] 27% Unzipping... x86_64/system.img    [===========                            ] 28% Unzipping... x86_64/system.img    [===========                            ] 29% Unzipping... x86_64/system.img    [===========                            ] 30% Unzipping... x86_64/system.img    [============                           ] 30% Unzipping... x86_64/system.img    [============                           ] 31% Unzipping... x86_64/system.img    [============                           ] 32% Unzipping... x86_64/system.img    [============                           ] 32% Unzipping... x86_64/vendor.img    [=============                          ] 33% Unzipping... x86_64/vendor.img    [=====================                  ] 55% Unzipping... x86_64/vendor.img    [=====================                  ] 55% Installing Android SDK Platform 36[=====================                  ] 55% Downloading platform-36_r02.zip...[======================                 ] 55% Downloading platform-36_r02.zip...[======================                 ] 56% Downloading platform-36_r02.zip...[======================                 ] 57% Downloading platform-36_r02.zip...[=======================                ] 58% Downloading platform-36_r02.zip...[=======================                ] 59% Downloading platform-36_r02.zip...[=======================                ] 60% Downloading platform-36_r02.zip...[========================               ] 60% Downloading platform-36_r02.zip...[========================               ] 61% Downloading platform-36_r02.zip...[========================               ] 62% Downloading platform-36_r02.zip...[=========================              ] 63% Downloading platform-36_r02.zip...[=========================              ] 64% Downloading platform-36_r02.zip...[=========================              ] 65% Downloading platform-36_r02.zip...[==========================             ] 65% Downloading platform-36_r02.zip...[==========================             ] 66% Downloading platform-36_r02.zip...[==========================             ] 66% Unzipping... x86_64/vendor.img    [==========================             ] 66% Unzipping... android-36/android-st[==========================             ] 67% Unzipping... android-36/android-st[===========================            ] 68% Unzipping... android-36/android-st[===========================            ] 68% Unzipping... android-36/android.ja[===========================            ] 69% Unzipping... android-36/android.ja[===========================            ] 70% Unzipping... android-36/android.ja[============================           ] 70% Unzipping... android-36/android.ja[============================           ] 71% Unzipping... android-36/android.ja[============================           ] 72% Unzipping... android-36/android.ja[============================           ] 72% Unzipping... android-36/build.prop[============================           ] 72% Unzipping... android-36/core-for-s[============================           ] 72% Unzipping... android-36/data/NOTIC[============================           ] 72% Unzipping... android-36/data/activ[============================           ] 72% Unzipping... android-36/data/annot[============================           ] 72% Unzipping... android-36/data/api-v[============================           ] 72% Unzipping... android-36/data/broad[============================           ] 72% Unzipping... android-36/data/categ[============================           ] 72% Unzipping... android-36/data/featu[============================           ] 72% Unzipping... android-36/data/res/a[============================           ] 72% Unzipping... android-36/data/res/c[============================           ] 72% Unzipping... android-36/data/res/d[=============================          ] 73% Unzipping... android-36/data/res/d[=============================          ] 74% Unzipping... android-36/data/res/d[=============================          ] 75% Unzipping... android-36/data/res/d[=============================          ] 75% Unzipping... android-36/data/res/i[=============================          ] 75% Unzipping... android-36/data/res/l[==============================         ] 75% Unzipping... android-36/data/res/l[==============================         ] 75% Unzipping... android-36/data/res/m[==============================         ] 75% Unzipping... android-36/data/res/r[==============================         ] 75% Unzipping... android-36/data/res/t[==============================         ] 75% Unzipping... android-36/data/res/v[==============================         ] 76% Unzipping... android-36/data/res/v[==============================         ] 77% Unzipping... android-36/data/res/v[==============================         ] 77% Unzipping... android-36/data/res/x[==============================         ] 77% Unzipping... android-36/data/servi[==============================         ] 77% Unzipping... android-36/data/widge[==============================         ] 77% Unzipping... android-36/framework.[==============================         ] 77% Unzipping... android-36/optional/a[==============================         ] 77% Unzipping... android-36/optional/l[==============================         ] 77% Unzipping... android-36/optional/o[==============================         ] 77% Unzipping... android-36/optional/w[==============================         ] 77% Unzipping... android-36/sdk.proper[==============================         ] 77% Unzipping... android-36/skins/HVGA[==============================         ] 77% Unzipping... android-36/skins/NOTI[==============================         ] 77% Unzipping... android-36/skins/QVGA[==============================         ] 77% Unzipping... android-36/skins/WQVG[==============================         ] 77% Unzipping... android-36/skins/WSVG[==============================         ] 77% Unzipping... android-36/skins/WVGA[==============================         ] 77% Unzipping... android-36/skins/WXGA[==============================         ] 77% Unzipping... android-36/source.pro[==============================         ] 77% Unzipping... android-36/templates/[==============================         ] 77% Unzipping... android-36/uiautomato[==============================         ] 78% Unzipping... android-36/uiautomato[=======================================] 100% Unzipping... android-36/uiautomat
+#6 55.66 
+#6 DONE 55.8s
+
+#7 exporting to image
+#7 exporting layers
+#7 exporting layers 96.3s done
+#7 exporting manifest sha256:8c4a133e1b2a81c19517dad434682eee4534786c8f9b49483693debedafa2ba7 0.0s done
+#7 exporting config sha256:005b97bc3f8d27515375c562ec88942e44699bc919cdaac39bc846b887cb1855 0.0s done
+#7 exporting attestation manifest sha256:818586fa48439933249ce40b2aa59f4c9db14b31e63b44be2b9b9b2aedf0df8d 0.0s done
+#7 exporting manifest list sha256:e430e83c5516f97c71af8c1bdbbcc73588df5d41cf4f4eaa36fcf434bb3e94de 0.0s done
+#7 naming to docker.io/lab5g/android:36-google_apis_playstore done
+#7 unpacking to docker.io/lab5g/android:36-google_apis_playstore
+#7 unpacking to docker.io/lab5g/android:36-google_apis_playstore 17.4s done
+#7 DONE 113.8s

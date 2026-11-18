@@ -1,22 +1,66 @@
 #!/bin/bash
-# VNC session: emulator budtmo/docker-android dengan VNC password (dibuat acak di VM, tidak pernah dicetak).
-# Port 5900/6080/5555 hanya bind 127.0.0.1 -> akses lewat SSH tunnel via IAP.
+# Emulator container (budtmo-based) with a random VNC password (generated on the VM, never printed).
+# Ports 5900/6080/5555 bind 127.0.0.1 only -> IAP SSH tunnel / caddy. Idempotent: the container is recreated only when
+# absent, stopped, or when image/device/screen differ from the running one (label lab5g.spec), or FORCE=1.
+# Params (env, defaults = large screen + newest Play Store image):
+#   EMU_IMAGE        image tag (default: built by emu-image-build.sh from EMU_API/EMU_IMG_TYPE)
+#   EMU_API=36  EMU_IMG_TYPE=google_apis_playstore   (EMU_API=budtmo -> budtmo/docker-android:emulator_14.0)
+#   EMU_DEVICE="Pixel C" (tablet 2560x1800; budtmo list: Nexus 4/5/7/One/S, Samsung Galaxy S6-S10, Pixel C/8/9)
+#   EMU_SCREEN=1920x1080 (X/VNC framebuffer)  EMU_RAM_MB=8192  EMU_CORES=6  EMU_DATA=16g
+#   EMU_USERDATA_URI=gs://<private-bucket>/<path>/session.tar.zst : restore saved session (SENSITIVE, see README)
+#   EMU_GPU: auto (default) = "host" through VirtualGL EGL (vglrun -d egl0) + `--gpus all` when /opt/lab5g/gpu.env says
+#            EMU_HAS_GPU=1 and docker has the nvidia runtime; otherwise swiftshader_indirect (CPU). Explicit values win.
 set -e
+V=${V:-/opt/lab5g/vnc}
 for i in $(seq 1 60); do command -v docker >/dev/null && ! pgrep -x apt-get >/dev/null && break; sleep 5; done
-mkdir -p /opt/lab5g; umask 077
+mkdir -p /opt/lab5g /var/log/lab5g; umask 077
 P=/opt/lab5g/vnc-password.txt
-if [ ! -s $P ]; then tr -dc 'A-Za-z0-9' </dev/urandom | head -c 20 > $P; fi
+[ -s $P ] || tr -dc 'A-Za-z0-9' </dev/urandom 2>/dev/null | head -c 20 > $P
 chown root:root $P; chmod 0600 $P
 printf 'VNC_PASSWORD=%s\n' "$(cat $P)" > /opt/lab5g/emu.env; chmod 0600 /opt/lab5g/emu.env
 umask 022
-docker rm -f android-emu >/dev/null 2>&1 || true
-docker pull -q budtmo/docker-android:emulator_13.0 >/dev/null
-docker run -d --name android-emu --restart unless-stopped --privileged --device /dev/kvm \
-  -p 127.0.0.1:5555:5555 -p 127.0.0.1:5900:5900 -p 127.0.0.1:6080:6080 \
-  -e EMULATOR_DEVICE="Nexus 5" -e WEB_VNC=true --env-file /opt/lab5g/emu.env \
-  budtmo/docker-android:emulator_13.0 >/dev/null
-S=$(date +%s)
-for i in $(seq 1 90); do b=$(docker exec android-emu adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r'); [ "$b" = 1 ] && break; sleep 5; done
-echo "BOOT_COMPLETED=$b BOOT_WAIT_S=$(( $(date +%s)-S ))"
+IMG=${EMU_IMAGE:-$(EMU_API=${EMU_API:-36} EMU_IMG_TYPE=${EMU_IMG_TYPE:-google_apis_playstore} bash $V/emu-image-build.sh)} || true
+if [ -z "$IMG" ] && [ "${EMU_API:-36}" = 36 ] && [ -z "${EMU_IMAGE:-}" ]; then
+  echo "build API 36 gagal -> coba API 35 sekali"; IMG=$(EMU_API=35 EMU_IMG_TYPE=${EMU_IMG_TYPE:-google_apis_playstore} bash $V/emu-image-build.sh) || true
+fi
+[ -n "$IMG" ] || { echo "EMU_IMAGE kosong: build gagal (lihat /var/log/lab5g/emu-image-build.log)"; exit 1; }
+DEV=${EMU_DEVICE:-Pixel C}; SCR=${EMU_SCREEN:-1920x1080}; GPU=${EMU_GPU:-auto}
+EMU_HAS_GPU=0; [ -f /opt/lab5g/gpu.env ] && . /opt/lab5g/gpu.env
+GARGS=(); PREFIX=""
+if [ "$GPU" = auto ]; then
+  if [ "$EMU_HAS_GPU" = 1 ] && nvidia-smi -L >/dev/null 2>&1 && docker info 2>/dev/null | grep -q nvidia; then GPU=host; else GPU=swiftshader_indirect; fi
+fi
+case "$IMG" in budtmo/*) [ "$GPU" = host ] && { echo "image budtmo asli tanpa VirtualGL -> swiftshader"; GPU=swiftshader_indirect; };; esac
+if [ "$GPU" = host ]; then
+  GARGS=(--gpus all -e NVIDIA_DRIVER_CAPABILITIES=all -e NVIDIA_VISIBLE_DEVICES=all); PREFIX="vglrun -d ${VGL_DEVICE:-egl0}"
+fi
+RAM=${EMU_RAM_MB:-8192}; CORES=${EMU_CORES:-6}; DATA=${EMU_DATA:-16g}
+SPEC="$IMG|$DEV|$SCR|$GPU|$RAM|$CORES|$DATA|$PREFIX"
+cur=$(docker inspect -f '{{.State.Running}}|{{index .Config.Labels "lab5g.spec"}}' android-emu 2>/dev/null || true)
+if [ "${FORCE:-0}" != 1 ] && [ "$cur" = "true|$SPEC" ]; then
+  echo "android-emu already running ($SPEC)"
+else
+  docker rm -f android-emu >/dev/null 2>&1 || true
+  docker create --name android-emu --restart unless-stopped --privileged --device /dev/kvm \
+    --label "lab5g.spec=$SPEC" \
+    -p 127.0.0.1:5555:5555 -p 127.0.0.1:5900:5900 -p 127.0.0.1:6080:6080 \
+    -e EMULATOR_DEVICE="$DEV" -e WEB_VNC=true -e EMULATOR_GPU="$GPU" -e EMULATOR_LAUNCH_PREFIX="$PREFIX" "${GARGS[@]}" \
+    -e SCREEN_WIDTH="${SCR%x*}" -e SCREEN_HEIGHT="${SCR#*x}" \
+    -e EMULATOR_DATA_PARTITION="$DATA" -e EMULATOR_ADDITIONAL_ARGS="-memory $RAM -cores $CORES -no-audio" \
+    --env-file /opt/lab5g/emu.env "$IMG" >/dev/null
+  # optional: restore a saved user session (signed-in Google account) before first start; warns + boots fresh on mismatch
+  [ -n "${EMU_USERDATA_URI:-}" ] && bash $V/emu-session-restore.sh 2>&1 | sed 's/^/[session] /'
+  docker start android-emu >/dev/null
+fi
+S=$(date +%s); b=
+for i in $(seq 1 120); do b=$(docker exec android-emu adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r'); [ "$b" = 1 ] && break; sleep 5; done
+echo "BOOT_COMPLETED=$b BOOT_WAIT_S=$(( $(date +%s)-S )) SPEC=$SPEC"
+A="docker exec android-emu adb shell"
+echo "android=$($A getprop ro.build.version.release 2>/dev/null | tr -d '\r') sdk=$($A getprop ro.build.version.sdk 2>/dev/null | tr -d '\r') abilist=$($A getprop ro.product.cpu.abilist 2>/dev/null | tr -d '\r') native_bridge=$($A getprop ro.dalvik.vm.native.bridge 2>/dev/null | tr -d '\r') wm=$($A wm size 2>/dev/null | tr -d '\r' | awk '{print $NF}')"
+# Chrome without first-run/sign-in screens (automation + manual use without a Google account); idempotent
+$A "echo '_ --disable-fre --no-default-browser-check --no-first-run' > /data/local/tmp/chrome-command-line" 2>/dev/null
+$A am set-debug-app --persistent com.android.chrome >/dev/null 2>&1
+echo "gpu_mode=$GPU renderer=$($A dumpsys SurfaceFlinger 2>/dev/null | grep -m1 -i 'GLES:' | tr -d '\r' | sed 's/^ *//')"
+echo "play_store=$($A pm list packages com.android.vending 2>/dev/null | tr -d '\r')"
 ls -l $P | awk '{print $1,$3,$4,$NF}'
 ss -ltnp | grep -E ':(5900|6080|5555)\b' | awk '{print $4}'

@@ -1,0 +1,39 @@
+Open5GS daemon v2.8.0
+
+11/18 03:40:48.105: [app] INFO: Configuration: '/etc/open5gs/upf.yaml' (../lib/app/ogs-init.c:144)
+11/18 03:40:48.105: [app] INFO: File Logging: '/var/log/open5gs/upf.log' (../lib/app/ogs-init.c:147)
+11/18 03:40:48.181: [metrics] INFO: metrics_server() [http://127.0.0.7]:9090 (../lib/metrics/prometheus/context.c:392)
+11/18 03:40:48.181: [pfcp] INFO: pfcp_server() [127.0.0.7]:8805 (../lib/pfcp/path.c:30)
+11/18 03:40:48.181: [gtp] INFO: gtp_server() [127.0.0.7]:2152 (../lib/gtp/path.c:30)
+11/18 03:40:48.185: [app] INFO: UPF initialize...done (../src/upf/app.c:31)
+11/18 03:40:51.543: [upf] INFO: PFCP associated [127.0.0.4]:8805 (../src/upf/pfcp-sm.c:168)
+11/18 03:49:29.198: [app] INFO: SIGTERM received (../src/main.c:54)
+11/18 03:49:29.198: [app] INFO: Open5GS daemon terminating... (../src/main.c:231)
+11/18 03:49:29.199: [upf] INFO: PFCP de-associated [127.0.0.4]:8805 (../src/upf/pfcp-sm.c:184)
+11/18 03:49:29.202: [app] INFO: UPF terminate...done (../src/upf/app.c:39)
+Open5GS daemon v2.8.0
+
+11/18 03:49:29.247: [app] INFO: Configuration: '/etc/open5gs/upf.yaml' (../lib/app/ogs-init.c:144)
+11/18 03:49:29.247: [app] INFO: File Logging: '/var/log/open5gs/upf.log' (../lib/app/ogs-init.c:147)
+11/18 03:49:29.330: [metrics] INFO: metrics_server() [http://127.0.0.7]:9090 (../lib/metrics/prometheus/context.c:392)
+11/18 03:49:29.330: [pfcp] INFO: pfcp_server() [127.0.0.7]:8805 (../lib/pfcp/path.c:30)
+11/18 03:49:29.330: [gtp] INFO: gtp_server() [127.0.0.7]:2152 (../lib/gtp/path.c:30)
+11/18 03:49:29.330: [app] INFO: UPF initialize...done (../src/upf/app.c:31)
+11/18 03:49:29.546: [upf] INFO: PFCP associated [127.0.0.4]:8805 (../src/upf/pfcp-sm.c:168)
+11/18 03:50:11.047: [upf] INFO: [Added] Number of UPF-Sessions is now 1 (../src/upf/context.c:212)
+11/18 03:50:11.047: [gtp] INFO: gtp_connect() [127.0.0.6]:2152 (../lib/gtp/path.c:60)
+11/18 03:50:11.047: [gtp] INFO: gtp_connect() [127.0.0.4]:2152 (../lib/gtp/path.c:60)
+11/18 03:50:11.047: [upf] INFO: UE F-SEID[UP:0x4bf CP:0xed6] APN[internet] PDN-Type[1] IPv4[10.45.0.2] IPv6[] (../src/upf/context.c:498)
+11/18 03:50:11.047: [upf] INFO: UE F-SEID[UP:0x4bf CP:0xed6] APN[internet] PDN-Type[1] IPv4[10.45.0.2] IPv6[] (../src/upf/context.c:498)
+11/18 03:50:11.154: [upf] ERROR: Invalid packet [IP version:6, Packet Length:48] (../src/upf/gtp-path.c:694)
+0000: 60000000 00083aff fe800000 00000000   `.....:.........
+0010: a23836c7 5efa4433 ff020000 00000000   .86.^.D3........
+0020: 00000000 00000002 8500010a 00000000   ................
+11/18 03:52:36.798: [upf] INFO: [Removed] Number of UPF-sessions is now 0 (../src/upf/context.c:256)
+11/18 03:53:42.156: [upf] INFO: [Added] Number of UPF-Sessions is now 1 (../src/upf/context.c:212)
+11/18 03:53:42.156: [upf] INFO: UE F-SEID[UP:0x287 CP:0x5e7] APN[internet] PDN-Type[1] IPv4[10.45.0.3] IPv6[] (../src/upf/context.c:498)
+11/18 03:53:42.156: [upf] INFO: UE F-SEID[UP:0x287 CP:0x5e7] APN[internet] PDN-Type[1] IPv4[10.45.0.3] IPv6[] (../src/upf/context.c:498)
+11/18 03:53:42.263: [upf] ERROR: Invalid packet [IP version:6, Packet Length:48] (../src/upf/gtp-path.c:694)
+0000: 60000000 00083aff fe800000 00000000   `.....:.........
+0010: 5ec63d17 184e5eb9 ff020000 00000000   ^.=..N^.........
+0020: 00000000 00000002 85006a52 00000000   ..........jR....

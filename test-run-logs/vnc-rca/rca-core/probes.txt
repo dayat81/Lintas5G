@@ -1,0 +1,14 @@
+== PMTU probes from ue1
+DF size 1472: From 10.45.0.1 icmp_seq=1 Frag needed and DF set (mtu = 1460) ping: local error: message too long, mtu=1460 2 packets transmitted, 0 received, +2 errors, 100% packet loss, time 1000ms 
+DF size 1400: 2 packets transmitted, 2 received, 0% packet loss, time 999ms 
+DF size 1372: 2 packets transmitted, 2 received, 0% packet loss, time 1000ms 
+DF size 1340: 2 packets transmitted, 2 received, 0% packet loss, time 1000ms 
+== DNS from ue1 (dig-like via getent not ns-aware; use python)
+www.google.com rcode 0 ans 8 ms 114.3
+www.youtube.com rcode 0 ans 8 ms 113.1
+dl.google.com rcode 0 ans 4 ms 94.3
+android.googleapis.com rcode 0 ans 8 ms 106.7
+== ping ue1 60s
+--- 8.8.8.8 ping statistics ---
+60 packets transmitted, 60 received, 0% packet loss, time 59059ms
+rtt min/avg/max/mdev = 19.489/29.742/40.336/6.118 ms

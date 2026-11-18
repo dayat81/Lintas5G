@@ -157,3 +157,19 @@ resource "google_storage_bucket_object" "mpls_ce_tunnels" {
   source       = "${path.module}/../startup/mpls-ce-tunnels.sh"
   content_type = "text/x-shellscript"
 }
+
+# Sesi GUI: skrip sesi-c + vnc diunggah ke gs://<bucket>/gui/ dan diambil startup script (gui_session=true).
+locals {
+  gui_files = var.gui_session ? toset(concat(
+    [for f in fileset("${path.module}/../sesi-c", "*.{sh,py}") : "sesi-c/${f}"],
+    [for f in fileset("${path.module}/../vnc", "*.{sh,py,html}") : "vnc/${f}"],
+    ["vnc/emu-image/Dockerfile", "vnc/emu-image/patch-cli.py"], # custom emulator image (Android 16 Play Store + ARM translation)
+  )) : toset([])
+}
+
+resource "google_storage_bucket_object" "gui_files" {
+  for_each = local.gui_files
+  name     = "gui/${each.value}"
+  bucket   = google_storage_bucket.runs.name
+  source   = "${path.module}/../${each.value}"
+}

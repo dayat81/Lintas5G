@@ -1,6 +1,5 @@
 #!/bin/bash
-# Jalankan di vm-core-ran (root) setelah ue-watchdog.sh disalin ke /tmp.
-install -m 0755 /tmp/ue-watchdog.sh /opt/lab5g/ue-watchdog.sh
+install -m 0755 ${1:-/tmp/ue-watchdog.sh} /opt/lab5g/ue-watchdog.sh
 cat > /etc/systemd/system/lab5g-watchdog.service <<U
 [Unit]
 Description=Lab5G UE re-attach watchdog

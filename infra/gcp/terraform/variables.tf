@@ -169,3 +169,104 @@ variable "enable_obs" {
   type        = bool
   default     = true
 }
+
+# --- Sesi GUI (remote emulator via VNC/noVNC + dashboard lab) ---
+variable "gui_session" {
+  description = "Jika true, VM menjalankan bring-up sesi GUI otomatis saat boot: EPC + srsRAN ZMQ + gost (emulator via UE), tanpa shaping QoD, MTU/MSS fix, watchdog, dashboard (caddy 127.0.0.1:6081). Skrip diunggah ke bucket runs."
+  type        = bool
+  default     = false
+}
+
+variable "gui_public_tunnel" {
+  description = "OPT-IN: Cloudflare Quick Tunnel publik ke halaman dashboard+noVNC (basic auth + password VNC). Tanpa SLA, TLS diputus di Cloudflare."
+  type        = bool
+  default     = false
+}
+
+variable "gui_emu_egress" {
+  description = "Kebijakan egress emulator: ue-l3 (default: SEMUA trafik TCP/UDP/QUIC/ICMP lewat GRE -> netns UE, fail-closed), ue-proxy (hanya proxy HTTP Android; app yang mengabaikan proxy seperti YouTube GAGAL), quic-block, atau off (langsung Cloud NAT, tidak lewat UE)."
+  type        = string
+  default     = "ue-l3"
+  validation {
+    condition     = contains(["ue-l3", "ue-proxy", "quic-block", "off"], var.gui_emu_egress)
+    error_message = "gui_emu_egress harus ue-l3, ue-proxy, quic-block, atau off."
+  }
+}
+
+variable "gui_emu_api" {
+  description = "API level image emulator: 36 (Android 16, default), 35 (Android 15), atau budtmo (image asli emulator_14.0, tanpa Play Store/ARM translation). API 35+ google_apis_playstore x86_64 punya translasi ARM64 untuk game/app ARM-only."
+  type        = string
+  default     = "36"
+  validation {
+    condition     = contains(["35", "36", "budtmo"], var.gui_emu_api)
+    error_message = "gui_emu_api harus 35, 36, atau budtmo."
+  }
+}
+
+variable "gui_emu_img_type" {
+  description = "Tipe system image: google_apis_playstore (default, Play Store) atau google_apis (bisa root)."
+  type        = string
+  default     = "google_apis_playstore"
+  validation {
+    condition     = contains(["google_apis_playstore", "google_apis"], var.gui_emu_img_type)
+    error_message = "gui_emu_img_type harus google_apis_playstore atau google_apis."
+  }
+}
+
+variable "gui_emu_device" {
+  description = "Profil AVD (nama device budtmo). Default Pixel C (tablet layar besar)."
+  type        = string
+  default     = "Pixel C"
+}
+
+variable "gui_emu_screen" {
+  description = "Resolusi framebuffer X/VNC WxH."
+  type        = string
+  default     = "1920x1080"
+  validation {
+    condition     = can(regex("^[0-9]{3,4}x[0-9]{3,4}$", var.gui_emu_screen))
+    error_message = "gui_emu_screen format WxH, mis. 1920x1080."
+  }
+}
+
+variable "gui_cost_per_hour" {
+  description = "Estimasi biaya USD/jam untuk tampilan dashboard (bukan tagihan)."
+  type        = string
+  default     = "0.80"
+}
+
+variable "gui_emu_gpu" {
+  description = "GPU untuk vm-emu: none (default, n2 + swiftshader CPU) atau t4 (n1-standard-8 + 1x nvidia-tesla-t4, on_host_maintenance=TERMINATE, zona asia-southeast2-a/b; butuh kuota NVIDIA_T4_GPUS dan GPUS_ALL_REGIONS >= 1). Emulator render lewat VirtualGL EGL ke GPU; fallback swiftshader bila GPU tidak terdeteksi."
+  type        = string
+  default     = "none"
+  validation {
+    condition     = contains(["none", "t4"], var.gui_emu_gpu)
+    error_message = "gui_emu_gpu harus none atau t4."
+  }
+}
+
+variable "gui_emu_gpu_machine_type" {
+  description = "Tipe mesin vm-emu saat gui_emu_gpu=t4 (T4 hanya bisa di-attach ke N1)."
+  type        = string
+  default     = "n1-standard-8"
+  validation {
+    condition     = can(regex("^n1-(standard|highmem)-(4|8|16)$", var.gui_emu_gpu_machine_type))
+    error_message = "gui_emu_gpu_machine_type harus N1 (mis. n1-standard-8)."
+  }
+}
+
+variable "gui_cost_per_hour_gpu" {
+  description = "Estimasi USD/jam lab saat gui_emu_gpu=t4 (n1-standard-8 0.511 + T4 ~0.35-0.40 + n2-standard-4 0.261 + disk + NAT). Estimasi, bukan tagihan."
+  type        = string
+  default     = "1.19"
+}
+
+variable "gui_emu_userdata_uri" {
+  description = "OPSIONAL: gs://<bucket-privat>/<path>/session.tar.zst berisi sesi user emulator (akun Google yang sudah login). SENSITIF. Bucket TIDAK dikelola terraform lab (tidak ikut destroy); terraform hanya memberi lab5g-emu roles/storage.objectViewer di bucket itu. Kosong = boot fresh."
+  type        = string
+  default     = ""
+  validation {
+    condition     = var.gui_emu_userdata_uri == "" || can(regex("^gs://[a-z0-9._-]+/.+\\.tar\\.zst$", var.gui_emu_userdata_uri))
+    error_message = "gui_emu_userdata_uri harus kosong atau gs://<bucket>/<path>.tar.zst."
+  }
+}

@@ -1,0 +1,2384 @@
+APPLY_START 2026-11-18 13:13:48 WIB
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # google_compute_address.nat will be created
+  + resource "google_compute_address" "nat" {
+      + address            = (known after apply)
+      + address_type       = "EXTERNAL"
+      + creation_timestamp = (known after apply)
+      + description        = "IP statis Cloud NAT untuk egress SGi/UE. Bukan IP publik VM."
+      + effective_labels   = {
+          + "goog-terraform-provisioned" = "true"
+        }
+      + id                 = (known after apply)
+      + label_fingerprint  = (known after apply)
+      + name               = "lab5g-nat-ip"
+      + network_tier       = "PREMIUM"
+      + prefix_length      = (known after apply)
+      + project            = "<PROJECT_ID>"
+      + purpose            = (known after apply)
+      + region             = "asia-southeast2"
+      + self_link          = (known after apply)
+      + subnetwork         = (known after apply)
+      + terraform_labels   = {
+          + "goog-terraform-provisioned" = "true"
+        }
+      + users              = (known after apply)
+    }
+
+  # google_compute_disk.core will be created
+  + resource "google_compute_disk" "core" {
+      + access_mode                    = (known after apply)
+      + create_snapshot_before_destroy = false
+      + creation_timestamp             = (known after apply)
+      + disk_id                        = (known after apply)
+      + effective_labels               = {
+          + "component"                  = "latency-poc"
+          + "goog-terraform-provisioned" = "true"
+          + "managed-by"                 = "terraform"
+          + "project"                    = "lab5g"
+          + "role"                       = "core-ran"
+        }
+      + enable_confidential_compute    = (known after apply)
+      + id                             = (known after apply)
+      + image                          = "ubuntu-os-cloud/ubuntu-2204-lts"
+      + label_fingerprint              = (known after apply)
+      + labels                         = {
+          + "component"  = "latency-poc"
+          + "managed-by" = "terraform"
+          + "project"    = "lab5g"
+          + "role"       = "core-ran"
+        }
+      + last_attach_timestamp          = (known after apply)
+      + last_detach_timestamp          = (known after apply)
+      + licenses                       = (known after apply)
+      + name                           = "vm-core-ran-boot"
+      + physical_block_size_bytes      = (known after apply)
+      + project                        = "<PROJECT_ID>"
+      + provisioned_iops               = (known after apply)
+      + provisioned_throughput         = (known after apply)
+      + self_link                      = (known after apply)
+      + size                           = 80
+      + source_disk_id                 = (known after apply)
+      + source_image_id                = (known after apply)
+      + source_instant_snapshot_id     = (known after apply)
+      + source_snapshot_id             = (known after apply)
+      + terraform_labels               = {
+          + "component"                  = "latency-poc"
+          + "goog-terraform-provisioned" = "true"
+          + "managed-by"                 = "terraform"
+          + "project"                    = "lab5g"
+          + "role"                       = "core-ran"
+        }
+      + type                           = "pd-standard"
+      + users                          = (known after apply)
+      + zone                           = "asia-southeast2-a"
+
+      + guest_os_features (known after apply)
+    }
+
+  # google_compute_disk.emu will be created
+  + resource "google_compute_disk" "emu" {
+      + access_mode                    = (known after apply)
+      + create_snapshot_before_destroy = false
+      + creation_timestamp             = (known after apply)
+      + disk_id                        = (known after apply)
+      + effective_labels               = {
+          + "component"                  = "latency-poc"
+          + "goog-terraform-provisioned" = "true"
+          + "managed-by"                 = "terraform"
+          + "project"                    = "lab5g"
+          + "role"                       = "emu"
+        }
+      + enable_confidential_compute    = (known after apply)
+      + id                             = (known after apply)
+      + image                          = "ubuntu-os-cloud/ubuntu-2204-lts"
+      + label_fingerprint              = (known after apply)
+      + labels                         = {
+          + "component"  = "latency-poc"
+          + "managed-by" = "terraform"
+          + "project"    = "lab5g"
+          + "role"       = "emu"
+        }
+      + last_attach_timestamp          = (known after apply)
+      + last_detach_timestamp          = (known after apply)
+      + licenses                       = (known after apply)
+      + name                           = "vm-emu-boot"
+      + physical_block_size_bytes      = (known after apply)
+      + project                        = "<PROJECT_ID>"
+      + provisioned_iops               = (known after apply)
+      + provisioned_throughput         = (known after apply)
+      + self_link                      = (known after apply)
+      + size                           = 100
+      + source_disk_id                 = (known after apply)
+      + source_image_id                = (known after apply)
+      + source_instant_snapshot_id     = (known after apply)
+      + source_snapshot_id             = (known after apply)
+      + terraform_labels               = {
+          + "component"                  = "latency-poc"
+          + "goog-terraform-provisioned" = "true"
+          + "managed-by"                 = "terraform"
+          + "project"                    = "lab5g"
+          + "role"                       = "emu"
+        }
+      + type                           = "pd-standard"
+      + users                          = (known after apply)
+      + zone                           = "asia-southeast2-a"
+
+      + guest_os_features (known after apply)
+    }
+
+  # google_compute_disk_resource_policy_attachment.core will be created
+  + resource "google_compute_disk_resource_policy_attachment" "core" {
+      + disk    = "vm-core-ran-boot"
+      + id      = (known after apply)
+      + name    = "lab5g-daily-snapshot"
+      + project = "<PROJECT_ID>"
+      + zone    = "asia-southeast2-a"
+    }
+
+  # google_compute_disk_resource_policy_attachment.emu will be created
+  + resource "google_compute_disk_resource_policy_attachment" "emu" {
+      + disk    = "vm-emu-boot"
+      + id      = (known after apply)
+      + name    = "lab5g-daily-snapshot"
+      + project = "<PROJECT_ID>"
+      + zone    = "asia-southeast2-a"
+    }
+
+  # google_compute_firewall.allow_iap will be created
+  + resource "google_compute_firewall" "allow_iap" {
+      + creation_timestamp = (known after apply)
+      + description        = "SSH, VNC/noVNC, dan Grafana hanya dari rentang IAP."
+      + destination_ranges = (known after apply)
+      + direction          = "INGRESS"
+      + enable_logging     = (known after apply)
+      + id                 = (known after apply)
+      + name               = "lab5g-allow-iap"
+      + network            = (known after apply)
+      + priority           = 1000
+      + project            = "<PROJECT_ID>"
+      + self_link          = (known after apply)
+      + source_ranges      = [
+          + "35.235.240.0/20",
+        ]
+      + target_tags        = [
+          + "lab5g",
+        ]
+
+      + allow {
+          + ports    = [
+              + "22",
+              + "5900",
+              + "6080",
+              + "3000",
+            ]
+          + protocol = "tcp"
+        }
+    }
+
+  # google_compute_firewall.allow_internal_lab will be created
+  + resource "google_compute_firewall" "allow_internal_lab" {
+      + creation_timestamp = (known after apply)
+      + description        = "Lalu lintas antar-VM: proxy CONNECT, collector dashboard 8099, ClickHouse, Vector, SSH internal, ICMP, GRE/VXLAN (CE-PE MPLS)."
+      + destination_ranges = (known after apply)
+      + direction          = "INGRESS"
+      + enable_logging     = (known after apply)
+      + id                 = (known after apply)
+      + name               = "lab5g-allow-internal"
+      + network            = (known after apply)
+      + priority           = 1000
+      + project            = "<PROJECT_ID>"
+      + self_link          = (known after apply)
+      + source_ranges      = [
+          + "10.10.0.0/16",
+        ]
+      + target_tags        = [
+          + "lab5g",
+        ]
+
+      + allow {
+          + ports    = [
+              + "22",
+              + "18080",
+              + "8123",
+              + "9000",
+              + "6000",
+              + "8099",
+            ]
+          + protocol = "tcp"
+        }
+      + allow {
+          + ports    = [
+              + "4789",
+            ]
+          + protocol = "udp"
+        }
+      + allow {
+          + ports    = []
+          + protocol = "47"
+        }
+      + allow {
+          + ports    = []
+          + protocol = "icmp"
+        }
+    }
+
+  # google_compute_firewall.deny_all_ingress will be created
+  + resource "google_compute_firewall" "deny_all_ingress" {
+      + creation_timestamp = (known after apply)
+      + description        = "Tolak ingress lain. Aturan allow di atas (priority 1000) lebih dulu."
+      + destination_ranges = (known after apply)
+      + direction          = "INGRESS"
+      + enable_logging     = (known after apply)
+      + id                 = (known after apply)
+      + name               = "lab5g-deny-other-ingress"
+      + network            = (known after apply)
+      + priority           = 65534
+      + project            = "<PROJECT_ID>"
+      + self_link          = (known after apply)
+      + source_ranges      = [
+          + "0.0.0.0/0",
+        ]
+
+      + deny {
+          + ports    = []
+          + protocol = "all"
+        }
+    }
+
+  # google_compute_instance.core will be created
+  + resource "google_compute_instance" "core" {
+      + allow_stopping_for_update = true
+      + can_ip_forward            = true
+      + cpu_platform              = (known after apply)
+      + creation_timestamp        = (known after apply)
+      + current_status            = (known after apply)
+      + deletion_protection       = false
+      + effective_labels          = {
+          + "component"                  = "latency-poc"
+          + "goog-terraform-provisioned" = "true"
+          + "managed-by"                 = "terraform"
+          + "project"                    = "lab5g"
+          + "role"                       = "core-ran"
+        }
+      + id                        = (known after apply)
+      + instance_id               = (known after apply)
+      + label_fingerprint         = (known after apply)
+      + labels                    = {
+          + "component"  = "latency-poc"
+          + "managed-by" = "terraform"
+          + "project"    = "lab5g"
+          + "role"       = "core-ran"
+        }
+      + machine_type              = "n2-standard-4"
+      + metadata                  = (known after apply)
+      + metadata_fingerprint      = (known after apply)
+      + min_cpu_platform          = (known after apply)
+      + name                      = "vm-core-ran"
+      + project                   = "<PROJECT_ID>"
+      + self_link                 = (known after apply)
+      + tags                      = [
+          + "lab5g",
+          + "lab5g-core",
+        ]
+      + tags_fingerprint          = (known after apply)
+      + terraform_labels          = {
+          + "component"                  = "latency-poc"
+          + "goog-terraform-provisioned" = "true"
+          + "managed-by"                 = "terraform"
+          + "project"                    = "lab5g"
+          + "role"                       = "core-ran"
+        }
+      + zone                      = "asia-southeast2-a"
+
+      + boot_disk {
+          + auto_delete                = false
+          + device_name                = (known after apply)
+          + disk_encryption_key_sha256 = (known after apply)
+          + guest_os_features          = (known after apply)
+          + kms_key_self_link          = (known after apply)
+          + mode                       = "READ_WRITE"
+          + source                     = (known after apply)
+
+          + initialize_params (known after apply)
+        }
+
+      + confidential_instance_config (known after apply)
+
+      + guest_accelerator (known after apply)
+
+      + network_interface {
+          + internal_ipv6_prefix_length = (known after apply)
+          + ipv6_access_type            = (known after apply)
+          + ipv6_address                = (known after apply)
+          + name                        = (known after apply)
+          + network                     = (known after apply)
+          + network_attachment          = (known after apply)
+          + network_ip                  = (known after apply)
+          + stack_type                  = (known after apply)
+          + subnetwork                  = (known after apply)
+          + subnetwork_project          = (known after apply)
+        }
+
+      + reservation_affinity (known after apply)
+
+      + scheduling {
+          + automatic_restart   = true
+          + on_host_maintenance = "MIGRATE"
+          + preemptible         = false
+          + provisioning_model  = "STANDARD"
+        }
+
+      + service_account {
+          + email  = "lab5g-core-ran@<PROJECT_ID>.iam.gserviceaccount.com"
+          + scopes = [
+              + "https://www.googleapis.com/auth/cloud-platform",
+            ]
+        }
+
+      + shielded_instance_config {
+          + enable_integrity_monitoring = true
+          + enable_secure_boot          = false
+          + enable_vtpm                 = true
+        }
+    }
+
+  # google_compute_instance.emu will be created
+  + resource "google_compute_instance" "emu" {
+      + allow_stopping_for_update = true
+      + can_ip_forward            = false
+      + cpu_platform              = (known after apply)
+      + creation_timestamp        = (known after apply)
+      + current_status            = (known after apply)
+      + deletion_protection       = false
+      + effective_labels          = {
+          + "component"                  = "latency-poc"
+          + "goog-terraform-provisioned" = "true"
+          + "managed-by"                 = "terraform"
+          + "project"                    = "lab5g"
+          + "role"                       = "emu"
+        }
+      + id                        = (known after apply)
+      + instance_id               = (known after apply)
+      + label_fingerprint         = (known after apply)
+      + labels                    = {
+          + "component"  = "latency-poc"
+          + "managed-by" = "terraform"
+          + "project"    = "lab5g"
+          + "role"       = "emu"
+        }
+      + machine_type              = "n2-standard-8"
+      + metadata                  = (known after apply)
+      + metadata_fingerprint      = (known after apply)
+      + min_cpu_platform          = "Intel Cascade Lake"
+      + name                      = "vm-emu"
+      + project                   = "<PROJECT_ID>"
+      + self_link                 = (known after apply)
+      + tags                      = [
+          + "lab5g",
+          + "lab5g-emu",
+        ]
+      + tags_fingerprint          = (known after apply)
+      + terraform_labels          = {
+          + "component"                  = "latency-poc"
+          + "goog-terraform-provisioned" = "true"
+          + "managed-by"                 = "terraform"
+          + "project"                    = "lab5g"
+          + "role"                       = "emu"
+        }
+      + zone                      = "asia-southeast2-a"
+
+      + advanced_machine_features {
+          + enable_nested_virtualization = true
+        }
+
+      + boot_disk {
+          + auto_delete                = false
+          + device_name                = (known after apply)
+          + disk_encryption_key_sha256 = (known after apply)
+          + guest_os_features          = (known after apply)
+          + kms_key_self_link          = (known after apply)
+          + mode                       = "READ_WRITE"
+          + source                     = (known after apply)
+
+          + initialize_params (known after apply)
+        }
+
+      + confidential_instance_config (known after apply)
+
+      + guest_accelerator (known after apply)
+
+      + network_interface {
+          + internal_ipv6_prefix_length = (known after apply)
+          + ipv6_access_type            = (known after apply)
+          + ipv6_address                = (known after apply)
+          + name                        = (known after apply)
+          + network                     = (known after apply)
+          + network_attachment          = (known after apply)
+          + network_ip                  = (known after apply)
+          + stack_type                  = (known after apply)
+          + subnetwork                  = (known after apply)
+          + subnetwork_project          = (known after apply)
+        }
+
+      + reservation_affinity (known after apply)
+
+      + scheduling {
+          + automatic_restart   = true
+          + on_host_maintenance = "MIGRATE"
+          + preemptible         = false
+          + provisioning_model  = "STANDARD"
+        }
+
+      + service_account {
+          + email  = "lab5g-emu@<PROJECT_ID>.iam.gserviceaccount.com"
+          + scopes = [
+              + "https://www.googleapis.com/auth/cloud-platform",
+            ]
+        }
+
+      + shielded_instance_config {
+          + enable_integrity_monitoring = true
+          + enable_secure_boot          = false
+          + enable_vtpm                 = true
+        }
+    }
+
+  # google_compute_network.lab5g will be created
+  + resource "google_compute_network" "lab5g" {
+      + auto_create_subnetworks                   = false
+      + bgp_always_compare_med                    = (known after apply)
+      + bgp_best_path_selection_mode              = (known after apply)
+      + bgp_inter_region_cost                     = (known after apply)
+      + delete_default_routes_on_create           = false
+      + description                               = "VPC custom-mode lab 5G latency PoC. Tanpa IP publik pada VM."
+      + gateway_ipv4                              = (known after apply)
+      + id                                        = (known after apply)
+      + internal_ipv6_range                       = (known after apply)
+      + mtu                                       = (known after apply)
+      + name                                      = "lab5g"
+      + network_firewall_policy_enforcement_order = "AFTER_CLASSIC_FIREWALL"
+      + network_id                                = (known after apply)
+      + numeric_id                                = (known after apply)
+      + project                                   = "<PROJECT_ID>"
+      + routing_mode                              = "REGIONAL"
+      + self_link                                 = (known after apply)
+    }
+
+  # google_compute_resource_policy.daily_snapshot will be created
+  + resource "google_compute_resource_policy" "daily_snapshot" {
+      + id        = (known after apply)
+      + name      = "lab5g-daily-snapshot"
+      + project   = "<PROJECT_ID>"
+      + region    = "asia-southeast2"
+      + self_link = (known after apply)
+
+      + snapshot_schedule_policy {
+          + retention_policy {
+              + max_retention_days    = 7
+              + on_source_disk_delete = "KEEP_AUTO_SNAPSHOTS"
+            }
+          + schedule {
+              + daily_schedule {
+                  + days_in_cycle = 1
+                  + start_time    = "17:00"
+                }
+            }
+          + snapshot_properties {
+              + guest_flush       = false
+              + labels            = {
+                  + "component"  = "latency-poc"
+                  + "managed-by" = "terraform"
+                  + "project"    = "lab5g"
+                }
+              + storage_locations = [
+                  + "asia-southeast2",
+                ]
+            }
+        }
+    }
+
+  # google_compute_router.lab will be created
+  + resource "google_compute_router" "lab" {
+      + creation_timestamp = (known after apply)
+      + id                 = (known after apply)
+      + name               = "lab5g-router"
+      + network            = (known after apply)
+      + project            = "<PROJECT_ID>"
+      + region             = "asia-southeast2"
+      + self_link          = (known after apply)
+
+      + bgp {
+          + advertise_mode     = "DEFAULT"
+          + asn                = 64514
+          + identifier_range   = (known after apply)
+          + keepalive_interval = 20
+        }
+    }
+
+  # google_compute_router_nat.lab will be created
+  + resource "google_compute_router_nat" "lab" {
+      + auto_network_tier                   = (known after apply)
+      + drain_nat_ips                       = (known after apply)
+      + enable_dynamic_port_allocation      = true
+      + enable_endpoint_independent_mapping = false
+      + endpoint_types                      = (known after apply)
+      + icmp_idle_timeout_sec               = 30
+      + id                                  = (known after apply)
+      + max_ports_per_vm                    = 2048
+      + min_ports_per_vm                    = 256
+      + name                                = "lab5g-nat"
+      + nat_ip_allocate_option              = "MANUAL_ONLY"
+      + nat_ips                             = (known after apply)
+      + project                             = "<PROJECT_ID>"
+      + region                              = "asia-southeast2"
+      + router                              = "lab5g-router"
+      + source_subnetwork_ip_ranges_to_nat  = "LIST_OF_SUBNETWORKS"
+      + tcp_established_idle_timeout_sec    = 1200
+      + tcp_time_wait_timeout_sec           = 120
+      + tcp_transitory_idle_timeout_sec     = 30
+      + type                                = "PUBLIC"
+      + udp_idle_timeout_sec                = 30
+
+      + log_config {
+          + enable = true
+          + filter = "ERRORS_ONLY"
+        }
+
+      + subnetwork {
+          + name                     = (known after apply)
+          + secondary_ip_range_names = []
+          + source_ip_ranges_to_nat  = [
+              + "ALL_IP_RANGES",
+            ]
+        }
+      + subnetwork {
+          + name                     = (known after apply)
+          + secondary_ip_range_names = []
+          + source_ip_ranges_to_nat  = [
+              + "ALL_IP_RANGES",
+            ]
+        }
+    }
+
+  # google_compute_subnetwork.lab will be created
+  + resource "google_compute_subnetwork" "lab" {
+      + creation_timestamp         = (known after apply)
+      + description                = "Core/RAN + emulator"
+      + enable_flow_logs           = (known after apply)
+      + external_ipv6_prefix       = (known after apply)
+      + fingerprint                = (known after apply)
+      + gateway_address            = (known after apply)
+      + id                         = (known after apply)
+      + internal_ipv6_prefix       = (known after apply)
+      + ip_cidr_range              = "10.10.0.0/24"
+      + ipv6_cidr_range            = (known after apply)
+      + ipv6_gce_endpoint          = (known after apply)
+      + name                       = "lab"
+      + network                    = (known after apply)
+      + private_ip_google_access   = true
+      + private_ipv6_google_access = (known after apply)
+      + project                    = "<PROJECT_ID>"
+      + purpose                    = (known after apply)
+      + region                     = "asia-southeast2"
+      + self_link                  = (known after apply)
+      + stack_type                 = (known after apply)
+      + state                      = (known after apply)
+      + subnetwork_id              = (known after apply)
+
+      + secondary_ip_range (known after apply)
+    }
+
+  # google_compute_subnetwork.obs will be created
+  + resource "google_compute_subnetwork" "obs" {
+      + creation_timestamp         = (known after apply)
+      + description                = "ClickHouse + Grafana + sink Vector"
+      + enable_flow_logs           = (known after apply)
+      + external_ipv6_prefix       = (known after apply)
+      + fingerprint                = (known after apply)
+      + gateway_address            = (known after apply)
+      + id                         = (known after apply)
+      + internal_ipv6_prefix       = (known after apply)
+      + ip_cidr_range              = "10.10.1.0/24"
+      + ipv6_cidr_range            = (known after apply)
+      + ipv6_gce_endpoint          = (known after apply)
+      + name                       = "obs"
+      + network                    = (known after apply)
+      + private_ip_google_access   = true
+      + private_ipv6_google_access = (known after apply)
+      + project                    = "<PROJECT_ID>"
+      + purpose                    = (known after apply)
+      + region                     = "asia-southeast2"
+      + self_link                  = (known after apply)
+      + stack_type                 = (known after apply)
+      + state                      = (known after apply)
+      + subnetwork_id              = (known after apply)
+
+      + secondary_ip_range (known after apply)
+    }
+
+  # google_project_iam_member.compute_viewer["serviceAccount:lab5g-tf@<PROJECT_ID>.iam.gserviceaccount.com"] will be created
+  + resource "google_project_iam_member" "compute_viewer" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + member  = "serviceAccount:lab5g-tf@<PROJECT_ID>.iam.gserviceaccount.com"
+      + project = "<PROJECT_ID>"
+      + role    = "roles/compute.viewer"
+    }
+
+  # google_project_iam_member.compute_viewer["user:<owner-email>"] will be created
+  + resource "google_project_iam_member" "compute_viewer" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + member  = "user:<owner-email>"
+      + project = "<PROJECT_ID>"
+      + role    = "roles/compute.viewer"
+    }
+
+  # google_project_iam_member.iap_tunnel["serviceAccount:lab5g-tf@<PROJECT_ID>.iam.gserviceaccount.com"] will be created
+  + resource "google_project_iam_member" "iap_tunnel" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + member  = "serviceAccount:lab5g-tf@<PROJECT_ID>.iam.gserviceaccount.com"
+      + project = "<PROJECT_ID>"
+      + role    = "roles/iap.tunnelResourceAccessor"
+    }
+
+  # google_project_iam_member.iap_tunnel["user:<owner-email>"] will be created
+  + resource "google_project_iam_member" "iap_tunnel" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + member  = "user:<owner-email>"
+      + project = "<PROJECT_ID>"
+      + role    = "roles/iap.tunnelResourceAccessor"
+    }
+
+  # google_project_iam_member.log_writer["core"] will be created
+  + resource "google_project_iam_member" "log_writer" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + member  = "serviceAccount:lab5g-core-ran@<PROJECT_ID>.iam.gserviceaccount.com"
+      + project = "<PROJECT_ID>"
+      + role    = "roles/logging.logWriter"
+    }
+
+  # google_project_iam_member.log_writer["emu"] will be created
+  + resource "google_project_iam_member" "log_writer" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + member  = "serviceAccount:lab5g-emu@<PROJECT_ID>.iam.gserviceaccount.com"
+      + project = "<PROJECT_ID>"
+      + role    = "roles/logging.logWriter"
+    }
+
+  # google_project_iam_member.log_writer["obs"] will be created
+  + resource "google_project_iam_member" "log_writer" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + member  = "serviceAccount:lab5g-obs@<PROJECT_ID>.iam.gserviceaccount.com"
+      + project = "<PROJECT_ID>"
+      + role    = "roles/logging.logWriter"
+    }
+
+  # google_project_iam_member.metric_writer["core"] will be created
+  + resource "google_project_iam_member" "metric_writer" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + member  = "serviceAccount:lab5g-core-ran@<PROJECT_ID>.iam.gserviceaccount.com"
+      + project = "<PROJECT_ID>"
+      + role    = "roles/monitoring.metricWriter"
+    }
+
+  # google_project_iam_member.metric_writer["emu"] will be created
+  + resource "google_project_iam_member" "metric_writer" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + member  = "serviceAccount:lab5g-emu@<PROJECT_ID>.iam.gserviceaccount.com"
+      + project = "<PROJECT_ID>"
+      + role    = "roles/monitoring.metricWriter"
+    }
+
+  # google_project_iam_member.metric_writer["obs"] will be created
+  + resource "google_project_iam_member" "metric_writer" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + member  = "serviceAccount:lab5g-obs@<PROJECT_ID>.iam.gserviceaccount.com"
+      + project = "<PROJECT_ID>"
+      + role    = "roles/monitoring.metricWriter"
+    }
+
+  # google_project_iam_member.os_admin_login["serviceAccount:lab5g-tf@<PROJECT_ID>.iam.gserviceaccount.com"] will be created
+  + resource "google_project_iam_member" "os_admin_login" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + member  = "serviceAccount:lab5g-tf@<PROJECT_ID>.iam.gserviceaccount.com"
+      + project = "<PROJECT_ID>"
+      + role    = "roles/compute.osAdminLogin"
+    }
+
+  # google_project_iam_member.os_admin_login["user:<owner-email>"] will be created
+  + resource "google_project_iam_member" "os_admin_login" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + member  = "user:<owner-email>"
+      + project = "<PROJECT_ID>"
+      + role    = "roles/compute.osAdminLogin"
+    }
+
+  # google_project_iam_member.os_login["serviceAccount:lab5g-tf@<PROJECT_ID>.iam.gserviceaccount.com"] will be created
+  + resource "google_project_iam_member" "os_login" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + member  = "serviceAccount:lab5g-tf@<PROJECT_ID>.iam.gserviceaccount.com"
+      + project = "<PROJECT_ID>"
+      + role    = "roles/compute.osLogin"
+    }
+
+  # google_project_iam_member.os_login["user:<owner-email>"] will be created
+  + resource "google_project_iam_member" "os_login" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + member  = "user:<owner-email>"
+      + project = "<PROJECT_ID>"
+      + role    = "roles/compute.osLogin"
+    }
+
+  # google_project_service.required["cloudresourcemanager.googleapis.com"] will be created
+  + resource "google_project_service" "required" {
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "<PROJECT_ID>"
+      + service            = "cloudresourcemanager.googleapis.com"
+    }
+
+  # google_project_service.required["compute.googleapis.com"] will be created
+  + resource "google_project_service" "required" {
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "<PROJECT_ID>"
+      + service            = "compute.googleapis.com"
+    }
+
+  # google_project_service.required["iam.googleapis.com"] will be created
+  + resource "google_project_service" "required" {
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "<PROJECT_ID>"
+      + service            = "iam.googleapis.com"
+    }
+
+  # google_project_service.required["iamcredentials.googleapis.com"] will be created
+  + resource "google_project_service" "required" {
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "<PROJECT_ID>"
+      + service            = "iamcredentials.googleapis.com"
+    }
+
+  # google_project_service.required["iap.googleapis.com"] will be created
+  + resource "google_project_service" "required" {
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "<PROJECT_ID>"
+      + service            = "iap.googleapis.com"
+    }
+
+  # google_project_service.required["oslogin.googleapis.com"] will be created
+  + resource "google_project_service" "required" {
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "<PROJECT_ID>"
+      + service            = "oslogin.googleapis.com"
+    }
+
+  # google_project_service.required["storage.googleapis.com"] will be created
+  + resource "google_project_service" "required" {
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "<PROJECT_ID>"
+      + service            = "storage.googleapis.com"
+    }
+
+  # google_service_account.core will be created
+  + resource "google_service_account" "core" {
+      + account_id   = "lab5g-core-ran"
+      + description  = "SA minimal untuk core/RAN, Zeek, dan unggah hasil run ke GCS."
+      + disabled     = false
+      + display_name = "lab5g vm-core-ran"
+      + email        = "lab5g-core-ran@<PROJECT_ID>.iam.gserviceaccount.com"
+      + id           = (known after apply)
+      + member       = "serviceAccount:lab5g-core-ran@<PROJECT_ID>.iam.gserviceaccount.com"
+      + name         = (known after apply)
+      + project      = "<PROJECT_ID>"
+      + unique_id    = (known after apply)
+    }
+
+  # google_service_account.emu will be created
+  + resource "google_service_account" "emu" {
+      + account_id   = "lab5g-emu"
+      + description  = "SA minimal untuk emulator dan unggah artefak run ke GCS."
+      + disabled     = false
+      + display_name = "lab5g vm-emu"
+      + email        = "lab5g-emu@<PROJECT_ID>.iam.gserviceaccount.com"
+      + id           = (known after apply)
+      + member       = "serviceAccount:lab5g-emu@<PROJECT_ID>.iam.gserviceaccount.com"
+      + name         = (known after apply)
+      + project      = "<PROJECT_ID>"
+      + unique_id    = (known after apply)
+    }
+
+  # google_service_account.obs will be created
+  + resource "google_service_account" "obs" {
+      + account_id   = "lab5g-obs"
+      + description  = "SA minimal untuk ClickHouse/Grafana dan baca objek hasil run."
+      + disabled     = false
+      + display_name = "lab5g vm-obs"
+      + email        = "lab5g-obs@<PROJECT_ID>.iam.gserviceaccount.com"
+      + id           = (known after apply)
+      + member       = "serviceAccount:lab5g-obs@<PROJECT_ID>.iam.gserviceaccount.com"
+      + name         = (known after apply)
+      + project      = "<PROJECT_ID>"
+      + unique_id    = (known after apply)
+    }
+
+  # google_storage_bucket.runs will be created
+  + resource "google_storage_bucket" "runs" {
+      + effective_labels            = {
+          + "component"                  = "latency-poc"
+          + "goog-terraform-provisioned" = "true"
+          + "managed-by"                 = "terraform"
+          + "project"                    = "lab5g"
+        }
+      + force_destroy               = true
+      + id                          = (known after apply)
+      + labels                      = {
+          + "component"  = "latency-poc"
+          + "managed-by" = "terraform"
+          + "project"    = "lab5g"
+        }
+      + location                    = "ASIA-SOUTHEAST2"
+      + name                        = (known after apply)
+      + project                     = (known after apply)
+      + project_number              = (known after apply)
+      + public_access_prevention    = "enforced"
+      + rpo                         = (known after apply)
+      + self_link                   = (known after apply)
+      + storage_class               = "STANDARD"
+      + terraform_labels            = {
+          + "component"                  = "latency-poc"
+          + "goog-terraform-provisioned" = "true"
+          + "managed-by"                 = "terraform"
+          + "project"                    = "lab5g"
+        }
+      + time_created                = (known after apply)
+      + uniform_bucket_level_access = true
+      + updated                     = (known after apply)
+      + url                         = (known after apply)
+
+      + lifecycle_rule {
+          + action {
+              + type          = "Delete"
+                # (1 unchanged attribute hidden)
+            }
+          + condition {
+              + age                    = 30
+              + matches_prefix         = []
+              + matches_storage_class  = []
+              + matches_suffix         = []
+              + with_state             = (known after apply)
+                # (3 unchanged attributes hidden)
+            }
+        }
+
+      + soft_delete_policy (known after apply)
+
+      + versioning {
+          + enabled = false
+        }
+
+      + website (known after apply)
+    }
+
+  # google_storage_bucket_iam_member.core_writer will be created
+  + resource "google_storage_bucket_iam_member" "core_writer" {
+      + bucket = (known after apply)
+      + etag   = (known after apply)
+      + id     = (known after apply)
+      + member = "serviceAccount:lab5g-core-ran@<PROJECT_ID>.iam.gserviceaccount.com"
+      + role   = "roles/storage.objectAdmin"
+    }
+
+  # google_storage_bucket_iam_member.emu_writer will be created
+  + resource "google_storage_bucket_iam_member" "emu_writer" {
+      + bucket = (known after apply)
+      + etag   = (known after apply)
+      + id     = (known after apply)
+      + member = "serviceAccount:lab5g-emu@<PROJECT_ID>.iam.gserviceaccount.com"
+      + role   = "roles/storage.objectAdmin"
+    }
+
+  # google_storage_bucket_iam_member.obs_reader will be created
+  + resource "google_storage_bucket_iam_member" "obs_reader" {
+      + bucket = (known after apply)
+      + etag   = (known after apply)
+      + id     = (known after apply)
+      + member = "serviceAccount:lab5g-obs@<PROJECT_ID>.iam.gserviceaccount.com"
+      + role   = "roles/storage.objectViewer"
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/analyze.py"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/analyze.py"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/analyze.py"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/core-bringup.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/core-bringup.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/core-bringup.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/core-config.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/core-config.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/core-config.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/core-install.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/core-install.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/core-install.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/core-proxy.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/core-proxy.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/core-proxy.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/core-run.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/core-run.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/core-run.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/core-zeek.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/core-zeek.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/core-zeek.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/diag-rlf.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/diag-rlf.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/diag-rlf.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/emu-servers.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/emu-servers.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/emu-servers.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/emu-start.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/emu-start.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/emu-start.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/emu-youtube.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/emu-youtube.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/emu-youtube.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/enb-qci2.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/enb-qci2.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/enb-qci2.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/fix-reattach.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/fix-reattach.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/fix-reattach.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/fix-zmq.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/fix-zmq.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/fix-zmq.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/gbr-test.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/gbr-test.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/gbr-test.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/p99-reps.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/p99-reps.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/p99-reps.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/p99-run.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/p99-run.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/p99-run.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/p99-stats.py"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/p99-stats.py"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/p99-stats.py"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/qod-tc.py"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/qod-tc.py"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/qod-tc.py"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/run-tests.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/run-tests.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/run-tests.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/run-tests2.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/run-tests2.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/run-tests2.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/run-tests3.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/run-tests3.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/run-tests3.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/rx-af.py"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/rx-af.py"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/rx-af.py"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/rx-setup.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/rx-setup.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/rx-setup.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/rx-test.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/rx-test.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/rx-test.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/str-rest-test.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/str-rest-test.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/str-rest-test.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/str-test.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/str-test.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/str-test.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/udp-flow.py"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/udp-flow.py"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/udp-flow.py"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["sesi-c/upload-logs.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/sesi-c/upload-logs.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../sesi-c/upload-logs.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/core-bringup-vnc.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/core-bringup-vnc.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/core-bringup-vnc.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/core-collector.py"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/core-collector.py"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/core-collector.py"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/core-gre-emu.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/core-gre-emu.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/core-gre-emu.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/core-proxy-gui.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/core-proxy-gui.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/core-proxy-gui.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/emu-collector.py"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/emu-collector.py"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/emu-collector.py"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/emu-dashboard-setup.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/emu-dashboard-setup.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/emu-dashboard-setup.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/emu-egress-policy.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/emu-egress-policy.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/emu-egress-policy.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/emu-gpu-setup.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/emu-gpu-setup.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/emu-gpu-setup.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/emu-image-build.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/emu-image-build.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/emu-image-build.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/emu-image/Dockerfile"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/emu-image/Dockerfile"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/emu-image/Dockerfile"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/emu-proxy-ue.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/emu-proxy-ue.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/emu-proxy-ue.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/emu-vnc-start.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/emu-vnc-start.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/emu-vnc-start.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/gui-core-up.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/gui-core-up.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/gui-core-up.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/gui-emu-up.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/gui-emu-up.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/gui-emu-up.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/gui-net-fix.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/gui-net-fix.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/gui-net-fix.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/install-collector.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/install-collector.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/install-collector.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/install-emu-egress.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/install-emu-egress.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/install-emu-egress.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/install-watchdog.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/install-watchdog.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/install-watchdog.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/lab.html"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/lab.html"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/lab.html"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/novnc-public-setup.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/novnc-public-setup.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/novnc-public-setup.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/novnc-public-toggle.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/novnc-public-toggle.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/novnc-public-toggle.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/shot-dashboard.py"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/shot-dashboard.py"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/shot-dashboard.py"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/ue-watchdog.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/ue-watchdog.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/ue-watchdog.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/usability-core.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/usability-core.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/usability-core.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/usability-emu.sh"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/usability-emu.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/usability-emu.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.gui_files["vnc/verify-public.py"] will be created
+  + resource "google_storage_bucket_object" "gui_files" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = (known after apply)
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "gui/vnc/verify-public.py"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./../vnc/verify-public.py"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.mpls_backhaul will be created
+  + resource "google_storage_bucket_object" "mpls_backhaul" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = "text/x-shellscript"
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "scripts/mpls-backhaul.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./startup/mpls-backhaul.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # google_storage_bucket_object.mpls_ce_tunnels will be created
+  + resource "google_storage_bucket_object" "mpls_ce_tunnels" {
+      + bucket         = (known after apply)
+      + content        = (sensitive value)
+      + content_type   = "text/x-shellscript"
+      + crc32c         = (known after apply)
+      + detect_md5hash = "different hash"
+      + generation     = (known after apply)
+      + id             = (known after apply)
+      + kms_key_name   = (known after apply)
+      + md5hash        = (known after apply)
+      + md5hexhash     = (known after apply)
+      + media_link     = (known after apply)
+      + name           = "scripts/mpls-ce-tunnels.sh"
+      + output_name    = (known after apply)
+      + self_link      = (known after apply)
+      + source         = "./startup/mpls-ce-tunnels.sh"
+      + storage_class  = (known after apply)
+    }
+
+  # random_id.bucket_suffix will be created
+  + resource "random_id" "bucket_suffix" {
+      + b64_std     = (known after apply)
+      + b64_url     = (known after apply)
+      + byte_length = 2
+      + dec         = (known after apply)
+      + hex         = (known after apply)
+      + id          = (known after apply)
+    }
+
+Plan: 102 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + emu_spot            = false
+  + enable_mpls         = false
+  + iap_tunnel_commands = <<-EOT
+        gcloud compute ssh vm-core-ran --project=<PROJECT_ID> --zone=asia-southeast2-a --tunnel-through-iap
+        gcloud compute ssh vm-emu --project=<PROJECT_ID> --zone=asia-southeast2-a --tunnel-through-iap
+        gcloud compute ssh vm-obs --project=<PROJECT_ID> --zone=asia-southeast2-a --tunnel-through-iap
+        # vm-mpls hanya ada jika enable_mpls = true
+        gcloud compute ssh vm-mpls --project=<PROJECT_ID> --zone=asia-southeast2-a --tunnel-through-iap
+        
+        # VNC/noVNC + dashboard emulator: port 5900/6080/6081 hanya bind 127.0.0.1 di vm-emu, jadi start-iap-tunnel
+        # langsung GAGAL (4003). Pakai SSH tunnel via IAP, lalu buka http://localhost:6081/ (emulator + dashboard,
+        # basic auth user lab), atau http://localhost:6080/vnc.html, atau klien VNC ke localhost:5900.
+        # Password: sudo cat /opt/lab5g/vnc-password.txt dan /opt/lab5g/novnc-web-password.txt (lihat vnc/README.md)
+        gcloud compute ssh vm-emu --project=<PROJECT_ID> --zone=asia-southeast2-a --tunnel-through-iap -- -N -L 6081:localhost:6081 -L 6080:localhost:6080 -L 5900:localhost:5900
+        
+        # Grafana (lalu buka http://127.0.0.1:3000)
+        gcloud compute start-iap-tunnel vm-obs 3000 --local-host-port=localhost:3000 --project=<PROJECT_ID> --zone=asia-southeast2-a
+    EOT
+  + mpls_backhaul       = "enable_mpls=false; vm-mpls tidak dibuat."
+  + nat_ip              = (known after apply)
+  + network             = "lab5g"
+  + next_steps          = "Lanjut ke ../scripts/test-run-day1.sh setelah terraform apply selesai. Jangan simpan kredensial di repo ini."
+  + region              = "asia-southeast2"
+  + runs_bucket         = (known after apply)
+  + vm_internal_ips     = {
+      + vm-core-ran = (known after apply)
+      + vm-emu      = (known after apply)
+    }
+  + zone                = "asia-southeast2-a"
+random_id.bucket_suffix: Creating...
+random_id.bucket_suffix: Creation complete after 0s [id=FX0]
+google_project_iam_member.iap_tunnel["serviceAccount:lab5g-tf@<PROJECT_ID>.iam.gserviceaccount.com"]: Creating...
+google_project_iam_member.os_admin_login["serviceAccount:lab5g-tf@<PROJECT_ID>.iam.gserviceaccount.com"]: Creating...
+google_project_iam_member.compute_viewer["user:<owner-email>"]: Creating...
+google_service_account.core: Creating...
+google_project_iam_member.iap_tunnel["user:<owner-email>"]: Creating...
+google_project_iam_member.os_admin_login["user:<owner-email>"]: Creating...
+google_service_account.obs: Creating...
+google_compute_address.nat: Creating...
+google_compute_disk.emu: Creating...
+google_compute_resource_policy.daily_snapshot: Creating...
+google_compute_resource_policy.daily_snapshot: Creation complete after 1s [id=projects/<PROJECT_ID>/regions/asia-southeast2/resourcePolicies/lab5g-daily-snapshot]
+google_project_iam_member.compute_viewer["serviceAccount:lab5g-tf@<PROJECT_ID>.iam.gserviceaccount.com"]: Creating...
+google_compute_address.nat: Creation complete after 4s [id=projects/<PROJECT_ID>/regions/asia-southeast2/addresses/lab5g-nat-ip]
+google_compute_disk.core: Creating...
+google_project_iam_member.compute_viewer["serviceAccount:lab5g-tf@<PROJECT_ID>.iam.gserviceaccount.com"]: Creation complete after 7s [id=<PROJECT_ID>/roles/compute.viewer/serviceAccount:lab5g-tf@<PROJECT_ID>.iam.gserviceaccount.com]
+google_project_iam_member.os_login["user:<owner-email>"]: Creating...
+google_project_iam_member.iap_tunnel["serviceAccount:lab5g-tf@<PROJECT_ID>.iam.gserviceaccount.com"]: Creation complete after 8s [id=<PROJECT_ID>/roles/iap.tunnelResourceAccessor/serviceAccount:lab5g-tf@<PROJECT_ID>.iam.gserviceaccount.com]
+google_service_account.emu: Creating...
+google_project_iam_member.os_admin_login["serviceAccount:lab5g-tf@<PROJECT_ID>.iam.gserviceaccount.com"]: Creation complete after 8s [id=<PROJECT_ID>/roles/compute.osAdminLogin/serviceAccount:lab5g-tf@<PROJECT_ID>.iam.gserviceaccount.com]
+google_project_iam_member.os_login["serviceAccount:lab5g-tf@<PROJECT_ID>.iam.gserviceaccount.com"]: Creating...
+google_project_iam_member.compute_viewer["user:<owner-email>"]: Creation complete after 8s [id=<PROJECT_ID>/roles/compute.viewer/user:<owner-email>]
+google_project_service.required["iap.googleapis.com"]: Creating...
+google_project_iam_member.iap_tunnel["user:<owner-email>"]: Creation complete after 8s [id=<PROJECT_ID>/roles/iap.tunnelResourceAccessor/user:<owner-email>]
+google_project_service.required["compute.googleapis.com"]: Creating...
+google_project_iam_member.os_admin_login["user:<owner-email>"]: Creation complete after 9s [id=<PROJECT_ID>/roles/compute.osAdminLogin/user:<owner-email>]
+google_project_service.required["cloudresourcemanager.googleapis.com"]: Creating...
+google_service_account.obs: Still creating... [10s elapsed]
+google_service_account.core: Still creating... [10s elapsed]
+google_compute_disk.emu: Still creating... [10s elapsed]
+google_project_service.required["cloudresourcemanager.googleapis.com"]: Creation complete after 3s [id=<PROJECT_ID>/cloudresourcemanager.googleapis.com]
+google_project_service.required["iap.googleapis.com"]: Creation complete after 4s [id=<PROJECT_ID>/iap.googleapis.com]
+google_project_service.required["compute.googleapis.com"]: Creation complete after 4s [id=<PROJECT_ID>/compute.googleapis.com]
+google_project_service.required["oslogin.googleapis.com"]: Creating...
+google_project_service.required["iamcredentials.googleapis.com"]: Creating...
+google_project_service.required["storage.googleapis.com"]: Creating...
+google_compute_disk.emu: Creation complete after 12s [id=projects/<PROJECT_ID>/zones/asia-southeast2-a/disks/vm-emu-boot]
+google_project_service.required["iam.googleapis.com"]: Creating...
+google_service_account.core: Creation complete after 12s [id=projects/<PROJECT_ID>/serviceAccounts/lab5g-core-ran@<PROJECT_ID>.iam.gserviceaccount.com]
+google_compute_disk_resource_policy_attachment.emu: Creating...
+google_compute_disk.core: Still creating... [10s elapsed]
+google_project_service.required["iamcredentials.googleapis.com"]: Creation complete after 3s [id=<PROJECT_ID>/iamcredentials.googleapis.com]
+google_project_service.required["iam.googleapis.com"]: Creation complete after 3s [id=<PROJECT_ID>/iam.googleapis.com]
+google_project_service.required["storage.googleapis.com"]: Creation complete after 3s [id=<PROJECT_ID>/storage.googleapis.com]
+google_project_service.required["oslogin.googleapis.com"]: Creation complete after 3s [id=<PROJECT_ID>/oslogin.googleapis.com]
+google_compute_network.lab5g: Creating...
+google_storage_bucket.runs: Creating...
+google_project_iam_member.os_login["serviceAccount:lab5g-tf@<PROJECT_ID>.iam.gserviceaccount.com"]: Creation complete after 7s [id=<PROJECT_ID>/roles/compute.osLogin/serviceAccount:lab5g-tf@<PROJECT_ID>.iam.gserviceaccount.com]
+google_project_iam_member.os_login["user:<owner-email>"]: Creation complete after 8s [id=<PROJECT_ID>/roles/compute.osLogin/user:<owner-email>]
+google_compute_disk.core: Creation complete after 12s [id=projects/<PROJECT_ID>/zones/asia-southeast2-a/disks/vm-core-ran-boot]
+google_compute_disk_resource_policy_attachment.core: Creating...
+google_service_account.emu: Still creating... [10s elapsed]
+google_storage_bucket.runs: Creation complete after 4s [id=lab5g-runs-<PROJECT_ID>-157d]
+google_storage_bucket_iam_member.core_writer: Creating...
+google_storage_bucket_object.mpls_ce_tunnels: Creating...
+google_storage_bucket_object.mpls_backhaul: Creating...
+google_storage_bucket_object.gui_files["sesi-c/run-tests3.sh"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/core-zeek.sh"]: Creating...
+google_service_account.emu: Creation complete after 11s [id=projects/<PROJECT_ID>/serviceAccounts/lab5g-emu@<PROJECT_ID>.iam.gserviceaccount.com]
+google_storage_bucket_object.gui_files["sesi-c/run-tests.sh"]: Creating...
+google_service_account.obs: Still creating... [20s elapsed]
+google_storage_bucket_object.mpls_ce_tunnels: Creation complete after 2s [id=lab5g-runs-<PROJECT_ID>-157d-scripts/mpls-ce-tunnels.sh]
+google_storage_bucket_object.gui_files["vnc/emu-collector.py"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/run-tests3.sh"]: Creation complete after 2s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/run-tests3.sh]
+google_storage_bucket_object.gui_files["sesi-c/str-test.sh"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/run-tests.sh"]: Creation complete after 2s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/run-tests.sh]
+google_storage_bucket_object.gui_files["sesi-c/fix-zmq.sh"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/core-zeek.sh"]: Creation complete after 2s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/core-zeek.sh]
+google_storage_bucket_object.gui_files["vnc/emu-dashboard-setup.sh"]: Creating...
+google_storage_bucket_object.mpls_backhaul: Creation complete after 2s [id=lab5g-runs-<PROJECT_ID>-157d-scripts/mpls-backhaul.sh]
+google_storage_bucket_object.gui_files["sesi-c/upload-logs.sh"]: Creating...
+google_compute_disk_resource_policy_attachment.emu: Still creating... [10s elapsed]
+google_storage_bucket_object.gui_files["vnc/emu-collector.py"]: Creation complete after 2s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/emu-collector.py]
+google_storage_bucket_object.gui_files["vnc/emu-image/Dockerfile"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/str-test.sh"]: Creation complete after 2s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/str-test.sh]
+google_storage_bucket_object.gui_files["vnc/install-emu-egress.sh"]: Creating...
+google_compute_disk_resource_policy_attachment.emu: Creation complete after 12s [id=<PROJECT_ID>/asia-southeast2-a/vm-emu-boot/lab5g-daily-snapshot]
+google_storage_bucket_object.gui_files["sesi-c/emu-youtube.sh"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/fix-zmq.sh"]: Creation complete after 3s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/fix-zmq.sh]
+google_storage_bucket_object.gui_files["sesi-c/udp-flow.py"]: Creating...
+google_storage_bucket_object.gui_files["vnc/emu-dashboard-setup.sh"]: Creation complete after 3s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/emu-dashboard-setup.sh]
+google_storage_bucket_object.gui_files["sesi-c/p99-stats.py"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/upload-logs.sh"]: Creation complete after 3s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/upload-logs.sh]
+google_storage_bucket_object.gui_files["vnc/emu-vnc-start.sh"]: Creating...
+google_compute_network.lab5g: Still creating... [10s elapsed]
+google_storage_bucket_object.gui_files["vnc/emu-image/Dockerfile"]: Creation complete after 3s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/emu-image/Dockerfile]
+google_storage_bucket_object.gui_files["sesi-c/analyze.py"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/emu-youtube.sh"]: Creation complete after 2s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/emu-youtube.sh]
+google_storage_bucket_object.gui_files["vnc/install-emu-egress.sh"]: Creation complete after 3s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/install-emu-egress.sh]
+google_storage_bucket_object.gui_files["vnc/core-proxy-gui.sh"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/rx-test.sh"]: Creating...
+google_compute_disk_resource_policy_attachment.core: Still creating... [10s elapsed]
+google_storage_bucket_object.gui_files["sesi-c/udp-flow.py"]: Creation complete after 2s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/udp-flow.py]
+google_storage_bucket_object.gui_files["sesi-c/emu-servers.sh"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/p99-stats.py"]: Creation complete after 3s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/p99-stats.py]
+google_storage_bucket_object.gui_files["vnc/emu-gpu-setup.sh"]: Creating...
+google_storage_bucket_object.gui_files["vnc/emu-vnc-start.sh"]: Creation complete after 3s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/emu-vnc-start.sh]
+google_storage_bucket_object.gui_files["vnc/shot-dashboard.py"]: Creating...
+google_compute_disk_resource_policy_attachment.core: Creation complete after 12s [id=<PROJECT_ID>/asia-southeast2-a/vm-core-ran-boot/lab5g-daily-snapshot]
+google_storage_bucket_object.gui_files["sesi-c/diag-rlf.sh"]: Creating...
+google_service_account.obs: Creation complete after 28s [id=projects/<PROJECT_ID>/serviceAccounts/lab5g-obs@<PROJECT_ID>.iam.gserviceaccount.com]
+google_storage_bucket_object.gui_files["sesi-c/p99-run.sh"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/analyze.py"]: Creation complete after 2s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/analyze.py]
+google_storage_bucket_object.gui_files["sesi-c/gbr-test.sh"]: Creating...
+google_storage_bucket_iam_member.core_writer: Still creating... [10s elapsed]
+google_storage_bucket_object.gui_files["vnc/core-proxy-gui.sh"]: Creation complete after 3s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/core-proxy-gui.sh]
+google_storage_bucket_object.gui_files["sesi-c/core-config.sh"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/rx-test.sh"]: Creation complete after 3s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/rx-test.sh]
+google_storage_bucket_object.gui_files["vnc/usability-core.sh"]: Creating...
+google_storage_bucket_iam_member.core_writer: Creation complete after 10s [id=b/lab5g-runs-<PROJECT_ID>-157d/roles/storage.objectAdmin/serviceAccount:lab5g-core-ran@<PROJECT_ID>.iam.gserviceaccount.com]
+google_storage_bucket_object.gui_files["sesi-c/fix-reattach.sh"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/emu-servers.sh"]: Creation complete after 3s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/emu-servers.sh]
+google_storage_bucket_object.gui_files["sesi-c/enb-qci2.sh"]: Creating...
+google_storage_bucket_object.gui_files["vnc/emu-gpu-setup.sh"]: Creation complete after 2s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/emu-gpu-setup.sh]
+google_storage_bucket_object.gui_files["vnc/novnc-public-toggle.sh"]: Creating...
+google_storage_bucket_object.gui_files["vnc/shot-dashboard.py"]: Creation complete after 2s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/shot-dashboard.py]
+google_storage_bucket_object.gui_files["vnc/core-collector.py"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/diag-rlf.sh"]: Creation complete after 2s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/diag-rlf.sh]
+google_storage_bucket_object.gui_files["vnc/ue-watchdog.sh"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/p99-run.sh"]: Creation complete after 2s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/p99-run.sh]
+google_storage_bucket_object.gui_files["vnc/usability-emu.sh"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/gbr-test.sh"]: Creation complete after 2s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/gbr-test.sh]
+google_storage_bucket_object.gui_files["sesi-c/core-run.sh"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/core-config.sh"]: Creation complete after 1s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/core-config.sh]
+google_storage_bucket_object.gui_files["vnc/usability-core.sh"]: Creation complete after 1s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/usability-core.sh]
+google_storage_bucket_object.gui_files["vnc/gui-net-fix.sh"]: Creating...
+google_storage_bucket_object.gui_files["vnc/install-collector.sh"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/fix-reattach.sh"]: Creation complete after 1s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/fix-reattach.sh]
+google_storage_bucket_object.gui_files["vnc/emu-image-build.sh"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/enb-qci2.sh"]: Creation complete after 1s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/enb-qci2.sh]
+google_storage_bucket_object.gui_files["vnc/novnc-public-setup.sh"]: Creating...
+google_storage_bucket_object.gui_files["vnc/novnc-public-toggle.sh"]: Creation complete after 1s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/novnc-public-toggle.sh]
+google_storage_bucket_object.gui_files["sesi-c/rx-setup.sh"]: Creating...
+google_storage_bucket_object.gui_files["vnc/core-collector.py"]: Creation complete after 2s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/core-collector.py]
+google_storage_bucket_object.gui_files["sesi-c/core-bringup.sh"]: Creating...
+google_storage_bucket_object.gui_files["vnc/ue-watchdog.sh"]: Creation complete after 1s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/ue-watchdog.sh]
+google_storage_bucket_object.gui_files["sesi-c/run-tests2.sh"]: Creating...
+google_storage_bucket_object.gui_files["vnc/usability-emu.sh"]: Creation complete after 1s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/usability-emu.sh]
+google_storage_bucket_object.gui_files["sesi-c/rx-af.py"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/core-run.sh"]: Creation complete after 1s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/core-run.sh]
+google_storage_bucket_object.gui_files["sesi-c/core-install.sh"]: Creating...
+google_storage_bucket_object.gui_files["vnc/gui-net-fix.sh"]: Creation complete after 1s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/gui-net-fix.sh]
+google_storage_bucket_object.gui_files["vnc/verify-public.py"]: Creating...
+google_storage_bucket_object.gui_files["vnc/install-collector.sh"]: Creation complete after 1s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/install-collector.sh]
+google_storage_bucket_object.gui_files["sesi-c/core-proxy.sh"]: Creating...
+google_storage_bucket_object.gui_files["vnc/emu-image-build.sh"]: Creation complete after 1s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/emu-image-build.sh]
+google_storage_bucket_object.gui_files["sesi-c/qod-tc.py"]: Creating...
+google_storage_bucket_object.gui_files["vnc/novnc-public-setup.sh"]: Creation complete after 1s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/novnc-public-setup.sh]
+google_storage_bucket_object.gui_files["sesi-c/emu-start.sh"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/rx-setup.sh"]: Creation complete after 1s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/rx-setup.sh]
+google_storage_bucket_object.gui_files["sesi-c/str-rest-test.sh"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/core-bringup.sh"]: Creation complete after 1s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/core-bringup.sh]
+google_storage_bucket_object.gui_files["vnc/core-bringup-vnc.sh"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/run-tests2.sh"]: Creation complete after 1s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/run-tests2.sh]
+google_storage_bucket_object.gui_files["vnc/install-watchdog.sh"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/rx-af.py"]: Creation complete after 1s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/rx-af.py]
+google_storage_bucket_object.gui_files["vnc/lab.html"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/core-install.sh"]: Creation complete after 3s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/core-install.sh]
+google_storage_bucket_object.gui_files["vnc/verify-public.py"]: Creation complete after 3s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/verify-public.py]
+google_storage_bucket_object.gui_files["vnc/core-gre-emu.sh"]: Creating...
+google_storage_bucket_object.gui_files["vnc/emu-egress-policy.sh"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/core-proxy.sh"]: Creation complete after 3s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/core-proxy.sh]
+google_storage_bucket_object.gui_files["vnc/emu-proxy-ue.sh"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/emu-start.sh"]: Creation complete after 3s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/emu-start.sh]
+google_storage_bucket_object.gui_files["vnc/gui-core-up.sh"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/qod-tc.py"]: Creation complete after 3s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/qod-tc.py]
+google_storage_bucket_object.gui_files["sesi-c/p99-reps.sh"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/str-rest-test.sh"]: Creation complete after 2s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/str-rest-test.sh]
+google_storage_bucket_object.gui_files["vnc/gui-emu-up.sh"]: Creating...
+google_storage_bucket_object.gui_files["vnc/core-bringup-vnc.sh"]: Creation complete after 2s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/core-bringup-vnc.sh]
+google_storage_bucket_iam_member.emu_writer: Creating...
+google_compute_network.lab5g: Still creating... [20s elapsed]
+google_storage_bucket_object.gui_files["vnc/install-watchdog.sh"]: Creation complete after 3s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/install-watchdog.sh]
+google_storage_bucket_iam_member.obs_reader: Creating...
+google_storage_bucket_object.gui_files["vnc/lab.html"]: Creation complete after 3s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/lab.html]
+google_project_iam_member.log_writer["emu"]: Creating...
+google_storage_bucket_object.gui_files["vnc/core-gre-emu.sh"]: Creation complete after 1s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/core-gre-emu.sh]
+google_project_iam_member.metric_writer["obs"]: Creating...
+google_storage_bucket_object.gui_files["vnc/emu-egress-policy.sh"]: Creation complete after 2s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/emu-egress-policy.sh]
+google_project_iam_member.log_writer["core"]: Creating...
+google_storage_bucket_object.gui_files["vnc/emu-proxy-ue.sh"]: Creation complete after 3s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/emu-proxy-ue.sh]
+google_storage_bucket_object.gui_files["vnc/gui-core-up.sh"]: Creation complete after 3s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/gui-core-up.sh]
+google_project_iam_member.metric_writer["core"]: Creating...
+google_project_iam_member.metric_writer["emu"]: Creating...
+google_compute_network.lab5g: Creation complete after 22s [id=projects/<PROJECT_ID>/global/networks/lab5g]
+google_project_iam_member.log_writer["obs"]: Creating...
+google_storage_bucket_object.gui_files["sesi-c/p99-reps.sh"]: Creation complete after 3s [id=lab5g-runs-<PROJECT_ID>-157d-gui/sesi-c/p99-reps.sh]
+google_compute_firewall.deny_all_ingress: Creating...
+google_storage_bucket_object.gui_files["vnc/gui-emu-up.sh"]: Creation complete after 3s [id=lab5g-runs-<PROJECT_ID>-157d-gui/vnc/gui-emu-up.sh]
+google_compute_router.lab: Creating...
+google_project_iam_member.log_writer["obs"]: Creation complete after 6s [id=<PROJECT_ID>/roles/logging.logWriter/serviceAccount:lab5g-obs@<PROJECT_ID>.iam.gserviceaccount.com]
+google_compute_firewall.allow_iap: Creating...
+google_project_iam_member.log_writer["core"]: Creation complete after 7s [id=<PROJECT_ID>/roles/logging.logWriter/serviceAccount:lab5g-core-ran@<PROJECT_ID>.iam.gserviceaccount.com]
+google_compute_subnetwork.obs: Creating...
+google_project_iam_member.log_writer["emu"]: Creation complete after 8s [id=<PROJECT_ID>/roles/logging.logWriter/serviceAccount:lab5g-emu@<PROJECT_ID>.iam.gserviceaccount.com]
+google_compute_firewall.allow_internal_lab: Creating...
+google_project_iam_member.metric_writer["obs"]: Creation complete after 9s [id=<PROJECT_ID>/roles/monitoring.metricWriter/serviceAccount:lab5g-obs@<PROJECT_ID>.iam.gserviceaccount.com]
+google_compute_subnetwork.lab: Creating...
+google_project_iam_member.metric_writer["core"]: Creation complete after 7s [id=<PROJECT_ID>/roles/monitoring.metricWriter/serviceAccount:lab5g-core-ran@<PROJECT_ID>.iam.gserviceaccount.com]
+google_storage_bucket_iam_member.emu_writer: Still creating... [10s elapsed]
+google_project_iam_member.metric_writer["emu"]: Creation complete after 7s [id=<PROJECT_ID>/roles/monitoring.metricWriter/serviceAccount:lab5g-emu@<PROJECT_ID>.iam.gserviceaccount.com]
+google_storage_bucket_iam_member.obs_reader: Still creating... [10s elapsed]
+google_storage_bucket_iam_member.obs_reader: Creation complete after 11s [id=b/lab5g-runs-<PROJECT_ID>-157d/roles/storage.objectViewer/serviceAccount:lab5g-obs@<PROJECT_ID>.iam.gserviceaccount.com]
+google_storage_bucket_iam_member.emu_writer: Creation complete after 12s [id=b/lab5g-runs-<PROJECT_ID>-157d/roles/storage.objectAdmin/serviceAccount:lab5g-emu@<PROJECT_ID>.iam.gserviceaccount.com]
+google_compute_firewall.deny_all_ingress: Still creating... [10s elapsed]
+google_compute_router.lab: Still creating... [10s elapsed]
+google_compute_firewall.deny_all_ingress: Creation complete after 11s [id=projects/<PROJECT_ID>/global/firewalls/lab5g-deny-other-ingress]
+google_compute_firewall.allow_iap: Still creating... [10s elapsed]
+google_compute_subnetwork.obs: Still creating... [10s elapsed]
+google_compute_firewall.allow_internal_lab: Still creating... [10s elapsed]
+google_compute_subnetwork.lab: Still creating... [10s elapsed]
+google_compute_firewall.allow_iap: Creation complete after 11s [id=projects/<PROJECT_ID>/global/firewalls/lab5g-allow-iap]
+google_compute_firewall.allow_internal_lab: Creation complete after 11s [id=projects/<PROJECT_ID>/global/firewalls/lab5g-allow-internal]
+google_compute_router.lab: Still creating... [20s elapsed]
+google_compute_router.lab: Creation complete after 24s [id=projects/<PROJECT_ID>/regions/asia-southeast2/routers/lab5g-router]
+google_compute_subnetwork.obs: Still creating... [20s elapsed]
+google_compute_subnetwork.lab: Still creating... [20s elapsed]
+google_compute_subnetwork.obs: Creation complete after 23s [id=projects/<PROJECT_ID>/regions/asia-southeast2/subnetworks/obs]
+google_compute_subnetwork.lab: Creation complete after 23s [id=projects/<PROJECT_ID>/regions/asia-southeast2/subnetworks/lab]
+google_compute_router_nat.lab: Creating...
+google_compute_instance.emu: Creating...
+google_compute_instance.core: Creating...
+google_compute_router_nat.lab: Creation complete after 3s [id=<PROJECT_ID>/asia-southeast2/lab5g-router/lab5g-nat]
+google_compute_instance.core: Still creating... [10s elapsed]
+google_compute_instance.emu: Still creating... [10s elapsed]
+google_compute_instance.emu: Creation complete after 19s [id=projects/<PROJECT_ID>/zones/asia-southeast2-a/instances/vm-emu]
+google_compute_instance.core: Creation complete after 19s [id=projects/<PROJECT_ID>/zones/asia-southeast2-a/instances/vm-core-ran]
+
+Apply complete! Resources: 102 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+emu_spot = false
+enable_mpls = false
+iap_tunnel_commands = <<EOT
+gcloud compute ssh vm-core-ran --project=<PROJECT_ID> --zone=asia-southeast2-a --tunnel-through-iap
+gcloud compute ssh vm-emu --project=<PROJECT_ID> --zone=asia-southeast2-a --tunnel-through-iap
+gcloud compute ssh vm-obs --project=<PROJECT_ID> --zone=asia-southeast2-a --tunnel-through-iap
+# vm-mpls hanya ada jika enable_mpls = true
+gcloud compute ssh vm-mpls --project=<PROJECT_ID> --zone=asia-southeast2-a --tunnel-through-iap
+
+# VNC/noVNC + dashboard emulator: port 5900/6080/6081 hanya bind 127.0.0.1 di vm-emu, jadi start-iap-tunnel
+# langsung GAGAL (4003). Pakai SSH tunnel via IAP, lalu buka http://localhost:6081/ (emulator + dashboard,
+# basic auth user lab), atau http://localhost:6080/vnc.html, atau klien VNC ke localhost:5900.
+# Password: sudo cat /opt/lab5g/vnc-password.txt dan /opt/lab5g/novnc-web-password.txt (lihat vnc/README.md)
+gcloud compute ssh vm-emu --project=<PROJECT_ID> --zone=asia-southeast2-a --tunnel-through-iap -- -N -L 6081:localhost:6081 -L 6080:localhost:6080 -L 5900:localhost:5900
+
+# Grafana (lalu buka http://127.0.0.1:3000)
+gcloud compute start-iap-tunnel vm-obs 3000 --local-host-port=localhost:3000 --project=<PROJECT_ID> --zone=asia-southeast2-a
+
+EOT
+mpls_backhaul = "enable_mpls=false; vm-mpls tidak dibuat."
+nat_ip = "<NAT_IP>"
+network = "lab5g"
+next_steps = "Lanjut ke ../scripts/test-run-day1.sh setelah terraform apply selesai. Jangan simpan kredensial di repo ini."
+region = "asia-southeast2"
+runs_bucket = "lab5g-runs-<PROJECT_ID>-157d"
+vm_internal_ips = {
+  "vm-core-ran" = "10.10.0.3"
+  "vm-emu" = "10.10.0.2"
+}
+zone = "asia-southeast2-a"
+
+real	1m28.105s
+user	0m3.822s
+sys	0m1.170s
+APPLY_END 2026-11-18 13:15:16 WIB
