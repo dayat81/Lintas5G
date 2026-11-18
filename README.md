@@ -17,6 +17,8 @@ Open lab 5G/4G berbasis open source untuk partner: pengukuran **latency per pake
 | [`adapters/qod-af/`](adapters/qod-af/) | Adapter CAMARA QoD → N5/Rx (FastAPI) — SKELETON |
 | [`upstream-patches/`](upstream-patches/) | Patch upstream Open5GS/srsRAN (AGPL-3.0, terpisah) |
 
+Hasil Sesi A (N5): [docs/results/2026-11-18-sesi-a-n5.md](docs/results/2026-11-18-sesi-a-n5.md).
+
 ## Quickstart (GCP)
 
 ```bash
