@@ -20,6 +20,7 @@ Open lab 5G/4G berbasis open source untuk partner: pengukuran **latency per pake
 Hasil Sesi A (N5): [docs/results/2026-11-18-sesi-a-n5.md](docs/results/2026-11-18-sesi-a-n5.md).
 Hasil Sesi B (Rx + QoD): [docs/results/2026-11-18-sesi-b-rx-qod.md](docs/results/2026-11-18-sesi-b-rx-qod.md).
 Hasil Sesi C (verdict): [docs/results/2026-11-18-sesi-c-verdict.md](docs/results/2026-11-18-sesi-c-verdict.md).
+Akses VNC: [infra/gcp/vnc/README.md](infra/gcp/vnc/README.md).
 
 ## Quickstart (GCP)
 

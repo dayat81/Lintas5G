@@ -48,11 +48,10 @@ output "iap_tunnel_commands" {
     # vm-mpls hanya ada jika enable_mpls = true
     gcloud compute ssh vm-mpls --project=${var.project_id} --zone=${var.zone} --tunnel-through-iap
 
-    # VNC emulator (lalu buka klien VNC ke localhost:5900)
-    gcloud compute start-iap-tunnel vm-emu 5900 --local-host-port=localhost:5900 --project=${var.project_id} --zone=${var.zone}
-
-    # noVNC emulator (lalu buka http://127.0.0.1:6080)
-    gcloud compute start-iap-tunnel vm-emu 6080 --local-host-port=localhost:6080 --project=${var.project_id} --zone=${var.zone}
+    # VNC/noVNC emulator: port 5900/6080 hanya bind 127.0.0.1 di vm-emu, jadi start-iap-tunnel langsung
+    # ke 5900/6080 GAGAL (4003). Pakai SSH tunnel via IAP, lalu buka http://localhost:6080/vnc.html
+    # atau klien VNC ke localhost:5900. Password: sudo cat /opt/lab5g/vnc-password.txt (lihat infra/gcp/vnc/README.md)
+    gcloud compute ssh vm-emu --project=${var.project_id} --zone=${var.zone} --tunnel-through-iap -- -N -L 6080:localhost:6080 -L 5900:localhost:5900
 
     # Grafana (lalu buka http://127.0.0.1:3000)
     gcloud compute start-iap-tunnel vm-obs 3000 --local-host-port=localhost:3000 --project=${var.project_id} --zone=${var.zone}
