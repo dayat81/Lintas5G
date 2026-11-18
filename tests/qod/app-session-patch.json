@@ -1,0 +1,10 @@
+{
+  "medComponents": {
+    "1": {
+      "medCompN": 1,
+      "medType": "VIDEO",
+      "marBwDl": "10 Mbps",
+      "mirBwDl": "5 Mbps"
+    }
+  }
+}

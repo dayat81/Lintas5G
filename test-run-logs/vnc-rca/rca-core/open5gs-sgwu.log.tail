@@ -1,0 +1,27 @@
+Open5GS daemon v2.8.0
+
+11/18 03:40:52.694: [app] INFO: Configuration: '/etc/open5gs/sgwu.yaml' (../lib/app/ogs-init.c:144)
+11/18 03:40:52.694: [app] INFO: File Logging: '/var/log/open5gs/sgwu.log' (../lib/app/ogs-init.c:147)
+11/18 03:40:52.749: [pfcp] INFO: pfcp_server() [127.0.0.6]:8805 (../lib/pfcp/path.c:30)
+11/18 03:40:52.749: [gtp] INFO: gtp_server() [127.0.0.6]:2152 (../lib/gtp/path.c:30)
+11/18 03:40:52.749: [app] INFO: SGW-U initialize...done (../src/sgwu/app.c:31)
+11/18 03:40:54.725: [sgwu] INFO: PFCP associated [127.0.0.3]:8805 (../src/sgwu/pfcp-sm.c:163)
+11/18 03:49:29.196: [app] INFO: SIGTERM received (../src/main.c:54)
+11/18 03:49:29.196: [app] INFO: Open5GS daemon terminating... (../src/main.c:231)
+11/18 03:49:29.200: [sgwu] INFO: PFCP de-associated [127.0.0.3]:8805 (../src/sgwu/pfcp-sm.c:177)
+11/18 03:49:29.204: [app] INFO: SGW-U terminate...done (../src/sgwu/app.c:39)
+Open5GS daemon v2.8.0
+
+11/18 03:49:29.233: [app] INFO: Configuration: '/etc/open5gs/sgwu.yaml' (../lib/app/ogs-init.c:144)
+11/18 03:49:29.233: [app] INFO: File Logging: '/var/log/open5gs/sgwu.log' (../lib/app/ogs-init.c:147)
+11/18 03:49:29.318: [pfcp] INFO: pfcp_server() [127.0.0.6]:8805 (../lib/pfcp/path.c:30)
+11/18 03:49:29.318: [gtp] INFO: gtp_server() [127.0.0.6]:2152 (../lib/gtp/path.c:30)
+11/18 03:49:29.318: [app] INFO: SGW-U initialize...done (../src/sgwu/app.c:31)
+11/18 03:49:31.792: [sgwu] INFO: PFCP associated [127.0.0.3]:8805 (../src/sgwu/pfcp-sm.c:163)
+11/18 03:50:11.039: [sgwu] INFO: UE F-SEID[UP:0xcc4 CP:0x369] (../src/sgwu/context.c:173)
+11/18 03:50:11.039: [sgwu] INFO: [Added] Number of SGWU-Sessions is now 1 (../src/sgwu/context.c:178)
+11/18 03:50:11.048: [gtp] INFO: gtp_connect() [127.0.0.7]:2152 (../lib/gtp/path.c:60)
+11/18 03:50:11.308: [gtp] INFO: gtp_connect() [127.0.1.1]:2152 (../lib/gtp/path.c:60)
+11/18 03:52:36.804: [sgwu] INFO: [Removed] Number of SGWU-sessions is now 0 (../src/sgwu/context.c:204)
+11/18 03:53:42.149: [sgwu] INFO: UE F-SEID[UP:0x2fc CP:0x219] (../src/sgwu/context.c:173)
+11/18 03:53:42.149: [sgwu] INFO: [Added] Number of SGWU-Sessions is now 1 (../src/sgwu/context.c:178)

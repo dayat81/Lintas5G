@@ -1,0 +1,2106 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "type": "row",
+      "title": "Ringkasan QUIC waktu nyata (source=rt)",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "collapsed": false,
+      "panels": [],
+      "id": 1
+    },
+    {
+      "type": "stat",
+      "title": "UL p50 QUIC (ms)",
+      "description": "S1-U uplink",
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 0,
+        "y": 1
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT quantile(0.5)(one_way_ms) AS p50\nFROM poc_latency.pkt_latency FINAL\nWHERE $__timeFilter(ts) AND proto='quic' AND source='rt' AND dir='UL' AND seg='s1u' AND one_way_ms IS NOT NULL\n  AND run_id IN (${run_id:singlequote})\n  AND flow IN (${flow:singlequote})",
+          "format": 0,
+          "queryType": "table",
+          "selectedFormat": 0,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "decimals": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 50
+              },
+              {
+                "color": "red",
+                "value": 100
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "area",
+        "textMode": "auto"
+      },
+      "id": 2
+    },
+    {
+      "type": "stat",
+      "title": "DL p50 QUIC (ms)",
+      "description": "SGi downlink (tap terakhir sebelum UE untuk DL: pakai SGi sebagai acuan masuk core)",
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 3,
+        "y": 1
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT quantile(0.5)(one_way_ms) AS p50\nFROM poc_latency.pkt_latency FINAL\nWHERE $__timeFilter(ts) AND proto='quic' AND source='rt' AND dir='DL' AND seg='sgi' AND one_way_ms IS NOT NULL\n  AND run_id IN (${run_id:singlequote})\n  AND flow IN (${flow:singlequote})",
+          "format": 0,
+          "queryType": "table",
+          "selectedFormat": 0,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "decimals": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 50
+              },
+              {
+                "color": "red",
+                "value": 100
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "area",
+        "textMode": "auto"
+      },
+      "id": 3
+    },
+    {
+      "type": "stat",
+      "title": "UL ok / miss",
+      "description": "Counter kumulatif Zeek (pktlat_stats)",
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 6,
+        "y": 1
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT\n  argMax(ul_ok, ts) AS ul_ok,\n  argMax(ul_miss, ts) AS ul_miss\nFROM poc_latency.pktlat_stats FINAL\nWHERE $__timeFilter(ts) AND run_id IN (${run_id:singlequote})",
+          "format": 0,
+          "queryType": "table",
+          "selectedFormat": 0,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 50
+              },
+              {
+                "color": "red",
+                "value": 100
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "area",
+        "textMode": "auto"
+      },
+      "id": 4
+    },
+    {
+      "type": "stat",
+      "title": "DL ok / miss",
+      "description": "",
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 9,
+        "y": 1
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT\n  argMax(dl_ok, ts) AS dl_ok,\n  argMax(if(dl_miss=0, dl_unmatched_evicted, dl_miss), ts) AS dl_miss\nFROM poc_latency.pktlat_stats FINAL\nWHERE $__timeFilter(ts) AND run_id IN (${run_id:singlequote})",
+          "format": 0,
+          "queryType": "table",
+          "selectedFormat": 0,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 50
+              },
+              {
+                "color": "red",
+                "value": 100
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "area",
+        "textMode": "auto"
+      },
+      "id": 5
+    },
+    {
+      "type": "stat",
+      "title": "Cakupan UL %",
+      "description": "",
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 12,
+        "y": 1
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT\n  if((argMax(ul_ok,ts)+argMax(ul_miss,ts))>0,\n     100.0 * argMax(ul_ok,ts) / (argMax(ul_ok,ts)+argMax(ul_miss,ts)),\n     NULL) AS pct\nFROM poc_latency.pktlat_stats FINAL\nWHERE $__timeFilter(ts) AND run_id IN (${run_id:singlequote})",
+          "format": 0,
+          "queryType": "table",
+          "selectedFormat": 0,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 50
+              },
+              {
+                "color": "red",
+                "value": 100
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "area",
+        "textMode": "auto"
+      },
+      "id": 6
+    },
+    {
+      "type": "stat",
+      "title": "Cakupan DL %",
+      "description": "",
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 15,
+        "y": 1
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT\n  if((argMax(dl_ok,ts)+argMax(if(dl_miss=0, dl_unmatched_evicted, dl_miss),ts))>0,\n     100.0 * argMax(dl_ok,ts) / (argMax(dl_ok,ts)+argMax(if(dl_miss=0, dl_unmatched_evicted, dl_miss),ts)),\n     NULL) AS pct\nFROM poc_latency.pktlat_stats FINAL\nWHERE $__timeFilter(ts) AND run_id IN (${run_id:singlequote})",
+          "format": 0,
+          "queryType": "table",
+          "selectedFormat": 0,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 50
+              },
+              {
+                "color": "red",
+                "value": 100
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "area",
+        "textMode": "auto"
+      },
+      "id": 7
+    },
+    {
+      "type": "stat",
+      "title": "Probe bytes (terakhir)",
+      "description": "",
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 18,
+        "y": 1
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT argMax(probe_bytes, ts) AS probe_bytes\nFROM poc_latency.pktlat_stats FINAL\nWHERE $__timeFilter(ts) AND run_id IN (${run_id:singlequote})",
+          "format": 0,
+          "queryType": "table",
+          "selectedFormat": 0,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "decimals": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 50
+              },
+              {
+                "color": "red",
+                "value": 100
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "area",
+        "textMode": "auto"
+      },
+      "id": 8
+    },
+    {
+      "type": "stat",
+      "title": "Jumlah paket QUIC",
+      "description": "",
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 21,
+        "y": 1
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT count() AS n\nFROM poc_latency.pkt_latency FINAL\nWHERE $__timeFilter(ts) AND proto='quic' AND source='rt' AND one_way_ms IS NOT NULL\n  AND run_id IN (${run_id:singlequote})\n  AND flow IN (${flow:singlequote})",
+          "format": 0,
+          "queryType": "table",
+          "selectedFormat": 0,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 50
+              },
+              {
+                "color": "red",
+                "value": 100
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "area",
+        "textMode": "auto"
+      },
+      "id": 9
+    },
+    {
+      "type": "row",
+      "title": "QUIC per paket \u2014 UL per tap (waktu nyata)",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "collapsed": false,
+      "panels": [],
+      "id": 10
+    },
+    {
+      "type": "timeseries",
+      "title": "UL S1-U",
+      "description": "One-way app \u2192 tap, proto=quic, source=rt. p50/p90/p99 per interval.",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 6
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT\n  $__timeInterval(ts) AS time,\n  quantile(0.5)(one_way_ms) AS p50,\n  quantile(0.9)(one_way_ms) AS p90,\n  quantile(0.99)(one_way_ms) AS p99\nFROM poc_latency.pkt_latency FINAL\nWHERE $__timeFilter(ts)\n  AND dir = 'UL'\n  AND seg = 's1u'\n  AND proto = 'quic'\n  AND source = 'rt'\n  AND one_way_ms IS NOT NULL\n  AND run_id IN (${run_id:singlequote})\n  AND flow IN (${flow:singlequote})\nGROUP BY time\nORDER BY time",
+          "format": 1,
+          "queryType": "timeSeries",
+          "selectedFormat": 1,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 1,
+            "fillOpacity": 10,
+            "pointSize": 5,
+            "spanNulls": true
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "p50",
+            "p90",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "id": 11
+    },
+    {
+      "type": "timeseries",
+      "title": "UL S5/S8",
+      "description": "One-way app \u2192 tap, proto=quic, source=rt. p50/p90/p99 per interval.",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 6
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT\n  $__timeInterval(ts) AS time,\n  quantile(0.5)(one_way_ms) AS p50,\n  quantile(0.9)(one_way_ms) AS p90,\n  quantile(0.99)(one_way_ms) AS p99\nFROM poc_latency.pkt_latency FINAL\nWHERE $__timeFilter(ts)\n  AND dir = 'UL'\n  AND seg = 's5s8'\n  AND proto = 'quic'\n  AND source = 'rt'\n  AND one_way_ms IS NOT NULL\n  AND run_id IN (${run_id:singlequote})\n  AND flow IN (${flow:singlequote})\nGROUP BY time\nORDER BY time",
+          "format": 1,
+          "queryType": "timeSeries",
+          "selectedFormat": 1,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 1,
+            "fillOpacity": 10,
+            "pointSize": 5,
+            "spanNulls": true
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "p50",
+            "p90",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "id": 12
+    },
+    {
+      "type": "timeseries",
+      "title": "UL SGi",
+      "description": "One-way app \u2192 tap, proto=quic, source=rt. p50/p90/p99 per interval.",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 6
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT\n  $__timeInterval(ts) AS time,\n  quantile(0.5)(one_way_ms) AS p50,\n  quantile(0.9)(one_way_ms) AS p90,\n  quantile(0.99)(one_way_ms) AS p99\nFROM poc_latency.pkt_latency FINAL\nWHERE $__timeFilter(ts)\n  AND dir = 'UL'\n  AND seg = 'sgi'\n  AND proto = 'quic'\n  AND source = 'rt'\n  AND one_way_ms IS NOT NULL\n  AND run_id IN (${run_id:singlequote})\n  AND flow IN (${flow:singlequote})\nGROUP BY time\nORDER BY time",
+          "format": 1,
+          "queryType": "timeSeries",
+          "selectedFormat": 1,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 1,
+            "fillOpacity": 10,
+            "pointSize": 5,
+            "spanNulls": true
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "p50",
+            "p90",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "id": 13
+    },
+    {
+      "type": "row",
+      "title": "QUIC per paket \u2014 DL per tap (waktu nyata)",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
+      "collapsed": false,
+      "panels": [],
+      "id": 14
+    },
+    {
+      "type": "timeseries",
+      "title": "DL S1-U",
+      "description": "One-way tap \u2192 app (korelasi probe downlink QUIC), proto=quic, source=rt.",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 15
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT\n  $__timeInterval(ts) AS time,\n  quantile(0.5)(one_way_ms) AS p50,\n  quantile(0.9)(one_way_ms) AS p90,\n  quantile(0.99)(one_way_ms) AS p99\nFROM poc_latency.pkt_latency FINAL\nWHERE $__timeFilter(ts)\n  AND dir = 'DL'\n  AND seg = 's1u'\n  AND proto = 'quic'\n  AND source = 'rt'\n  AND one_way_ms IS NOT NULL\n  AND run_id IN (${run_id:singlequote})\n  AND flow IN (${flow:singlequote})\nGROUP BY time\nORDER BY time",
+          "format": 1,
+          "queryType": "timeSeries",
+          "selectedFormat": 1,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 1,
+            "fillOpacity": 10,
+            "pointSize": 5,
+            "spanNulls": true
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "p50",
+            "p90",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "id": 15
+    },
+    {
+      "type": "timeseries",
+      "title": "DL S5/S8",
+      "description": "One-way tap \u2192 app (korelasi probe downlink QUIC), proto=quic, source=rt.",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 15
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT\n  $__timeInterval(ts) AS time,\n  quantile(0.5)(one_way_ms) AS p50,\n  quantile(0.9)(one_way_ms) AS p90,\n  quantile(0.99)(one_way_ms) AS p99\nFROM poc_latency.pkt_latency FINAL\nWHERE $__timeFilter(ts)\n  AND dir = 'DL'\n  AND seg = 's5s8'\n  AND proto = 'quic'\n  AND source = 'rt'\n  AND one_way_ms IS NOT NULL\n  AND run_id IN (${run_id:singlequote})\n  AND flow IN (${flow:singlequote})\nGROUP BY time\nORDER BY time",
+          "format": 1,
+          "queryType": "timeSeries",
+          "selectedFormat": 1,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 1,
+            "fillOpacity": 10,
+            "pointSize": 5,
+            "spanNulls": true
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "p50",
+            "p90",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "id": 16
+    },
+    {
+      "type": "timeseries",
+      "title": "DL SGi",
+      "description": "One-way tap \u2192 app (korelasi probe downlink QUIC), proto=quic, source=rt.",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 15
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT\n  $__timeInterval(ts) AS time,\n  quantile(0.5)(one_way_ms) AS p50,\n  quantile(0.9)(one_way_ms) AS p90,\n  quantile(0.99)(one_way_ms) AS p99\nFROM poc_latency.pkt_latency FINAL\nWHERE $__timeFilter(ts)\n  AND dir = 'DL'\n  AND seg = 'sgi'\n  AND proto = 'quic'\n  AND source = 'rt'\n  AND one_way_ms IS NOT NULL\n  AND run_id IN (${run_id:singlequote})\n  AND flow IN (${flow:singlequote})\nGROUP BY time\nORDER BY time",
+          "format": 1,
+          "queryType": "timeSeries",
+          "selectedFormat": 1,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 1,
+            "fillOpacity": 10,
+            "pointSize": 5,
+            "spanNulls": true
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "p50",
+            "p90",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "id": 17
+    },
+    {
+      "type": "row",
+      "title": "Persentil QUIC (p50 / p90 / p99)",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 23
+      },
+      "collapsed": false,
+      "panels": [],
+      "id": 18
+    },
+    {
+      "type": "timeseries",
+      "title": "UL p50/p90/p99 per tap",
+      "description": "Seri per segmen.",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 24
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT\n  $__timeInterval(ts) AS time,\n  seg,\n  quantile(0.5)(one_way_ms) AS p50,\n  quantile(0.9)(one_way_ms) AS p90,\n  quantile(0.99)(one_way_ms) AS p99\nFROM poc_latency.pkt_latency FINAL\nWHERE $__timeFilter(ts)\n  AND dir = 'UL'\n  AND proto = 'quic'\n  AND source = 'rt'\n  AND one_way_ms IS NOT NULL\n  AND run_id IN (${run_id:singlequote})\n  AND flow IN (${flow:singlequote})\nGROUP BY time, seg\nORDER BY time",
+          "format": 1,
+          "queryType": "timeSeries",
+          "selectedFormat": 1,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 1,
+            "fillOpacity": 10,
+            "pointSize": 5,
+            "spanNulls": true
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "p50",
+            "p90",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "id": 19
+    },
+    {
+      "type": "timeseries",
+      "title": "DL p50/p90/p99 per tap",
+      "description": "",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 24
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT\n  $__timeInterval(ts) AS time,\n  seg,\n  quantile(0.5)(one_way_ms) AS p50,\n  quantile(0.9)(one_way_ms) AS p90,\n  quantile(0.99)(one_way_ms) AS p99\nFROM poc_latency.pkt_latency FINAL\nWHERE $__timeFilter(ts)\n  AND dir = 'DL'\n  AND proto = 'quic'\n  AND source = 'rt'\n  AND one_way_ms IS NOT NULL\n  AND run_id IN (${run_id:singlequote})\n  AND flow IN (${flow:singlequote})\nGROUP BY time, seg\nORDER BY time",
+          "format": 1,
+          "queryType": "timeSeries",
+          "selectedFormat": 1,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 1,
+            "fillOpacity": 10,
+            "pointSize": 5,
+            "spanNulls": true
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "p50",
+            "p90",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "id": 20
+    },
+    {
+      "type": "row",
+      "title": "Distribusi one-way QUIC",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 32
+      },
+      "collapsed": false,
+      "panels": [],
+      "id": 21
+    },
+    {
+      "type": "histogram",
+      "title": "Histogram UL QUIC (ms)",
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 33
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT one_way_ms\nFROM poc_latency.pkt_latency FINAL\nWHERE $__timeFilter(ts)\n  AND dir = 'UL'\n  AND proto = 'quic'\n  AND source = 'rt'\n  AND one_way_ms IS NOT NULL\n  AND one_way_ms >= 0 AND one_way_ms < 500\n  AND run_id IN (${run_id:singlequote})\n  AND flow IN (${flow:singlequote})",
+          "format": 0,
+          "queryType": "table",
+          "selectedFormat": 0,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "options": {
+        "bucketCount": 40,
+        "combine": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "id": 22
+    },
+    {
+      "type": "histogram",
+      "title": "Histogram DL QUIC (ms)",
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 6,
+        "y": 33
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT one_way_ms\nFROM poc_latency.pkt_latency FINAL\nWHERE $__timeFilter(ts)\n  AND dir = 'DL'\n  AND proto = 'quic'\n  AND source = 'rt'\n  AND one_way_ms IS NOT NULL\n  AND one_way_ms >= 0 AND one_way_ms < 500\n  AND run_id IN (${run_id:singlequote})\n  AND flow IN (${flow:singlequote})",
+          "format": 0,
+          "queryType": "table",
+          "selectedFormat": 0,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "options": {
+        "bucketCount": 40,
+        "combine": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "id": 23
+    },
+    {
+      "type": "heatmap",
+      "title": "Heatmap UL QUIC",
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 12,
+        "y": 33
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT\n  toStartOfInterval(ts, INTERVAL 10 second) AS time,\n  intDiv(toUInt32(ifNull(one_way_ms, 0)), 2) * 2 AS le,\n  count() AS value\nFROM poc_latency.pkt_latency FINAL\nWHERE $__timeFilter(ts)\n  AND dir = 'UL'\n  AND proto = 'quic'\n  AND source = 'rt'\n  AND one_way_ms IS NOT NULL\n  AND one_way_ms >= 0 AND one_way_ms < 200\n  AND run_id IN (${run_id:singlequote})\n  AND flow IN (${flow:singlequote})\nGROUP BY time, le\nORDER BY time, le",
+          "format": 0,
+          "queryType": "table",
+          "selectedFormat": 0,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "options": {
+        "calculate": false,
+        "cellGap": 1,
+        "color": {
+          "scheme": "Turbo",
+          "steps": 64,
+          "mode": "scheme"
+        },
+        "yAxis": {
+          "unit": "ms",
+          "decimals": 0
+        },
+        "legend": {
+          "show": true
+        },
+        "tooltip": {
+          "show": true
+        }
+      },
+      "id": 24
+    },
+    {
+      "type": "heatmap",
+      "title": "Heatmap DL QUIC",
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 33
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT\n  toStartOfInterval(ts, INTERVAL 10 second) AS time,\n  intDiv(toUInt32(ifNull(one_way_ms, 0)), 2) * 2 AS le,\n  count() AS value\nFROM poc_latency.pkt_latency FINAL\nWHERE $__timeFilter(ts)\n  AND dir = 'DL'\n  AND proto = 'quic'\n  AND source = 'rt'\n  AND one_way_ms IS NOT NULL\n  AND one_way_ms >= 0 AND one_way_ms < 200\n  AND run_id IN (${run_id:singlequote})\n  AND flow IN (${flow:singlequote})\nGROUP BY time, le\nORDER BY time, le",
+          "format": 0,
+          "queryType": "table",
+          "selectedFormat": 0,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "options": {
+        "calculate": false,
+        "cellGap": 1,
+        "color": {
+          "scheme": "Turbo",
+          "steps": 64,
+          "mode": "scheme"
+        },
+        "yAxis": {
+          "unit": "ms",
+          "decimals": 0
+        },
+        "legend": {
+          "show": true
+        },
+        "tooltip": {
+          "show": true
+        }
+      },
+      "id": 25
+    },
+    {
+      "type": "row",
+      "title": "Cakupan dan miss per arah",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 41
+      },
+      "collapsed": false,
+      "panels": [],
+      "id": 26
+    },
+    {
+      "type": "timeseries",
+      "title": "Cakupan / miss kumulatif Zeek",
+      "description": "Counter kumulatif dari pktlat_stats (bukan rate).",
+      "gridPos": {
+        "h": 8,
+        "w": 16,
+        "x": 0,
+        "y": 42
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT\n  $__timeInterval(ts) AS time,\n  argMax(ul_ok, ts) AS ul_ok,\n  argMax(ul_miss, ts) AS ul_miss,\n  argMax(dl_ok, ts) AS dl_ok,\n  argMax(if(dl_miss=0, dl_unmatched_evicted, dl_miss), ts) AS dl_miss\nFROM poc_latency.pktlat_stats FINAL\nWHERE $__timeFilter(ts)\n  AND run_id IN (${run_id:singlequote})\nGROUP BY time\nORDER BY time",
+          "format": 1,
+          "queryType": "timeSeries",
+          "selectedFormat": 1,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 1,
+            "fillOpacity": 10,
+            "pointSize": 5,
+            "spanNulls": true
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "p50",
+            "p90",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "id": 27
+    },
+    {
+      "type": "timeseries",
+      "title": "Overhead probe (bytes & jumlah)",
+      "description": "",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 42
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT\n  $__timeInterval(ts) AS time,\n  argMax(probes, ts) AS probes,\n  argMax(probe_bytes, ts) AS probe_bytes,\n  argMax(recs, ts) AS recs\nFROM poc_latency.pktlat_stats FINAL\nWHERE $__timeFilter(ts)\n  AND run_id IN (${run_id:singlequote})\nGROUP BY time\nORDER BY time",
+          "format": 1,
+          "queryType": "timeSeries",
+          "selectedFormat": 1,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 1,
+            "fillOpacity": 10,
+            "pointSize": 5,
+            "spanNulls": true
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "p50",
+            "p90",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "id": 28
+    },
+    {
+      "type": "row",
+      "title": "Breakdown segmen (QUIC rt): core S1-U \u2194 SGi",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 50
+      },
+      "collapsed": false,
+      "panels": [],
+      "id": 29
+    },
+    {
+      "type": "timeseries",
+      "title": "Core UL (SGi \u2212 S1-U) p50 ms",
+      "description": "",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 51
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT\n  $__timeInterval(a.ts) AS time,\n  quantile(0.5)(b.one_way_ms - a.one_way_ms) AS core_ms\nFROM (SELECT * FROM poc_latency.pkt_latency FINAL) AS a\nINNER JOIN (SELECT * FROM poc_latency.pkt_latency FINAL) AS b\n  ON a.run_id=b.run_id AND a.source=b.source AND a.proto=b.proto\n AND a.flow=b.flow AND a.dir=b.dir AND a.hash=b.hash AND a.off=b.off AND a.len=b.len\nWHERE $__timeFilter(a.ts)\n  AND a.dir='UL' AND a.seg='s1u' AND b.seg='sgi'\n  AND a.proto='quic' AND a.source='rt'\n  AND a.one_way_ms IS NOT NULL AND b.one_way_ms IS NOT NULL\n  AND run_id IN (${run_id:singlequote})\n  AND a.flow IN (${flow:singlequote})\nGROUP BY time\nORDER BY time",
+          "format": 1,
+          "queryType": "timeSeries",
+          "selectedFormat": 1,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 1,
+            "fillOpacity": 10,
+            "pointSize": 5,
+            "spanNulls": true
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "p50",
+            "p90",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "id": 30
+    },
+    {
+      "type": "timeseries",
+      "title": "Core DL (S1-U \u2212 SGi) p50 ms",
+      "description": "",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 51
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT\n  $__timeInterval(a.ts) AS time,\n  quantile(0.5)(a.one_way_ms - b.one_way_ms) AS core_ms\nFROM (SELECT * FROM poc_latency.pkt_latency FINAL) AS a\nINNER JOIN (SELECT * FROM poc_latency.pkt_latency FINAL) AS b\n  ON a.run_id=b.run_id AND a.source=b.source AND a.proto=b.proto\n AND a.flow=b.flow AND a.dir=b.dir AND a.hash=b.hash AND a.off=b.off AND a.len=b.len\nWHERE $__timeFilter(a.ts)\n  AND a.dir='DL' AND a.seg='s1u' AND b.seg='sgi'\n  AND a.proto='quic' AND a.source='rt'\n  AND a.one_way_ms IS NOT NULL AND b.one_way_ms IS NOT NULL\n  AND run_id IN (${run_id:singlequote})\n  AND a.flow IN (${flow:singlequote})\nGROUP BY time\nORDER BY time",
+          "format": 1,
+          "queryType": "timeSeries",
+          "selectedFormat": 1,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 1,
+            "fillOpacity": 10,
+            "pointSize": 5,
+            "spanNulls": true
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "p50",
+            "p90",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "id": 31
+    },
+    {
+      "type": "row",
+      "title": "Pembanding baseline TCP offline (fase 2/2b, source=offline-tcp)",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 59
+      },
+      "collapsed": false,
+      "panels": [],
+      "id": 32
+    },
+    {
+      "type": "table",
+      "title": "p50/p90 QUIC rt vs TCP offline, per arah dan tap",
+      "description": "Bukan pencocokan per paket (protokol berbeda). Angka baseline TCP vs QUIC waktu nyata, side-by-side.",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 60
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT\n  proto,\n  source,\n  dir,\n  seg,\n  count() AS n,\n  round(quantile(0.5)(one_way_ms), 2) AS p50_ms,\n  round(quantile(0.9)(one_way_ms), 2) AS p90_ms,\n  round(quantile(0.99)(one_way_ms), 2) AS p99_ms,\n  round(min(one_way_ms), 2) AS min_ms,\n  round(max(one_way_ms), 2) AS max_ms\nFROM poc_latency.pkt_latency FINAL\nWHERE $__timeFilter(ts)\n  AND one_way_ms IS NOT NULL\n  AND (\n    (proto='quic' AND source='rt')\n    OR (proto='tcp' AND source='offline-tcp')\n  )\n  AND run_id IN (${run_id:singlequote})\nGROUP BY proto, source, dir, seg\nORDER BY dir, seg, source",
+          "format": 0,
+          "queryType": "table",
+          "selectedFormat": 0,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "filterable": true
+          }
+        },
+        "overrides": []
+      },
+      "id": 33
+    },
+    {
+      "type": "timeseries",
+      "title": "p50 UL: QUIC rt vs TCP offline (S1-U)",
+      "description": "",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 68
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT\n  $__timeInterval(ts) AS time,\n  source,\n  quantile(0.5)(one_way_ms) AS p50\nFROM poc_latency.pkt_latency FINAL\nWHERE $__timeFilter(ts)\n  AND dir='UL' AND seg='s1u' AND one_way_ms IS NOT NULL\n  AND (\n    (proto='quic' AND source='rt')\n    OR (proto='tcp' AND source='offline-tcp')\n  )\n  AND run_id IN (${run_id:singlequote})\nGROUP BY time, source\nORDER BY time",
+          "format": 1,
+          "queryType": "timeSeries",
+          "selectedFormat": 1,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 1,
+            "fillOpacity": 10,
+            "pointSize": 5,
+            "spanNulls": true
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "p50",
+            "p90",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "id": 34
+    },
+    {
+      "type": "timeseries",
+      "title": "p50 DL: QUIC rt vs TCP offline (SGi)",
+      "description": "",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 68
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT\n  $__timeInterval(ts) AS time,\n  source,\n  quantile(0.5)(one_way_ms) AS p50\nFROM poc_latency.pkt_latency FINAL\nWHERE $__timeFilter(ts)\n  AND dir='DL' AND seg='sgi' AND one_way_ms IS NOT NULL\n  AND (\n    (proto='quic' AND source='rt')\n    OR (proto='tcp' AND source='offline-tcp')\n  )\n  AND run_id IN (${run_id:singlequote})\nGROUP BY time, source\nORDER BY time",
+          "format": 1,
+          "queryType": "timeSeries",
+          "selectedFormat": 1,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 1,
+            "fillOpacity": 10,
+            "pointSize": 5,
+            "spanNulls": true
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "p50",
+            "p90",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "id": 35
+    },
+    {
+      "type": "row",
+      "title": "Eksplorasi (filter proto & source di atas)",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 76
+      },
+      "collapsed": false,
+      "panels": [],
+      "id": 36
+    },
+    {
+      "type": "table",
+      "title": "Aliran (flow) dalam rentang waktu",
+      "description": "",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 77
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse"
+          },
+          "rawSql": "SELECT\n  flow,\n  proto,\n  source,\n  dir,\n  count() AS n,\n  round(quantile(0.5)(one_way_ms), 2) AS p50_ms,\n  round(quantile(0.9)(one_way_ms), 2) AS p90_ms\nFROM poc_latency.pkt_latency FINAL\nWHERE $__timeFilter(ts)\n  AND one_way_ms IS NOT NULL\n  AND proto IN (${proto:singlequote})\n  AND source IN (${source:singlequote})\n  AND run_id IN (${run_id:singlequote})\n  AND flow IN (${flow:singlequote})\nGROUP BY flow, proto, source, dir\nORDER BY n DESC\nLIMIT 100",
+          "format": 0,
+          "queryType": "table",
+          "selectedFormat": 0,
+          "meta": {
+            "builderOptions": {
+              "database": "poc_latency",
+              "table": "pkt_latency",
+              "mode": "list"
+            }
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.14.0"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "filterable": true
+          }
+        },
+        "overrides": []
+      },
+      "id": 37
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 39,
+  "tags": [
+    "poc-latency",
+    "quic",
+    "zeek"
+  ],
+  "templating": {
+    "list": [
+      {
+        "name": "run_id",
+        "type": "query",
+        "label": "run_id",
+        "datasource": {
+          "type": "grafana-clickhouse-datasource",
+          "uid": "clickhouse"
+        },
+        "query": "SELECT DISTINCT run_id FROM poc_latency.pkt_latency ORDER BY run_id",
+        "definition": "SELECT DISTINCT run_id FROM poc_latency.pkt_latency ORDER BY run_id",
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
+        "includeAll": true,
+        "multi": true,
+        "sort": 1,
+        "refresh": 2,
+        "regex": "",
+        "hide": 0
+      },
+      {
+        "name": "flow",
+        "type": "query",
+        "label": "flow",
+        "datasource": {
+          "type": "grafana-clickhouse-datasource",
+          "uid": "clickhouse"
+        },
+        "query": "SELECT DISTINCT flow FROM poc_latency.pkt_latency WHERE run_id IN (${run_id:singlequote}) ORDER BY flow",
+        "definition": "SELECT DISTINCT flow FROM poc_latency.pkt_latency WHERE run_id IN (${run_id:singlequote}) ORDER BY flow",
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
+        "includeAll": true,
+        "multi": true,
+        "sort": 1,
+        "refresh": 2,
+        "regex": "",
+        "hide": 0
+      },
+      {
+        "name": "proto",
+        "type": "custom",
+        "label": "proto",
+        "datasource": {
+          "type": "grafana-clickhouse-datasource",
+          "uid": "clickhouse"
+        },
+        "query": "quic,tcp",
+        "current": {
+          "text": "quic",
+          "value": "quic"
+        },
+        "includeAll": true,
+        "multi": true,
+        "options": [
+          {
+            "text": "All",
+            "value": "$__all",
+            "selected": false
+          },
+          {
+            "text": "quic",
+            "value": "quic",
+            "selected": true
+          },
+          {
+            "text": "tcp",
+            "value": "tcp",
+            "selected": false
+          }
+        ],
+        "hide": 0
+      },
+      {
+        "name": "source",
+        "type": "custom",
+        "label": "source",
+        "datasource": {
+          "type": "grafana-clickhouse-datasource",
+          "uid": "clickhouse"
+        },
+        "query": "rt,offline-tcp",
+        "current": {
+          "text": "rt",
+          "value": "rt"
+        },
+        "includeAll": true,
+        "multi": true,
+        "options": [
+          {
+            "text": "All",
+            "value": "$__all",
+            "selected": false
+          },
+          {
+            "text": "rt",
+            "value": "rt",
+            "selected": true
+          },
+          {
+            "text": "offline-tcp",
+            "value": "offline-tcp",
+            "selected": false
+          }
+        ],
+        "hide": 0
+      }
+    ]
+  },
+  "time": {
+    "from": "now-12h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "Asia/Bangkok",
+  "title": "PoC Latency per Paket (QUIC waktu nyata)",
+  "uid": "poc-pktlat",
+  "version": 1,
+  "weekStart": "",
+  "description": "Korelasi waktu nyata Zeek untuk paket QUIC (UDP 443), UL/DL per tap. Baseline TCP fase 2/2b sebagai pembanding (source=offline-tcp)."
+}

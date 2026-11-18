@@ -1,0 +1,23 @@
+mode=ue-l3
+tcp https 204
+curl: option --http3-only: the installed libcurl version does not support this
+curl: try 'curl --help' or 'curl --manual' for more information
+quic h3 unsupported-by-curl-build
+gre_core_tx_delta_bytes=5129  (must be >0: traffic went through the UE)
+Chain LAB5G-EMU (1 references)
+ pkts bytes target     prot opt in     out     source               destination         
+1035K 1267M RETURN     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+    0     0 RETURN     all  --  !docker+ *       0.0.0.0/0            0.0.0.0/0           
+    0     0 RETURN     all  --  *      *       0.0.0.0/0            10.10.0.0/16        
+  640 43188 RETURN     all  --  *      *       0.0.0.0/0            169.254.169.254     
+    0     0 RETURN     all  --  *      *       0.0.0.0/0            172.16.0.0/12       
+  834  447K RETURN     all  --  docker+ gre-core  0.0.0.0/0            0.0.0.0/0           
+    0     0 REJECT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            reject-with tcp-reset
+    0     0 REJECT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            reject-with icmp-port-unreachable
+0:	from all lookup local
+100:	from all to 10.10.0.0/16 lookup main
+101:	from all to 169.254.169.254 lookup main
+102:	from all to 172.16.0.0/12 lookup main
+110:	from all iif docker0 lookup 201
+32766:	from all lookup main
+32767:	from all lookup default

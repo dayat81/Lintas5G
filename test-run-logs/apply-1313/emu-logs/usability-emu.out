@@ -1,0 +1,15 @@
+{
+ "pageloads": 0,
+ "failed": 0,
+ "success_pct": 0.0,
+ "ttfb_p50_s": null,
+ "ttfb_p99_s": null,
+ "dl100_mbps": [
+  24.82,
+  28.8,
+  28.9
+ ],
+ "dl100_variation_pct": 14.8,
+ "K1_PASS_pageloads": null,
+ "K3_PASS": true
+}

@@ -1,0 +1,73 @@
+openapi: 3.0.3
+info:
+  title: Lintas5G QoD AF (SKELETON, subset CAMARA Quality-On-Demand)
+  version: 0.0.1
+  description: |
+    Subset ringkas. Spesifikasi resmi: https://github.com/camaraproject/QualityOnDemand
+    Endpoint ini memetakan sesi QoD ke Npcf_PolicyAuthorization (N5) atau Rx AAR.
+servers:
+  - url: http://127.0.0.1:8080
+security:
+  - bearer: []
+paths:
+  /quality-on-demand/v0/sessions:
+    post:
+      summary: Buat sesi QoD
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CreateSession' }
+      responses:
+        '201': { description: Dibuat, content: { application/json: { schema: { $ref: '#/components/schemas/SessionInfo' } } } }
+        '400': { description: Profil/perangkat tidak valid }
+        '401': { description: Token salah }
+        '501': { description: Backend belum diimplementasikan (Rx) }
+  /quality-on-demand/v0/sessions/{sessionId}:
+    parameters:
+      - { name: sessionId, in: path, required: true, schema: { type: string } }
+    get:
+      summary: Ambil sesi
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/SessionInfo' } } } }
+        '404': { description: Tidak ada }
+    delete:
+      summary: Hapus sesi (memicu DELETE app-session / STR)
+      responses:
+        '204': { description: Dihapus }
+        '404': { description: Tidak ada }
+components:
+  securitySchemes:
+    bearer: { type: http, scheme: bearer }
+  schemas:
+    CreateSession:
+      type: object
+      required: [device, applicationServer, qosProfile]
+      properties:
+        device:
+          type: object
+          properties:
+            ipv4Address:
+              type: object
+              properties:
+                publicAddress: { type: string }
+                privateAddress: { type: string }
+        applicationServer:
+          type: object
+          required: [ipv4Address]
+          properties: { ipv4Address: { type: string } }
+        applicationServerPorts:
+          type: object
+          properties: { ports: { type: array, items: { type: integer } } }
+        qosProfile: { type: string, enum: [QOS_E, QOS_S, QOS_M, QOS_L] }
+        duration: { type: integer, minimum: 1, maximum: 86400 }
+        sink: { type: string }
+    SessionInfo:
+      allOf:
+        - $ref: '#/components/schemas/CreateSession'
+        - type: object
+          properties:
+            sessionId: { type: string }
+            qosStatus: { type: string, enum: [REQUESTED, AVAILABLE, UNAVAILABLE] }
+            startedAt: { type: string, format: date-time }
+            expiresAt: { type: string, format: date-time }

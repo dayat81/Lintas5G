@@ -1,0 +1,10 @@
+● lab5g-enb.service - /usr/bin/bash -c /opt/lab5g/srsran/srsRAN_4G/build/srsenb/src/srsenb /opt/lab5g/srsran/conf/enb.conf > /var/log/lab5g/enb.stdout 2>&1
+     Active: active (running) since Wed 2026-11-18 03:53:08 UTC; 23min ago
+● lab5g-ue.service - /usr/bin/bash -c /opt/lab5g/srsran/srsRAN_4G/build/srsue/src/srsue /opt/lab5g/srsran/conf/ue.conf > /var/log/lab5g/ue.stdout 2>&1
+     Active: active (running) since Wed 2026-11-18 03:53:13 UTC; 23min ago
+● lab5g-keepalive.service - /usr/bin/bash -c ip netns exec ue1 ping -i 1 -D 8.8.8.8 > /var/log/lab5g/keepalive.log 2>&1
+     Active: active (running) since Wed 2026-11-18 03:53:43 UTC; 22min ago
+● lab5g-gost-ue.service - /usr/sbin/ip netns exec ue1 /usr/local/bin/gost -C /etc/lab5g-gost-ue.yaml
+     Active: active (running) since Wed 2026-11-18 03:50:14 UTC; 26min ago
+● lab5g-qod.service - /usr/bin/python3 /opt/lab5g/sesi-c/qod-tc.py serve --listen 127.0.0.1:8090 --dl 15mbit --ul 8mbit
+     Active: active (running) since Wed 2026-11-18 03:50:12 UTC; 26min ago

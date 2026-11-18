@@ -1,0 +1,11 @@
+Lintas5G
+Copyright 2026 Lintas5G contributors
+
+This product includes software developed by the Lintas5G contributors,
+licensed under the Apache License, Version 2.0.
+
+The upstream-patches/ directory is licensed separately under the
+GNU Affero General Public License v3.0 (see upstream-patches/LICENSE).
+
+Open5GS and srsRAN (AGPL-3.0) are used as separate, unmodified components
+and are not distributed with this repository.

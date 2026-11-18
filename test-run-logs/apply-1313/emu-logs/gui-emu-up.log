@@ -1,0 +1,23 @@
+2026-11-18 13:16:47 WIB start CORE_IP=10.10.0.3 egress=ue-l3 api=36 img=google_apis_playstore device=Pixel C screen=1920x1080 gpu=none
+-N LAB5G-EMU
+-A LAB5G-EMU -m conntrack --ctstate RELATED,ESTABLISHED -j RETURN
+-A LAB5G-EMU ! -i docker+ -j RETURN
+-A LAB5G-EMU -d 10.10.0.0/16 -j RETURN
+-A LAB5G-EMU -d 169.254.169.254/32 -j RETURN
+-A LAB5G-EMU -d 172.16.0.0/12 -j RETURN
+-A LAB5G-EMU -i docker+ -o gre-core -j RETURN
+-A LAB5G-EMU -p tcp -j REJECT --reject-with tcp-reset
+100:	from all to 10.10.0.0/16 lookup main
+101:	from all to 169.254.169.254 lookup main
+102:	from all to 172.16.0.0/12 lookup main
+110:	from all iif docker0 lookup 201
+32766:	from all lookup main
+gre-core@NONE    UNKNOWN        10.201.0.2/30 fe80::5efe:a0a:2/64 
+tr: write error: Broken pipe
+tr: write error
+{"level":"warn","ts":1794982634.9377615,"msg":"unable to determine directory for user configuration; falling back to current directory","error":"neither $XDG_CONFIG_HOME nor $HOME are defined"}
+caddyfile_valid
+active active 
+build gagal, lihat /var/log/lab5g/emu-image-build.log
+Error response from daemon: No such container: android-emu
+2026-11-18 13:21:04 WIB done

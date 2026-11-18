@@ -1,0 +1,324 @@
+{
+ "uid": "lintas5g-fase0",
+ "title": "Lintas5G Fase 0 - latency QoD (batch)",
+ "tags": [
+  "lintas5g",
+  "fase0"
+ ],
+ "timezone": "utc",
+ "schemaVersion": 39,
+ "version": 1,
+ "time": {
+  "from": "now-1h",
+  "to": "now"
+ },
+ "panels": [
+  {
+   "id": 1,
+   "title": "Ping RTT UE->emu (ms): p50/p95/p99 per kondisi (Sesi B + C, semua ulangan)",
+   "type": "barchart",
+   "datasource": {
+    "type": "grafana-clickhouse-datasource",
+    "uid": "ch"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 0,
+    "w": 12,
+    "h": 12
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "grafana-clickhouse-datasource",
+      "uid": "ch"
+     },
+     "editorType": "sql",
+     "format": 1,
+     "queryType": "table",
+     "rawSql": "SELECT concat(session,' ',cond) AS kondisi, round(quantileExact(0.5)(value_ms),1) AS p50, round(quantileExact(0.95)(value_ms),1) AS p95, round(quantileExact(0.99)(value_ms),1) AS p99 FROM poc_latency.probes WHERE ok=1 AND metric='ping_rtt' GROUP BY session, cond ORDER BY session, cond",
+     "refId": "A"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "ms"
+    },
+    "overrides": []
+   },
+   "options": {
+    "orientation": "horizontal",
+    "showValue": "always",
+    "stacking": "none",
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom",
+     "showLegend": true
+    },
+    "xTickLabelRotation": 0,
+    "barWidth": 0.85,
+    "groupWidth": 0.8
+   }
+  },
+  {
+   "id": 2,
+   "title": "HTTP TTFB UE->emu:9000 (ms): p50/p95/p99 per kondisi",
+   "type": "barchart",
+   "datasource": {
+    "type": "grafana-clickhouse-datasource",
+    "uid": "ch"
+   },
+   "gridPos": {
+    "x": 12,
+    "y": 0,
+    "w": 12,
+    "h": 12
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "grafana-clickhouse-datasource",
+      "uid": "ch"
+     },
+     "editorType": "sql",
+     "format": 1,
+     "queryType": "table",
+     "rawSql": "SELECT concat(session,' ',cond) AS kondisi, round(quantileExact(0.5)(value_ms),1) AS p50, round(quantileExact(0.95)(value_ms),1) AS p95, round(quantileExact(0.99)(value_ms),1) AS p99 FROM poc_latency.probes WHERE ok=1 AND metric='http_ttfb' GROUP BY session, cond ORDER BY session, cond",
+     "refId": "A"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "ms"
+    },
+    "overrides": []
+   },
+   "options": {
+    "orientation": "horizontal",
+    "showValue": "always",
+    "stacking": "none",
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom",
+     "showLegend": true
+    },
+    "xTickLabelRotation": 0,
+    "barWidth": 0.85,
+    "groupWidth": 0.8
+   }
+  },
+  {
+   "id": 3,
+   "title": "CV antar-ulangan Sesi C (3 rep)",
+   "type": "table",
+   "datasource": {
+    "type": "grafana-clickhouse-datasource",
+    "uid": "ch"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 12,
+    "w": 12,
+    "h": 7
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "grafana-clickhouse-datasource",
+      "uid": "ch"
+     },
+     "editorType": "sql",
+     "format": 1,
+     "queryType": "table",
+     "rawSql": "SELECT * FROM poc_latency.v_cv ORDER BY metric, cond",
+     "refId": "A"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {},
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "id": 4,
+   "title": "Latency adapter QoD (tc HTB): apply/remove (ms)",
+   "type": "table",
+   "datasource": {
+    "type": "grafana-clickhouse-datasource",
+    "uid": "ch"
+   },
+   "gridPos": {
+    "x": 12,
+    "y": 12,
+    "w": 12,
+    "h": 7
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "grafana-clickhouse-datasource",
+      "uid": "ch"
+     },
+     "editorType": "sql",
+     "format": 1,
+     "queryType": "table",
+     "rawSql": "SELECT session, event, count() AS n, round(quantileExact(0.5)(ifNull(apply_ms, remove_ms)),1) AS median_ms, round(min(ifNull(apply_ms, remove_ms)),1) AS min_ms, round(max(ifNull(apply_ms, remove_ms)),1) AS max_ms, groupUniqArray(source) AS sources FROM poc_latency.adapter WHERE event IN ('apply','remove') GROUP BY session, event ORDER BY session, event",
+     "refId": "A"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {},
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "id": 5,
+   "title": "Throughput bulk iperf3 rata-rata (Mbit/s) per kondisi/arah",
+   "type": "barchart",
+   "datasource": {
+    "type": "grafana-clickhouse-datasource",
+    "uid": "ch"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 19,
+    "w": 12,
+    "h": 12
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "grafana-clickhouse-datasource",
+      "uid": "ch"
+     },
+     "editorType": "sql",
+     "format": 1,
+     "queryType": "table",
+     "rawSql": "SELECT concat(session,' ',cond,' ',dir) AS kondisi, round(avg(mbps),2) AS mbps FROM poc_latency.iperf WHERE t_end_s > 2 GROUP BY session, cond, dir ORDER BY session, cond, dir",
+     "refId": "A"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "Mbits"
+    },
+    "overrides": []
+   },
+   "options": {
+    "orientation": "horizontal",
+    "showValue": "always",
+    "stacking": "none",
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom",
+     "showLegend": true
+    },
+    "xTickLabelRotation": 0,
+    "barWidth": 0.85,
+    "groupWidth": 0.8
+   }
+  },
+  {
+   "id": 6,
+   "title": "Flow GBR 5 Mbit/s di bawah beban: goodput & loss",
+   "type": "table",
+   "datasource": {
+    "type": "grafana-clickhouse-datasource",
+    "uid": "ch"
+   },
+   "gridPos": {
+    "x": 12,
+    "y": 19,
+    "w": 12,
+    "h": 6
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "grafana-clickhouse-datasource",
+      "uid": "ch"
+     },
+     "editorType": "sql",
+     "format": 1,
+     "queryType": "table",
+     "rawSql": "SELECT session, cond, proto, dir, target_kbps, goodput_kbps, round(100*goodput_kbps/target_kbps,1) AS pct_of_gbr, loss_pct FROM poc_latency.flow_gbr ORDER BY session, cond, proto, dir",
+     "refId": "A"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {},
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "id": 7,
+   "title": "Zeek capture_loss (%) per interface",
+   "type": "table",
+   "datasource": {
+    "type": "grafana-clickhouse-datasource",
+    "uid": "ch"
+   },
+   "gridPos": {
+    "x": 12,
+    "y": 25,
+    "w": 12,
+    "h": 6
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "grafana-clickhouse-datasource",
+      "uid": "ch"
+     },
+     "editorType": "sql",
+     "format": 1,
+     "queryType": "table",
+     "rawSql": "SELECT session, ifc, count() AS intervals, round(max(percent_lost),2) AS max_pct, round(avg(percent_lost),2) AS avg_pct, sum(gaps) AS gaps FROM poc_latency.zeek_capture_loss GROUP BY session, ifc ORDER BY session, ifc",
+     "refId": "A"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {},
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "id": 8,
+   "title": "Zeek conn: top layanan/port per sesi (bytes)",
+   "type": "table",
+   "datasource": {
+    "type": "grafana-clickhouse-datasource",
+    "uid": "ch"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 31,
+    "w": 24,
+    "h": 8
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "grafana-clickhouse-datasource",
+      "uid": "ch"
+     },
+     "editorType": "sql",
+     "format": 1,
+     "queryType": "table",
+     "rawSql": "SELECT session, ifc, proto, resp_p, count() AS conns, sum(orig_bytes+resp_bytes) AS bytes FROM poc_latency.zeek_conn GROUP BY session, ifc, proto, resp_p ORDER BY bytes DESC LIMIT 15",
+     "refId": "A"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {},
+    "overrides": []
+   },
+   "options": {}
+  }
+ ],
+ "editable": true
+}

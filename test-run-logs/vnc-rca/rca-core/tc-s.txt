@@ -1,0 +1,69 @@
+== ogstun
+qdisc htb 1: root refcnt 2 r2q 10 default 0x20 direct_packets_stat 0 direct_qlen 500
+ Sent 18162336 bytes 6332 pkt (dropped 0, overlimits 11947 requeues 0) 
+ backlog 0b 0p requeues 0
+qdisc pfifo 10: parent 1:10 limit 100p
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+qdisc pfifo 20: parent 1:20 limit 300p
+ Sent 18162336 bytes 6332 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+qdisc ingress ffff: parent ffff:fff1 ---------------- 
+ Sent 706919 bytes 9572 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+class htb 1:10 parent 1:1 leaf 10: prio 0 rate 4500Kbit ceil 15Mbit burst 1600b cburst 1600b 
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+ lended: 0 borrowed: 0 giants: 0
+ tokens: 44445 ctokens: 13334
+
+class htb 1:1 root rate 15Mbit ceil 15Mbit burst 1600b cburst 1600b 
+ Sent 18162336 bytes 6332 pkt (dropped 0, overlimits 3041 requeues 0) 
+ backlog 0b 0p requeues 0
+ lended: 2881 borrowed: 0 giants: 0
+ tokens: 12634 ctokens: 12634
+
+class htb 1:20 parent 1:1 leaf 20: prio 1 rate 10500Kbit ceil 15Mbit burst 1600b cburst 1600b 
+ Sent 18162336 bytes 6332 pkt (dropped 0, overlimits 8906 requeues 0) 
+ backlog 0b 0p requeues 0
+ lended: 8806 borrowed: 2881 giants: 0
+ tokens: 18048 ctokens: 12634
+
+== ifb0
+qdisc htb 1: root refcnt 2 r2q 10 default 0x20 direct_packets_stat 0 direct_qlen 32
+ Sent 707479 bytes 9580 pkt (dropped 0, overlimits 80 requeues 0) 
+ backlog 0b 0p requeues 0
+qdisc pfifo 10: parent 1:10 limit 100p
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+qdisc pfifo 20: parent 1:20 limit 300p
+ Sent 707479 bytes 9580 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+class htb 1:10 parent 1:1 leaf 10: prio 0 rate 2400Kbit ceil 8Mbit burst 1600b cburst 1600b 
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+ lended: 0 borrowed: 0 giants: 0
+ tokens: 83334 ctokens: 25000
+
+class htb 1:1 root rate 8Mbit ceil 8Mbit burst 1600b cburst 1600b 
+ Sent 707479 bytes 9580 pkt (dropped 0, overlimits 30 requeues 0) 
+ backlog 0b 0p requeues 0
+ lended: 19 borrowed: 0 giants: 0
+ tokens: 23687 ctokens: 23687
+
+class htb 1:20 parent 1:1 leaf 20: prio 1 rate 5600Kbit ceil 8Mbit burst 1600b cburst 1600b 
+ Sent 707479 bytes 9580 pkt (dropped 0, overlimits 50 requeues 0) 
+ backlog 0b 0p requeues 0
+ lended: 9561 borrowed: 19 giants: 0
+ tokens: 33840 ctokens: 23687
+
+filter parent ffff: protocol ip pref 1 u32 chain 0 
+filter parent ffff: protocol ip pref 1 u32 chain 0 fh 800: ht divisor 1 
+filter parent ffff: protocol ip pref 1 u32 chain 0 fh 800::800 order 2048 key ht 800 bkt 0 terminal flowid ??? not_in_hw 
+  match 00000000/00000000 at 0
+	action order 1: mirred (Egress Redirect to device ifb0) stolen
+	index 1 ref 1 bind 1 installed 1514 sec used 0 sec firstused 1514 sec
+	Action statistics:
+	Sent 706919 bytes 9572 pkt (dropped 0, overlimits 0 requeues 0) 
+	backlog 0b 0p requeues 0
+

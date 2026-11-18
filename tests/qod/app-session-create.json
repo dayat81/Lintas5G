@@ -1,0 +1,32 @@
+{
+  "ascReqData": {
+    "afAppId": "${AF_APP_ID}",
+    "dnn": "${DNN}",
+    "sliceInfo": { "sst": ${SNSSAI_SST} },
+    "supi": "${SUPI}",
+    "ueIpv4": "${UE_IPV4}",
+    "notifUri": "${NOTIF_URI}",
+    "suppFeat": "0",
+    "medComponents": {
+      "1": {
+        "medCompN": 1,
+        "medType": "VIDEO",
+        "fStatus": "ENABLED",
+        "marBwDl": "5 Mbps",
+        "marBwUl": "2 Mbps",
+        "mirBwDl": "5 Mbps",
+        "mirBwUl": "1 Mbps",
+        "medSubComps": {
+          "0": {
+            "fNum": 0,
+            "fDescs": [
+              "permit out 17 from ${APP_SERVER_IPV4} ${APP_SERVER_PORT} to ${UE_IPV4}",
+              "permit out 17 from ${UE_IPV4} to ${APP_SERVER_IPV4} ${APP_SERVER_PORT}"
+            ],
+            "flowUsage": "NO_INFO"
+          }
+        }
+      }
+    }
+  }
+}

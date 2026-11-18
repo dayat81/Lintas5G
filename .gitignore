@@ -1,0 +1,42 @@
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log
+crash.*.log
+*.tfplan
+override.tf
+override.tf.json
+
+# Rahasia
+.env
+**/.env
+*.pem
+*.key
+*-key.json
+*credentials*.json
+service-account*.json
+vnc-password*
+*.rfb
+
+# Data lab (jangan di-commit ke repo publik)
+*.pcap
+*.pcapng
+results/
+!docs/results/
+!docs/results/**
+test-run-logs/
+**/zeek-logs/
+*.log
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# Lainnya
+tests/qod/.app-session.loc
+.DS_Store
