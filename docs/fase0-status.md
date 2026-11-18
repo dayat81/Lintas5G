@@ -2,6 +2,7 @@
 
 > Per **18 Nov 2026 07:57 WIB**. Semua angka **[Dilaporkan PoC Architect]** dan belum diverifikasi ulang secara independen.
 > Roadmap lengkap: [roadmap.md](roadmap.md).
+> Status Sesi C: verdict usulan adalah merge [PR #1](https://github.com/dayat81/Lintas5G/pull/1). Lihat [verdict](results/2026-11-18-sesi-c-verdict.md).
 
 ## Ringkasan
 

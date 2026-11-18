@@ -1,0 +1,9 @@
+session,cond,proto,dir,target_kbps,goodput_kbps,loss_pct
+sesi-c,a-noqod,udp,dl,5000,4985.9,0.634
+sesi-c,a-noqod,udp,ul,5000,4888.2,2.47
+sesi-c,b-static,udp,dl,5000,4736.7,4.717
+sesi-c,b-static,udp,ul,5000,2355.8,52.25
+sesi-c,c-gbr,udp,dl,5000,5000.4,0.0
+sesi-c,c-gbr,udp,ul,5000,4996.7,0.0
+sesi-c,c-gbr,tcp,dl,5000,5005.6,
+sesi-c,c-gbr,tcp,ul,5000,3767.4,
