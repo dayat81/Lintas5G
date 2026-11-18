@@ -8,7 +8,7 @@ Open lab 5G/4G berbasis open source untuk partner: pengukuran **latency per pake
 
 | Folder | Isi |
 |---|---|
-| [`docs/`](docs/) | [arsitektur](docs/architecture.md), [lab GCP](docs/gcp-lab.md), [PoC latency](docs/latency-poc.md), [uji QoD](docs/qod-feasibility-test.md), [lisensi](docs/licensing.md) |
+| [`docs/`](docs/) | [roadmap](docs/roadmap.md), [status Fase 0](docs/fase0-status.md), [arsitektur](docs/architecture.md), [lab GCP](docs/gcp-lab.md), [PoC latency](docs/latency-poc.md), [uji QoD](docs/qod-feasibility-test.md), [lisensi](docs/licensing.md) |
 | [`infra/gcp/`](infra/gcp/) | Terraform (VPC, 3 VM tanpa IP publik, IAP, Cloud NAT, GCS, snapshot; `vm-mpls` opsional), startup, checklist test run |
 | [`infra/mpls/`](infra/mpls/) | Rujukan backhaul MPLS S1. Skrip kanonis ada di `infra/gcp/startup/` |
 | [`observability/`](observability/) | Zeek `pktlat2.zeek` v2.1, Vector, skema ClickHouse, dashboard Grafana, docker-compose vm-obs |
