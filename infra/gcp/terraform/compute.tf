@@ -116,6 +116,7 @@ resource "google_compute_instance" "emu" {
 }
 
 resource "google_compute_instance" "obs" {
+  count        = var.enable_obs ? 1 : 0
   name         = "vm-obs"
   machine_type = var.obs_machine_type
   zone         = var.zone
@@ -127,7 +128,7 @@ resource "google_compute_instance" "obs" {
   deletion_protection       = false
 
   boot_disk {
-    source      = google_compute_disk.obs.id
+    source      = google_compute_disk.obs[0].id
     auto_delete = false
   }
 

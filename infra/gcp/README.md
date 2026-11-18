@@ -19,6 +19,7 @@ infra/gcp/startup/                   # bootstrap per VM (bukan di dalam terrafor
   mpls-ce-tunnels.sh                 # sisi CE GRE/VXLAN di vm-core-ran
 infra/gcp/terraform/terraform.tfvars.example
 infra/gcp/scripts/test-run-day1.sh   # checklist test run hari pertama
+infra/gcp/day1/                      # skrip Hari 1 (Open5GS + srsRAN ZMQ), dijalankan di VM
 infra/mpls/mpls-backhaul.sh          # rujukan ke startup/mpls-backhaul.sh
 ```
 
@@ -28,9 +29,10 @@ infra/mpls/mpls-backhaul.sh          # rujukan ke startup/mpls-backhaul.sh
    [Google Cloud SDK](https://cloud.google.com/sdk/docs/install) (`gcloud`).
 2. Proyek GCP dengan billing aktif. Cek **CPUS_ALL_REGIONS** (bisa lebih ketat
    daripada kuota regional). Default optimal memakai 16 vCPU N2 + 4 vCPU E2.
-   Minimal 1 UE: 8 vCPU N2 + 2 vCPU E2. Opsional vm-mpls (e2-medium, 2 vCPU)
-   jika `enable_mpls=true` — total minimal menjadi 12 vCPU (pas dengan
-   kuota `CPUS_ALL_REGIONS=12`). Nested virtualization hanya untuk
+   Minimal 1 UE: 8 vCPU N2 + 2 vCPU E2. `enable_obs` default true.
+   Profil 12 vCPU: core n2-standard-4 + emu n2-standard-8 dengan
+   `enable_obs=false` dan `enable_mpls=false`. Opsional vm-mpls
+   (e2-medium, 2 vCPU) jika `enable_mpls=true`. Nested virtualization hanya untuk
    seri Intel (N2 memakai `min_cpu_platform = "Intel Cascade Lake"`).
    `pd-balanced` memakai kuota `SSD_TOTAL_GB`; jika sisa tipis, set
    `disk_type = "pd-standard"`. Spot membutuhkan kuota `PREEMPTIBLE_CPUS`.

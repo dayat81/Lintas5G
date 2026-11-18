@@ -163,3 +163,9 @@ variable "mpls_tunnel_mode" {
     error_message = "mpls_tunnel_mode harus gre atau vxlan."
   }
 }
+
+variable "enable_obs" {
+  description = "Buat vm-obs (ClickHouse/Grafana). false = hemat kuota vCPU (mis. core n2-4 + emu n2-8 = 12)."
+  type        = bool
+  default     = true
+}

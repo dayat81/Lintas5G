@@ -66,6 +66,22 @@ Hasil tambahan, tanpa project ID atau identitas:
 - MPLS: modul dan GRE PASS. L3VPN end-to-end FAIL karena LDP neighbor tidak terbentuk (known issue).
 - Rekomendasi: `n2-standard-4` minimal, `n2-standard-8` untuk UI mulus.
 
+`enable_obs` default true. Profil 12 vCPU di `terraform.tfvars.example` memakai `enable_obs=false` dan `enable_mpls=false` (core `n2-standard-4` + emu `n2-standard-8`).
+
+## Hasil Hari 1 (FAKTA, disanitasi)
+
+Profil: core `n2-standard-4`, emu `n2-standard-8`, `enable_obs=false`, `enable_mpls=false`. Tanpa project ID, IMSI, atau identitas. Skrip ada di `infra/gcp/day1/`.
+
+- Attach OK.
+- Ping UE ke UPF rata-rata 30,2 ms; ke 8.8.8.8 rata-rata 30,6 ms (100 paket, 0% loss).
+- iperf UL 18,9 Mbit/s, DL 30,8 Mbit/s.
+- Internet emulator lewat UE terbukti dari pcap `ogstun`.
+- TTFB HTTP sekitar 190 ms lewat UE, sekitar 39 ms langsung.
+- CPU steal 0%. ZMQ tanpa late/underflow.
+- Biaya sekitar USD 0,3 untuk sekitar 20 menit.
+
+Stack yang lulus: Open5GS 2.8.0 EPC, srsRAN_4G `release_23_11` di-build dari source (paket PPA tidak punya ZMQ), PLMN 001/01, TAC eNB dan MME 0x0001, subscriber acak lewat `mongosh`, proxy tinyproxy di netns UE. `core-proxy.sh` (gost + veth/DNAT) masih USULAN dan belum dites.
+
 ## Backhaul MPLS S1 (USULAN)
 
 ```mermaid

@@ -2,6 +2,7 @@
 # Checklist test run hari pertama lab 5G latency PoC di GCP.
 # Skrip ini tidak mendeploy Terraform dan tidak menyentuh lab on-prem.
 # Jalankan dari laptop yang sudah punya gcloud, setelah terraform apply.
+# Stack aplikasi dijalankan di VM dengan skrip infra/gcp/day1/ (sebagai root).
 set -euo pipefail
 
 PROJECT="${PROJECT:-}"
@@ -9,6 +10,8 @@ ZONE="${ZONE:-asia-southeast2-a}"
 CORE="vm-core-ran"
 EMU="vm-emu"
 OBS="vm-obs"
+# auto = cek apakah vm-obs ada. Hari 1 memakai enable_obs=false.
+ENABLE_OBS="${ENABLE_OBS:-auto}"
 
 if [[ -z "${PROJECT}" ]]; then
   PROJECT="$(gcloud config get-value project 2>/dev/null || true)"
@@ -41,8 +44,22 @@ if [[ -z "${PROJECT}" || "${PROJECT}" == "(unset)" ]]; then
 fi
 ok "project=${PROJECT} zone=${ZONE}"
 
+if [[ "${ENABLE_OBS}" == "auto" ]]; then
+  if gcloud compute instances describe "${OBS}" --project="${PROJECT}" --zone="${ZONE}" >/dev/null 2>&1; then
+    ENABLE_OBS=true
+  else
+    ENABLE_OBS=false
+  fi
+fi
+
 hdr "1. VM dan bootstrap (Docker + chrony)"
-for h in "${CORE}" "${EMU}" "${OBS}"; do
+HOSTS=("${CORE}" "${EMU}")
+if [[ "${ENABLE_OBS}" == "true" ]]; then
+  HOSTS+=("${OBS}")
+else
+  skip "vm-obs tidak dicek (enable_obs=false, profil 12 vCPU)"
+fi
+for h in "${HOSTS[@]}"; do
   if gssh "${h}" "test -f /opt/lab5g/.bootstrap-complete && chronyc tracking | head -n 5 && docker info >/dev/null"; then
     ok "${h}: bootstrap, chrony, docker"
   else
@@ -57,68 +74,91 @@ else
   fail "KVM tidak ada — nested virt gagal; jangan lanjutkan tes emulator"
 fi
 
-hdr "3. Deploy stack dari artefak PR (manual)"
+hdr "3. Deploy stack Hari 1 (manual, sebagai root di VM)"
 cat <<'TXT'
-  Copikan artefak pipeline latency (observability/ dan tests/latency/ repo ini) ke vm-core-ran:
-    - observability/zeek (pktlat2.zeek v2.1) -> vm-core-ran
-    - observability/vector/vector-agent.yaml -> vm-core-ran
-    - observability/docker-compose.yml (ClickHouse+Grafana+Vector) -> vm-obs
-    - tests/latency (generator QUIC + pembanding)
-  Lalu naikkan Open5GS 2.8.0 EPC CUPS + srsRAN 4G ZMQ (eNB + UE di netns l5g-ue),
-  Zeek tap pada bridge S1-U/SGi, proxy HTTP CONNECT :18080 di netns UE
-  (keluar lewat tun_srsue), dan keepalive ping dari UE.
-  Di vm-obs: ClickHouse (database poc_latency, bind internal) + Grafana
-  (bind 127.0.0.1) + sink Vector :6000.
-  Di vm-emu: emulator Android (swiftshader_indirect, hw.keyboard=yes),
-  x11vnc bind 127.0.0.1, http_proxy global ke vm-core-ran:18080.
+  Salin infra/gcp/day1/ ke vm-core-ran dan vm-emu, lalu jalankan sebagai root.
+
+  vm-core-ran, urutan:
+    1. core-install.sh
+       Open5GS 2.8.0 EPC (PPA) + MongoDB di 127.0.0.1.
+    2. core-build-srsran.sh
+       srsRAN_4G release_23_11 dari source, -DENABLE_ZEROMQ=ON.
+       Paket PPA tidak membawa plugin ZMQ.
+    3. core-config.sh
+       PLMN 001/01. TAC eNB di rr.conf = 0x0001; TAC MME harus sama (0x0001).
+       Subscriber diisi via mongosh. IMSI, KEY, dan OPC acak saat runtime,
+       hanya di /root/lab5g-sub.env (0600). Jangan salin file itu ke repo.
+    4. core-run.sh
+       srsenb + srsue (ZMQ), netns ue1.
+    5. core-ping.sh
+       Pasang default route netns UE secara manual:
+         ip netns exec ue1 ip route replace default via 10.45.0.1 dev tun_srsue
+       core-config.sh dan core-run.sh tidak memasang route ini.
+    6. core-iperf.sh lalu core-iperf-dl.sh
+    7. core-proxy-tinyproxy.sh
+       Proxy yang sudah teruji: tinyproxy di netns UE, socat di host :18080.
+       Trafik emulator keluar lewat tun_srsue.
+
+  Jangan pakai core-proxy.sh untuk mengulang Hari 1.
+  Itu USULAN v2 (gost + veth/DNAT) dan belum dites.
+
+  vm-emu, urutan:
+    1. emu-start.sh
+    2. emu-baseline.sh
+    3. emu-proxy-test.sh
+       http_proxy global ke vm-core-ran:18080.
+
+  Jika enable_obs=true, observability/ (Zeek, Vector, ClickHouse, Grafana)
+  tetap langkah terpisah dan tidak bagian dari lulus Hari 1 di atas.
 TXT
-info "Langkah ini sadar manual; skrip tidak menginstal stack aplikasi."
+info "Langkah ini sadar manual; checklist tidak menginstal stack aplikasi."
 
 hdr "4. Kriteria sukses: UE attach"
-info "Periksa log MME/AMF atau srsUE: registered / attach accept, IP PDN teralokasi."
-info "Contoh (sesuaikan path container):"
-echo "    gcloud compute ssh ${CORE} --zone=${ZONE} --tunnel-through-iap --command='sudo docker ps'"
+info "core-run.sh: log MME attach/session, dan tun_srsue di netns ue1 punya alamat 10.45.0.0/16."
+info "PLMN harus 001/01 dan TAC eNB serta MME harus 0x0001."
+echo "    gcloud compute ssh ${CORE} --zone=${ZONE} --tunnel-through-iap --command='systemctl is-active lab5g-enb lab5g-ue'"
 
-hdr "5. Kriteria sukses: keepalive wajib"
-info "Pastikan ping periodik dari netns l5g-ue berjalan (UE tidak boleh idle)."
-info "Jika keepalive mati, sesi UE bisa lepas dan flow Zeek berhenti."
+hdr "5. Kriteria sukses: ping dan route netns UE"
+info "Setelah core-ping.sh memasang default route manual:"
+info "  ping UE ke UPF (10.45.0.1): rata-rata 30,2 ms, 100 paket, 0% loss (Hari 1)."
+info "  ping UE ke 8.8.8.8: rata-rata 30,6 ms, 100 paket, 0% loss (Hari 1)."
+info "Keepalive ping dari netns ue1 harus tetap hidup."
 
-hdr "6. Kriteria sukses: Zeek melihat flow"
-info "Dari ${CORE}, setelah trafik app (atau curl lewat proxy UE):"
-echo "    # file conn.log / pktlat harus memuat flow S1-U (GTP-U) dan/atau SGi"
-echo "    # bukan hanya trafik manajemen VM"
+hdr "6. Kriteria sukses: iperf dan jalur internet UE"
+info "iperf Hari 1: UL 18,9 Mbit/s, DL 30,8 Mbit/s (TCP 10 dtk, UE <-> UPF)."
+info "Internet emulator lewat UE terbukti dari pcap ogstun (bukan hanya NAT host)."
+info "TTFB HTTP Hari 1: sekitar 190 ms lewat UE, sekitar 39 ms langsung."
+info "CPU steal 0%. Log ZMQ tanpa late/underflow."
 
-hdr "7. Kriteria sukses: latency p50 S1-U"
-info "Jalankan generator singkat (mis. 60 dtk) lalu hitung p50 dari pktlat2/ClickHouse."
-info "Catat juga skew chrony (tracking) di core, emu, dan obs pada saat run."
+hdr "7. Zeek dan Grafana (hanya jika enable_obs=true)"
+if [[ "${ENABLE_OBS}" == "true" ]]; then
+  info "Zeek di ${CORE} harus melihat flow S1-U/SGi, bukan hanya trafik manajemen."
+  info "Grafana lewat IAP, lalu http://127.0.0.1:3000 :"
+  echo "    gcloud compute start-iap-tunnel ${OBS} 3000 --local-host-port=localhost:3000 --project=${PROJECT} --zone=${ZONE}"
+else
+  skip "vm-obs tidak ada pada profil Hari 1; Zeek/Grafana tidak wajib untuk lulus attach."
+fi
 
-hdr "8. Kriteria sukses: Grafana tampil"
-info "Buka tunnel lalu http://127.0.0.1:3000 :"
-echo "    gcloud compute start-iap-tunnel ${OBS} 3000 --local-host-port=localhost:3000 --project=${PROJECT} --zone=${ZONE}"
-info "Dashboard 80–89 harus menampilkan flow run yang baru saja dikirim Vector."
+hdr "8. USULAN (bukan kriteria Hari 1): backhaul MPLS"
+info "enable_mpls default false. Jangan jalankan topologi lama di dalam vm-core-ran."
+info "Jika enable_mpls=true: mpls-backhaul.sh di vm-mpls, lalu mpls-ce-tunnels.sh di vm-core-ran."
+info "Uji 17 Nov: modul dan GRE PASS. L3VPN e2e FAIL (LDP neighbor tidak terbentuk)."
 
-hdr "9. USULAN (opsional hari pertama): backhaul MPLS S1"
-info "Tidak wajib untuk kriteria sukses baseline. Jalankan hanya di vm-core-ran."
-echo "    sudo /opt/lab5g/scripts/mpls-backhaul.sh setup"
-echo "    sudo /opt/lab5g/scripts/mpls-backhaul.sh verify"
-info "verify harus menunjukkan LDP neighbor, BGP VPNv4, rute MPLS, ping CE dummy."
-info "Lalu cek ulang UE attach + keepalive. Injeksi: netem set p1 delay 20ms"
-info "Zeek: tap pe1-ce (ingress eNB) dan pe2-ce (egress SGW), plus S1-U lama."
-info "Rollback: sudo /opt/lab5g/scripts/mpls-backhaul.sh rollback"
-
-hdr "10. Akses VNC emulator (opsional untuk tes app)"
-echo "    gcloud compute start-iap-tunnel ${EMU} 5900 --local-host-port=localhost:5900 --project=${PROJECT} --zone=${ZONE}"
-info "Ketik dari keyboard laptop setelah fokus ke jendela emulator (hw.keyboard=yes)."
+hdr "9. Akses VNC emulator"
+info "VNC bind ke loopback. start-iap-tunnel tidak menjangkaunya."
+echo "    gcloud compute ssh ${EMU} --project=${PROJECT} --zone=${ZONE} --tunnel-through-iap -- -L 5900:127.0.0.1:5900"
+info "Lalu buka klien VNC ke localhost:5900. noVNC memakai -L 6080:127.0.0.1:6080."
 
 hdr "Ringkasan kriteria sukses test run"
 cat <<'CRIT'
-  [ ] UE attach (IP PDN teralokasi, state registered)
-  [ ] Keepalive UE hidup (tidak idle)
-  [ ] Zeek mencatat flow dari jalur UE (S1-U dan/atau SGi)
-  [ ] Latency p50 S1-U terhitung untuk run_id yang sama
-  [ ] Grafana menampilkan dashboard run tersebut
-  [ ] (opsional MPLS) verify LDP/VPNv4/ping CE lulus, UE attach tetap OK
-  [ ] (opsional MPLS) Zeek melihat flow di pe1-ce dan pe2-ce; p50 terurai per segmen
+  [ ] UE attach (PLMN 001/01, TAC eNB dan MME 0x0001, IP PDN di tun_srsue)
+  [ ] Default route netns UE dipasang manual (via 10.45.0.1 dev tun_srsue)
+  [ ] Ping UE ke UPF dan ke 8.8.8.8, 0% loss
+  [ ] iperf UL/DL terukur
+  [ ] Proxy tinyproxy di netns UE; pcap ogstun menunjukkan internet emulator
+  [ ] CPU steal 0%, ZMQ tanpa late/underflow
+  [ ] (hanya enable_obs) Zeek mencatat flow dan Grafana menampilkan run
+  [ ] (opsional MPLS) jangan diharapkan L3VPN e2e; LDP neighbor masih known issue
 CRIT
 
 info "Skrip ini adalah checklist, bukan orkestrator. Tandai lulus secara manual."

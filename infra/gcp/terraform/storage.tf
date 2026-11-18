@@ -91,6 +91,7 @@ resource "google_compute_disk" "emu" {
 }
 
 resource "google_compute_disk" "obs" {
+  count  = var.enable_obs ? 1 : 0
   name   = "vm-obs-boot"
   type   = var.disk_type
   zone   = var.zone
@@ -112,9 +113,10 @@ resource "google_compute_disk_resource_policy_attachment" "emu" {
 }
 
 resource "google_compute_disk_resource_policy_attachment" "obs" {
-  name = google_compute_resource_policy.daily_snapshot.name
-  disk = google_compute_disk.obs.name
-  zone = var.zone
+  count = var.enable_obs ? 1 : 0
+  name  = google_compute_resource_policy.daily_snapshot.name
+  disk  = google_compute_disk.obs[0].name
+  zone  = var.zone
 }
 
 resource "google_storage_bucket_object" "mpls_backhaul" {

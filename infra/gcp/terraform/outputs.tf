@@ -16,8 +16,10 @@ output "vm_internal_ips" {
     {
       vm-core-ran = google_compute_instance.core.network_interface[0].network_ip
       vm-emu      = google_compute_instance.emu.network_interface[0].network_ip
-      vm-obs      = google_compute_instance.obs.network_interface[0].network_ip
     },
+    var.enable_obs ? {
+      vm-obs = google_compute_instance.obs[0].network_interface[0].network_ip
+    } : {},
     var.enable_mpls ? {
       vm-mpls = google_compute_instance.mpls[0].network_interface[0].network_ip
     } : {}
