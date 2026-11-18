@@ -80,7 +80,24 @@ Profil: core `n2-standard-4`, emu `n2-standard-8`, `enable_obs=false`, `enable_m
 - CPU steal 0%. ZMQ tanpa late/underflow.
 - Biaya sekitar USD 0,3 untuk sekitar 20 menit.
 
-Stack yang lulus: Open5GS 2.8.0 EPC, srsRAN_4G `release_23_11` di-build dari source (paket PPA tidak punya ZMQ), PLMN 001/01, TAC eNB dan MME 0x0001, subscriber acak lewat `mongosh`, proxy tinyproxy di netns UE. `core-proxy.sh` (gost + veth/DNAT) masih USULAN dan belum dites.
+Stack yang lulus: Open5GS 2.8.0 EPC, srsRAN_4G `release_23_11` di-build dari source (paket PPA tidak punya ZMQ), PLMN 001/01, TAC eNB dan MME 0x0001, subscriber acak lewat `mongosh`, proxy tinyproxy di netns UE. Proxy gost diuji pada 18 Nov (bagian di bawah).
+
+## Proxy bench 18 Nov
+
+Median HTTP TTFB / HTTP total / HTTPS total, 10 sampel. Angka mentah ada di [`results/2026-11-18-proxy-bench.csv`](results/2026-11-18-proxy-bench.csv). Label: A langsung, B tinyproxy + socat, C gost tanpa cache DNS, C2 gost + veth + DNS cache, C3mss sama dengan C2 plus MSS clamp 1360.
+
+| Jalur | HTTP TTFB | HTTP total | HTTPS total |
+|---|---:|---:|---:|
+| Langsung | 36 ms | 37 ms | 135 ms |
+| tinyproxy + socat | 204 ms | 705 ms | 497 ms |
+| gost + veth + DNS cache | 101 ms | 102 ms | 352 ms |
+
+- Batas bawah sekitar 89 ms karena 2× RTT ZMQ (sekitar 30 ms).
+- MSS clamp 1360 tidak berpengaruh (C2 dan C3mss hampir sama).
+- Penyebab utama yang ditemukan adalah DNS per request lewat UE. Cache resolver gost (TTL 300s, IPv4, 8.8.8.8) menurunkan TTFB HTTP dari seri tanpa cache.
+- Target direvisi menjadi TTFB HTTP ≤ 100 ms.
+- Ping UE ke 8.8.8.8 rata-rata 29,9 ms.
+- CPU steal 0%.
 
 ## Backhaul MPLS S1 (USULAN)
 

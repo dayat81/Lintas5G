@@ -25,6 +25,8 @@ vnc-password*
 *.pcap
 *.pcapng
 results/
+!docs/results/
+!docs/results/**
 test-run-logs/
 **/zeek-logs/
 *.log

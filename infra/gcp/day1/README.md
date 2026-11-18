@@ -22,7 +22,7 @@ sudo ./core-run.sh
 sudo ./core-ping.sh          # default route netns UE dipasang manual di sini
 sudo ./core-iperf.sh
 sudo ./core-iperf-dl.sh
-sudo ./core-proxy-tinyproxy.sh
+sudo ./core-proxy.sh            # default, sudah teruji 18 Nov
 ```
 
 `core-ping.sh` menambahkan default route netns UE secara manual:
@@ -38,14 +38,24 @@ ip netns exec ue1 ip route replace default via 10.45.0.1 dev tun_srsue
 ```bash
 sudo ./emu-start.sh
 sudo ./emu-baseline.sh
-sudo ./emu-proxy-test.sh
+sudo ./emu-proxy-test.sh     # P=host:port ./emu-proxy-test.sh
 ```
 
-`emu-proxy-test.sh` mengarahkan `http_proxy` emulator ke `vm-core-ran:18080`. VNC emulator bind ke loopback; dari laptop pakai `gcloud compute ssh -L`, bukan `start-iap-tunnel`.
+`emu-proxy-test.sh` mengarahkan `http_proxy` emulator ke `P` (default `10.10.0.3:18080`). Set `P` jika IP `vm-core-ran` berbeda. VNC emulator bind ke loopback; dari laptop pakai `gcloud compute ssh -L`, bukan `start-iap-tunnel`.
+
+Benchmark 10 sampel dari `vm-emu` (langsung, atau lewat proxy):
+
+```bash
+./emu-bench.sh A              > raw.csv          # langsung, tanpa proxy
+./emu-bench.sh B 10.10.0.3:18080 >> raw.csv    # ganti host:port proxy
+python3 stats.py raw.csv
+```
+
+`stats.py` mencetak median dan p90 (ms) untuk connect, TTFB, dan total.
 
 ## Proxy
 
 | Skrip | Status |
 |---|---|
-| `core-proxy-tinyproxy.sh` | Versi yang **sudah teruji** di Hari 1 (tinyproxy di netns UE, socat di host). |
-| `core-proxy.sh` | **USULAN**, belum dites. v2 memakai gost plus veth/DNAT, menggantikan socat per koneksi. Jangan dipakai untuk mengulang hasil Hari 1. |
+| `core-proxy.sh` | **Default, sudah teruji 18 Nov.** gost v3, config YAML, resolver ber-cache (8.8.8.8, TTL 300s, IPv4), veth + DNAT, `rp_filter=2`. `HOST_IP` diambil dari `ens4`. Menunggu port listen. `MSS_CLAMP` opsional. |
+| `core-proxy-tinyproxy.sh` | Fallback Hari 1 (tinyproxy di netns UE + socat). `HOST_IP` otomatis, dan skrip ini menghentikan unit gost. |

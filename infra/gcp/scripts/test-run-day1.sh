@@ -95,12 +95,10 @@ cat <<'TXT'
          ip netns exec ue1 ip route replace default via 10.45.0.1 dev tun_srsue
        core-config.sh dan core-run.sh tidak memasang route ini.
     6. core-iperf.sh lalu core-iperf-dl.sh
-    7. core-proxy-tinyproxy.sh
-       Proxy yang sudah teruji: tinyproxy di netns UE, socat di host :18080.
+    7. core-proxy.sh
+       Default sejak 18 Nov (sudah dites): gost v3 + veth/DNAT + DNS cache.
        Trafik emulator keluar lewat tun_srsue.
-
-  Jangan pakai core-proxy.sh untuk mengulang Hari 1.
-  Itu USULAN v2 (gost + veth/DNAT) dan belum dites.
+       Fallback Hari 1: core-proxy-tinyproxy.sh (tinyproxy + socat).
 
   vm-emu, urutan:
     1. emu-start.sh
@@ -155,7 +153,7 @@ cat <<'CRIT'
   [ ] Default route netns UE dipasang manual (via 10.45.0.1 dev tun_srsue)
   [ ] Ping UE ke UPF dan ke 8.8.8.8, 0% loss
   [ ] iperf UL/DL terukur
-  [ ] Proxy tinyproxy di netns UE; pcap ogstun menunjukkan internet emulator
+  [ ] Proxy gost (atau fallback tinyproxy) di netns UE; pcap ogstun menunjukkan internet emulator
   [ ] CPU steal 0%, ZMQ tanpa late/underflow
   [ ] (hanya enable_obs) Zeek mencatat flow dan Grafana menampilkan run
   [ ] (opsional MPLS) jangan diharapkan L3VPN e2e; LDP neighbor masih known issue
