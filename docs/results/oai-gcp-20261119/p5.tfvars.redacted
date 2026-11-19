@@ -1,0 +1,7 @@
+# OAI GCP run5 (19 Nov 2026, user pt242u "Approved, proceed"): ran_mode sa-oai, 3 nrUE (2x2+256QAM), core n2-custom-12 Ice Lake (auto), no emulator.
+ran_mode          = "sa-oai"
+core_machine_type = "n2-custom-12-49152"
+emu_enabled       = false
+nr_pairs          = 3
+oai_rf            = "rfsim"
+oai_mimo          = 2

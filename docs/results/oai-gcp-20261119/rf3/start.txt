@@ -1,0 +1,8 @@
+[oai] rf=rfsim timescale=1.0 mimo=2 ues=3 rt=1 core_cpus=0,1 ran_cpus=2-11
+[oai] gNB ready after 3s (NG setup ok)
+[oai] ue1 IP after 3s
+[oai] ue2 IP after 3s
+[oai] ue3 IP after 4s
+ue1 gnb=active ue=active keepalive=active ip=10.45.0.x/24
+ue2 gnb=active ue=active keepalive=active ip=10.45.0.x/24
+ue3 gnb=active ue=active keepalive=active ip=10.45.0.x/24

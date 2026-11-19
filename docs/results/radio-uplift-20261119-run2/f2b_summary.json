@@ -1,0 +1,105 @@
+{
+  "pairs": 3,
+  "dirs": {
+    "dl": {
+      "per_pair_mbps": {
+        "1": 17.91,
+        "2": 18.03,
+        "3": 17.81
+      },
+      "aggregate_mbps": 53.75,
+      "aggregate_sec_min": 39.05,
+      "aggregate_sec_p50": 53.85,
+      "retransmits": {
+        "1": 489,
+        "2": 853,
+        "3": 700
+      }
+    },
+    "ul": {
+      "per_pair_mbps": {
+        "1": 17.94,
+        "2": 18.04,
+        "3": 18.1
+      },
+      "aggregate_mbps": 54.08,
+      "aggregate_sec_min": 29.21,
+      "aggregate_sec_p50": 53.83,
+      "retransmits": {
+        "1": 33,
+        "2": 57,
+        "3": 48
+      }
+    }
+  },
+  "verdict": "FAIL",
+  "reasons": [
+    "dl pair1=17.91 < 50.0",
+    "dl pair2=18.03 < 50.0",
+    "dl pair3=17.81 < 50.0",
+    "dl aggregate 53.75 < 150.0",
+    "ul pair1=17.94 < 50.0",
+    "ul pair2=18.04 < 50.0",
+    "ul pair3=18.1 < 50.0"
+  ],
+  "cpu": {
+    "dl": {
+      "procs_pct_of_1cpu": {
+        "srsue2": 132.4,
+        "srsue1": 130.9,
+        "gnb2": 128.9,
+        "gnb1": 127.4,
+        "gnb3": 126.8,
+        "srsue3": 126.3,
+        "upfd": 12.5,
+        "iperf3": 3.9,
+        "systemd": 1.9
+      },
+      "mean_busy_pct": 68.2,
+      "max_sec_busy_pct": 69.5,
+      "per_cpu_peak_pct": {
+        "cpu0": 21.0,
+        "cpu1": 15.7,
+        "cpu10": 92.8,
+        "cpu11": 15.2,
+        "cpu2": 92.7,
+        "cpu3": 92.7,
+        "cpu4": 91.6,
+        "cpu5": 94.9,
+        "cpu6": 90.5,
+        "cpu7": 92.7,
+        "cpu8": 93.8,
+        "cpu9": 93.8
+      }
+    },
+    "ul": {
+      "procs_pct_of_1cpu": {
+        "gnb1": 152.8,
+        "gnb3": 152.4,
+        "gnb2": 151.7,
+        "srsue3": 106.5,
+        "srsue2": 105.5,
+        "srsue1": 105.1,
+        "upfd": 13.2,
+        "iperf3": 5.5,
+        "systemd": 1.9
+      },
+      "mean_busy_pct": 68.7,
+      "max_sec_busy_pct": 70.3,
+      "per_cpu_peak_pct": {
+        "cpu0": 24.3,
+        "cpu1": 10.9,
+        "cpu10": 92.9,
+        "cpu11": 16.0,
+        "cpu2": 92.8,
+        "cpu3": 92.9,
+        "cpu4": 92.5,
+        "cpu5": 91.8,
+        "cpu6": 88.5,
+        "cpu7": 91.5,
+        "cpu8": 92.9,
+        "cpu9": 93.8
+      }
+    }
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "pairs": 3,
+  "dirs": {
+    "dl": {
+      "per_pair_mbps": {
+        "1": 45.73,
+        "2": 35.3,
+        "3": 37.19
+      },
+      "aggregate_mbps": 118.22,
+      "aggregate_sec_min": 52.69,
+      "aggregate_sec_p50": 117.63,
+      "retransmits": {
+        "1": 382,
+        "2": 700,
+        "3": 529
+      },
+      "sim_ratio": 1.0,
+      "air_mbps": 118.22,
+      "air_per_pair_mbps": {
+        "1": 45.73,
+        "2": 35.3,
+        "3": 37.19
+      }
+    },
+    "ul": {
+      "per_pair_mbps": {
+        "1": 29.43,
+        "2": 29.26,
+        "3": 29.5
+      },
+      "aggregate_mbps": 88.19,
+      "aggregate_sec_min": 38.65,
+      "aggregate_sec_p50": 93.34,
+      "retransmits": {
+        "1": 1636,
+        "2": 749,
+        "3": 1091
+      },
+      "sim_ratio": 1.0,
+      "air_mbps": 88.19,
+      "air_per_pair_mbps": {
+        "1": 29.43,
+        "2": 29.26,
+        "3": 29.5
+      }
+    }
+  },
+  "verdict": "FAIL",
+  "reasons": [
+    "dl aggregate 118.22 < 150.0"
+  ],
+  "cpu": {
+    "dl": {
+      "procs_pct_of_1cpu": {
+        "nr-uesoftmodem": 360.9,
+        "nr-softmodem": 240.0,
+        "upfd": 15.7,
+        "iperf3": 5.8,
+        "systemd": 1.2
+      },
+      "mean_busy_pct": 55.6,
+      "max_sec_busy_pct": 67.8,
+      "per_cpu_peak_pct": {
+        "cpu0": 26.1,
+        "cpu1": 19.0,
+        "cpu10": 78.8,
+        "cpu11": 78.2,
+        "cpu2": 78.4,
+        "cpu3": 77.5,
+        "cpu4": 77.8,
+        "cpu5": 78.8,
+        "cpu6": 75.5,
+        "cpu7": 74.7,
+        "cpu8": 78.8,
+        "cpu9": 78.2
+      }
+    },
+    "ul": {
+      "procs_pct_of_1cpu": {
+        "nr-softmodem": 371.5,
+        "nr-uesoftmodem": 289.6,
+        "upfd": 13.9,
+        "iperf3": 6.5,
+        "systemd": 1.2
+      },
+      "mean_busy_pct": 60.9,
+      "max_sec_busy_pct": 62.4,
+      "per_cpu_peak_pct": {
+        "cpu0": 34.1,
+        "cpu1": 18.9,
+        "cpu10": 72.7,
+        "cpu11": 72.9,
+        "cpu2": 72.4,
+        "cpu3": 72.7,
+        "cpu4": 72.9,
+        "cpu5": 73.0,
+        "cpu6": 67.7,
+        "cpu7": 64.2,
+        "cpu8": 72.4,
+        "cpu9": 73.3
+      }
+    }
+  }
+}

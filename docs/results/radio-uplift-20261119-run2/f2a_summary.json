@@ -1,0 +1,87 @@
+{
+  "pairs": 2,
+  "dirs": {
+    "dl": {
+      "per_pair_mbps": {
+        "1": 16.19,
+        "2": 12.0
+      },
+      "aggregate_mbps": 28.19,
+      "aggregate_sec_min": 14.02,
+      "aggregate_sec_p50": 28.31,
+      "retransmits": {
+        "1": 59,
+        "2": 1479
+      }
+    },
+    "ul": {
+      "per_pair_mbps": {
+        "1": 19.92,
+        "2": 15.72
+      },
+      "aggregate_mbps": 35.64,
+      "aggregate_sec_min": 24.38,
+      "aggregate_sec_p50": 37.27,
+      "retransmits": {
+        "1": 54,
+        "2": 52
+      }
+    }
+  },
+  "verdict": "FAIL",
+  "reasons": [
+    "dl pair1=16.19 < 50.0",
+    "dl pair2=12.0 < 50.0",
+    "dl aggregate 28.19 < 100.0",
+    "ul pair1=19.92 < 50.0",
+    "ul pair2=15.72 < 50.0"
+  ],
+  "cpu": {
+    "dl": {
+      "procs_pct_of_1cpu": {
+        "gnb2": 166.6,
+        "gnb1": 165.2,
+        "srsue2": 85.1,
+        "srsue1": 74.9,
+        "upfd": 6.4,
+        "iperf3": 2.1,
+        "systemd": 1.8
+      },
+      "mean_busy_pct": 64.0,
+      "max_sec_busy_pct": 65.8,
+      "per_cpu_peak_pct": {
+        "cpu0": 15.1,
+        "cpu1": 16.0,
+        "cpu2": 100.0,
+        "cpu3": 70.3,
+        "cpu4": 78.9,
+        "cpu5": 100.0,
+        "cpu6": 74.4,
+        "cpu7": 88.5
+      }
+    },
+    "ul": {
+      "procs_pct_of_1cpu": {
+        "gnb1": 190.3,
+        "gnb2": 185.4,
+        "srsue2": 90.2,
+        "srsue1": 73.3,
+        "upfd": 8.8,
+        "iperf3": 3.5,
+        "systemd": 1.7
+      },
+      "mean_busy_pct": 70.9,
+      "max_sec_busy_pct": 74.6,
+      "per_cpu_peak_pct": {
+        "cpu0": 20.4,
+        "cpu1": 14.1,
+        "cpu2": 100.0,
+        "cpu3": 100.0,
+        "cpu4": 81.2,
+        "cpu5": 100.0,
+        "cpu6": 100.0,
+        "cpu7": 93.9
+      }
+    }
+  }
+}

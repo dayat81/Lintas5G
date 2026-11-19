@@ -1,0 +1,30 @@
+Nov 19 02:57:25 vm-core-ran systemd[1]: Started /opt/srsran/bin/gnb -c /etc/lab5g/sa/gnb.yaml.
+Nov 19 02:57:25 vm-core-ran systemd[1]: lab5g-gnb.service: Main process exited, code=dumped, status=4/ILL
+Nov 19 02:57:25 vm-core-ran systemd[1]: lab5g-gnb.service: Failed with result 'core-dump'.
+Nov 19 02:57:25 vm-core-ran systemd[1]: lab5g-gnb.service: Scheduled restart job, restart counter is at 1.
+Nov 19 02:57:25 vm-core-ran systemd[1]: Stopped /opt/srsran/bin/gnb -c /etc/lab5g/sa/gnb.yaml.
+Nov 19 02:57:25 vm-core-ran systemd[1]: Started /opt/srsran/bin/gnb -c /etc/lab5g/sa/gnb.yaml.
+Nov 19 02:57:25 vm-core-ran systemd[1]: lab5g-gnb.service: Main process exited, code=dumped, status=4/ILL
+Nov 19 02:57:25 vm-core-ran systemd[1]: lab5g-gnb.service: Failed with result 'core-dump'.
+Nov 19 02:57:25 vm-core-ran systemd[1]: lab5g-gnb.service: Scheduled restart job, restart counter is at 2.
+Nov 19 02:57:25 vm-core-ran systemd[1]: Stopped /opt/srsran/bin/gnb -c /etc/lab5g/sa/gnb.yaml.
+Nov 19 02:57:25 vm-core-ran systemd[1]: Started /opt/srsran/bin/gnb -c /etc/lab5g/sa/gnb.yaml.
+Nov 19 02:57:25 vm-core-ran systemd[1]: lab5g-gnb.service: Main process exited, code=dumped, status=4/ILL
+Nov 19 02:57:25 vm-core-ran systemd[1]: lab5g-gnb.service: Failed with result 'core-dump'.
+Nov 19 02:57:26 vm-core-ran systemd[1]: lab5g-gnb.service: Scheduled restart job, restart counter is at 3.
+Nov 19 02:57:26 vm-core-ran systemd[1]: Stopped /opt/srsran/bin/gnb -c /etc/lab5g/sa/gnb.yaml.
+Nov 19 02:57:26 vm-core-ran systemd[1]: Started /opt/srsran/bin/gnb -c /etc/lab5g/sa/gnb.yaml.
+Nov 19 02:57:26 vm-core-ran systemd[1]: lab5g-gnb.service: Main process exited, code=dumped, status=4/ILL
+Nov 19 02:57:26 vm-core-ran systemd[1]: lab5g-gnb.service: Failed with result 'core-dump'.
+Nov 19 02:57:26 vm-core-ran systemd[1]: lab5g-gnb.service: Scheduled restart job, restart counter is at 4.
+Nov 19 02:57:26 vm-core-ran systemd[1]: Stopped /opt/srsran/bin/gnb -c /etc/lab5g/sa/gnb.yaml.
+Nov 19 02:57:26 vm-core-ran systemd[1]: Started /opt/srsran/bin/gnb -c /etc/lab5g/sa/gnb.yaml.
+Nov 19 02:57:26 vm-core-ran systemd[1]: lab5g-gnb.service: Main process exited, code=dumped, status=4/ILL
+Nov 19 02:57:26 vm-core-ran systemd[1]: lab5g-gnb.service: Failed with result 'core-dump'.
+Nov 19 02:57:26 vm-core-ran systemd[1]: lab5g-gnb.service: Scheduled restart job, restart counter is at 5.
+Nov 19 02:57:26 vm-core-ran systemd[1]: Stopped /opt/srsran/bin/gnb -c /etc/lab5g/sa/gnb.yaml.
+Nov 19 02:57:26 vm-core-ran systemd[1]: lab5g-gnb.service: Start request repeated too quickly.
+Nov 19 02:57:26 vm-core-ran systemd[1]: lab5g-gnb.service: Failed with result 'core-dump'.
+Nov 19 02:57:26 vm-core-ran systemd[1]: Failed to start /opt/srsran/bin/gnb -c /etc/lab5g/sa/gnb.yaml.
+-- Boot <BOOT_ID> --
+Nov 19 03:03:36 vm-core-ran systemd[1]: Started /opt/srsran/bin/gnb -c /etc/lab5g/sa/gnb.yaml.

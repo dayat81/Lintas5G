@@ -1,0 +1,18 @@
+/opt/mq/mq.sh: line 48: kill: (20452) - No such process
+ue1=b5340c ue2=85f9b1 ue3=166e83 
+dir QFI proto port(min) ue_hash  pkts  MB(orig)
+DL 1 icmp 0 166e83 40 0.01
+UL 1 icmp 0 166e83 40 0.01
+DL 1 icmp 0 85f9b1 40 0.01
+DL 2 tcp 18081 85f9b1 735 0.08
+UL 1 icmp 0 85f9b1 40 0.01
+UL 2 tcp 18081 85f9b1 1489 2.14
+DL 1 icmp 0 b5340c 50 0.01
+DL 1 tcp 5201 b5340c 1568 2.25
+DL 2 tcp 18080 b5340c 2335 2.33
+DL 2 udp 18080 b5340c 1411 2.02
+UL 1 icmp 0 b5340c 50 0.01
+UL 1 tcp 5201 b5340c 720 0.08
+UL 2 tcp 18080 b5340c 2169 2.22
+UL 2 udp 18080 b5340c 1 0.0
+tshark cross-check (pdu_type QFI count):

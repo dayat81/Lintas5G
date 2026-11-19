@@ -1,0 +1,20 @@
+pair lab5g-nr1-gnb try 1: gNB ready after 3s
+pair lab5g-nr1-gnb try 1: UE IP after 4s
+pair lab5g-nr2-gnb try 1: gNB ready after 3s
+pair lab5g-nr2-gnb try 1: UE IP after 3s
+pair lab5g-nr3-gnb try 1: gNB ready after 3s
+pair lab5g-nr3-gnb try 1: UE IP after 4s
+pair1 gnb=active ue=active keepalive=active ip=OK
+pair2 gnb=active ue=active keepalive=active ip=OK
+pair3 gnb=active ue=active keepalive=active ip=OK
+Model name:                              Intel(R) Xeon(R) CPU @ 2.60GHz
+12
+{"rlf_events":0,"late_underflow_lines":0,"keepalive_active":3,"pairs":3}
+{"n3_captured": 548897, "n3_dropped": 0, "n3_drop_pct": 0.0}
+dl {'1': 26.43, '2': 26.64, '3': 26.21} agg 79.28 {'srsue2': 132.4, 'srsue3': 131.4, 'gnb2': 130.5, 'srsue1': 130.3, 'gnb1': 130.1, 'gnb3': 130.1, 'upfd': 12.1, 'iperf3': 3.5, 'systemd': 1.3} busy 68.9 max 70.3
+ul {'1': 26.65, '2': 26.73, '3': 26.81} agg 80.19 {'gnb3': 153.6, 'gnb2': 153.0, 'gnb1': 152.3, 'srsue3': 106.1, 'srsue2': 105.5, 'srsue1': 101.0, 'upfd': 12.6, 'iperf3': 4.8, 'systemd': 1.2} busy 68.3 max 70.0
+FAIL ['dl pair1=26.43 < 50.0', 'dl pair2=26.64 < 50.0', 'dl pair3=26.21 < 50.0', 'dl aggregate 79.28 < 150.0', 'ul pair1=26.65 < 50.0', 'ul pair2=26.73 < 50.0', 'ul pair3=26.81 < 50.0']
+/var/log/lab5g/sa/gnb1.out:0
+/var/log/lab5g/sa/gnb2.out:0
+/var/log/lab5g/sa/gnb3.out:0
+/var/log/lab5g/sa/gnb4.out:0

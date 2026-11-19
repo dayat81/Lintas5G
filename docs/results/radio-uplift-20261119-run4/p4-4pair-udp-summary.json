@@ -1,0 +1,115 @@
+{
+  "pairs": 4,
+  "dirs": {
+    "dl": {
+      "per_pair_mbps": {
+        "1": 40.0,
+        "2": 40.0,
+        "3": 40.0,
+        "4": 40.0
+      },
+      "aggregate_mbps": 160.0,
+      "aggregate_sec_min": 74.14,
+      "aggregate_sec_p50": 75.96,
+      "retransmits": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null
+      }
+    },
+    "ul": {
+      "per_pair_mbps": {
+        "1": 40.0,
+        "2": 40.0,
+        "3": 40.0,
+        "4": 40.0
+      },
+      "aggregate_mbps": 160.0,
+      "aggregate_sec_min": 159.85,
+      "aggregate_sec_p50": 159.99,
+      "retransmits": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null
+      }
+    }
+  },
+  "verdict": "FAIL",
+  "reasons": [
+    "dl pair1=40.0 < 50.0",
+    "dl pair2=40.0 < 50.0",
+    "dl pair3=40.0 < 50.0",
+    "dl pair4=40.0 < 50.0",
+    "dl aggregate 160.0 < 170.0",
+    "ul pair1=40.0 < 50.0",
+    "ul pair2=40.0 < 50.0",
+    "ul pair3=40.0 < 50.0",
+    "ul pair4=40.0 < 50.0"
+  ],
+  "cpu": {
+    "dl": {
+      "procs_pct_of_1cpu": {
+        "gnb4": 96.1,
+        "gnb1": 94.3,
+        "gnb2": 94.2,
+        "gnb3": 93.5,
+        "srsue4": 92.3,
+        "srsue2": 91.8,
+        "srsue1": 91.2,
+        "srsue3": 88.5,
+        "iperf3": 18.6,
+        "upfd": 17.8,
+        "systemd": 1.4
+      },
+      "mean_busy_pct": 70.8,
+      "max_sec_busy_pct": 73.2,
+      "per_cpu_peak_pct": {
+        "cpu0": 39.7,
+        "cpu1": 47.1,
+        "cpu10": 43.9,
+        "cpu11": 49.4,
+        "cpu2": 95.0,
+        "cpu3": 95.9,
+        "cpu4": 94.8,
+        "cpu5": 95.9,
+        "cpu6": 94.9,
+        "cpu7": 97.0,
+        "cpu8": 97.0,
+        "cpu9": 98.0
+      }
+    },
+    "ul": {
+      "procs_pct_of_1cpu": {
+        "gnb2": 115.5,
+        "gnb1": 113.7,
+        "gnb4": 112.8,
+        "gnb3": 111.2,
+        "srsue1": 73.2,
+        "srsue4": 72.7,
+        "srsue2": 71.8,
+        "srsue3": 69.7,
+        "iperf3": 17.5,
+        "upfd": 7.5,
+        "systemd": 1.2
+      },
+      "mean_busy_pct": 66.6,
+      "max_sec_busy_pct": 67.6,
+      "per_cpu_peak_pct": {
+        "cpu0": 28.0,
+        "cpu1": 14.3,
+        "cpu10": 10.8,
+        "cpu11": 7.1,
+        "cpu2": 97.9,
+        "cpu3": 95.9,
+        "cpu4": 95.0,
+        "cpu5": 94.9,
+        "cpu6": 93.9,
+        "cpu7": 98.0,
+        "cpu8": 94.9,
+        "cpu9": 97.0
+      }
+    }
+  }
+}

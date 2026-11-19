@@ -1,0 +1,12 @@
+N2: Connection to AMF on 127.0.0.5:38412 completed
+==== gNB started ===
+N2: Connection to AMF on 127.0.0.5:38412 completed
+==== gNB started ===
+N2: Connection to AMF on 127.0.0.5:38412 completed
+==== gNB started ===
+N2: Connection to AMF on 127.0.0.5:38412 completed
+==== gNB started ===
+N2: Connection to AMF on 127.0.0.5:38412 completed
+==== gNB started ===
+N2: Connection to AMF on 127.0.0.5:38412 completed
+==== gNB started ===

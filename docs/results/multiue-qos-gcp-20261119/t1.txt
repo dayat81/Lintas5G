@@ -1,0 +1,7 @@
+MAC 7381 CQI/RI ('15', '2') DL rounds/err/BLER/tbl/MCS ('28813/49/30/0', '0', '0.00255', '1', '27') UL ('9679/26/11/8', '6', '0.00242', '1', '27')
+MAC 2414 CQI/RI ('15', '2') DL rounds/err/BLER/tbl/MCS ('27976/48/25/0', '0', '0.00052', '1', '27') UL ('10337/27/14/11', '11', '0.00000', '1', '27')
+MAC 55d8 CQI/RI ('15', '2') DL rounds/err/BLER/tbl/MCS ('28123/49/26/1', '0', '0.00314', '1', '17') UL ('9152/20/10/9', '9', '0.00255', '1', '27')
+reestablish 0 ULfailure 0 RRCRelease 0 late/underflow 0
+t1 tcp dl per {'1': 43.22, '2': 40.89, '3': 40.26} agg 124.37 ratio 1.0 air 124.37 busy 54.2 max 73.3 procs {'nr-uesoftmodem': 368.9, 'nr-softmodem': 244.6, 'upfd': 16.7, 'iperf3': 6.0, 'systemd': 1.1}
+{"n3_captured": 924153, "n3_dropped": 0, "n3_drop_pct": 0.0}
+{"rlf_events":1,"late_underflow_lines":0,"keepalive_active":3,"pairs":3}

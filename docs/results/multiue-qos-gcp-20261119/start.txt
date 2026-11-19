@@ -1,0 +1,33 @@
+matched=1 modified=1 5qi=7 gbr=0 port=18080
+matched=1 modified=1 5qi=1 gbr=20 port=18081
+[oai] rf=vrtsim timescale=1.0 mimo=2 ues=3 rt=1 core_cpus=0,1 ran_cpus=2-11
+Running as unit: lab5g-oai-gnb.service
+[oai] gNB ready after 3s (NG setup ok)
+Running as unit: lab5g-nr1-ue.service
+[oai] ue1 IP after 3s
+Running as unit: lab5g-nr2-ue.service
+[oai] ue2 IP after 4s
+Running as unit: lab5g-nr3-ue.service
+[oai] ue3 IP after 4s
+Running as unit: lab5g-nr1-keepalive.service
+Running as unit: lab5g-nr2-keepalive.service
+Running as unit: lab5g-nr3-keepalive.service
+ue1 gnb=active ue=active keepalive=active ip=10.45.0.x/24
+ue2 gnb=active ue=active keepalive=active ip=10.45.0.x/24
+ue3 gnb=active ue=active keepalive=active ip=10.45.0.x/24
+ue1=b5340c ue2=85f9b1 ue3=166e83 
+ue1: 1 qos-rule2, 1 modcomplete
+ue2: 1 qos-rule2, 1 modcomplete
+ue3: 0 qos-rule2, 0 modcomplete
+519.330026 [NR_RRC] I UE 1: created new DRB 1 for QFI 1 (5QI 9)
+519.331830 [NGAP]   I PDUSESSIONModify initiating message
+519.365046 [NR_RRC] I UE 1: created new DRB 2 for QFI 2 (5QI 7)
+522.670533 [NR_RRC] I UE 2: created new DRB 1 for QFI 1 (5QI 9)
+522.671481 [NGAP]   I PDUSESSIONModify initiating message
+522.705065 [NR_RRC] I UE 2: created new DRB 2 for QFI 2 (5QI 1)
+526.910080 [NR_RRC] I UE 3: created new DRB 1 for QFI 1 (5QI 9)
+519.375504 [NAS]    I Received PDU Session Modification Command, QoS Rule 2: op=1 qfi=2 dqr=0 nb_pf=4 (decoded 4 filters)
+519.375510 [NAS]    I PDU session 1: CREATE new QoS rule 2 with QFI 2 (precedence 1, 4 filters)
+522.715166 [NAS]    I Received PDU Session Modification Command, QoS Rule 2: op=1 qfi=2 dqr=0 nb_pf=4 (decoded 4 filters)
+522.715175 [NAS]    I PDU session 1: CREATE new QoS rule 2 with QFI 2 (precedence 1, 4 filters)
+{"rlf_events":1,"late_underflow_lines":0,"keepalive_active":3,"pairs":3}

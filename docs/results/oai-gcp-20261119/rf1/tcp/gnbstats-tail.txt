@@ -1,0 +1,9 @@
+1923: CSI [CQI 15 RI 2 PMI (0,0)] SRS [UL-RI 2, TPMI 0]
+1923: dlsch_rounds 98763/0/0/0, dlsch_errors 0, pucch0_DTX 0 (SNR 21.8+1.8) RSSI -37.3, BLER 0.00000 MCS (1) 27 (Qm 8) CCE fail 2
+1923: ulsch_rounds 60662/2/0/0, ulsch_errors 0, ulsch_DTX 0, BLER 0.00000 MCS (1) 27 (Qm 8 deltaMCS 0) NPRB 106 SNR 24.0 (+4.0) RSSI -39.0 CCE fail 0
+1923: CSI [CQI 15 RI 2 PMI (0,0)] SRS [UL-RI 2, TPMI 0]
+1923: dlsch_rounds 99635/0/0/0, dlsch_errors 0, pucch0_DTX 0 (SNR 21.7+1.7) RSSI -37.3, BLER 0.00000 MCS (1) 27 (Qm 8) CCE fail 2
+1923: ulsch_rounds 61430/2/0/0, ulsch_errors 0, ulsch_DTX 0, BLER 0.00000 MCS (1) 27 (Qm 8 deltaMCS 0) NPRB 106 SNR 23.3 (+3.3) RSSI -39.0 CCE fail 0
+1923: CSI [CQI 15 RI 2 PMI (0,0)] SRS [UL-RI 2, TPMI 0]
+1923: dlsch_rounds 100487/0/0/0, dlsch_errors 0, pucch0_DTX 0 (SNR 21.9+1.9) RSSI -37.3, BLER 0.00000 MCS (1) 27 (Qm 8) CCE fail 2
+1923: ulsch_rounds 62198/2/0/0, ulsch_errors 0, ulsch_DTX 0, BLER 0.00000 MCS (1) 27 (Qm 8 deltaMCS 0) NPRB 106 SNR 24.2 (+4.2) RSSI -39.0 CCE fail 0
