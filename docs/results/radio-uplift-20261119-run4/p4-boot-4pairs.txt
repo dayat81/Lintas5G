@@ -1,0 +1,14 @@
+[sa] Running as unit: lab5g-nr4-gnb.service
+[sa] pair lab5g-nr4-gnb try 1: gNB ready after 5s
+[sa] Running as unit: lab5g-nr4-ue.service
+[sa] pair lab5g-nr4-gnb try 1: UE IP after 6s
+[sa] Running as unit: lab5g-nr1-keepalive.service
+[sa] Running as unit: lab5g-nr2-keepalive.service
+[sa] Running as unit: lab5g-nr3-keepalive.service
+[sa] Running as unit: lab5g-nr4-keepalive.service
+[sa] pair1 gnb=active ue=active keepalive=active ip=10.45.x.x/16
+[sa] pair2 gnb=active ue=active keepalive=active ip=10.45.x.x/16
+[sa] pair3 gnb=active ue=active keepalive=active ip=10.45.x.x/16
+[sa] pair4 gnb=active ue=active keepalive=active ip=10.45.x.x/16
+2026-11-19 12:48:54 WIB [sa] core-gre-emu not ready yet
+2026-11-19 12:48:55 WIB [sa] done

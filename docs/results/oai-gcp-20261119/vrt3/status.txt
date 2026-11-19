@@ -1,0 +1,3 @@
+ue1 gnb=active ue=active keepalive=active ip=10.45.0.x/24
+ue2 gnb=active ue=active keepalive=active ip=10.45.0.x/24
+ue3 gnb=active ue=active keepalive=active ip=10.45.0.x/24

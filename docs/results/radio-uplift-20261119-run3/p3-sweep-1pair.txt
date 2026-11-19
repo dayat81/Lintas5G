@@ -1,0 +1,7 @@
+pair lab5g-nr1-gnb try 1: gNB ready after 3s
+pair lab5g-nr1-gnb try 1: UE IP after 3s
+pair1 gnb=active ue=active keepalive=active ip=10.45.x.x/16
+{"udp_dl": 55.9, "udp_ul": 58.3, "tcp_dl": 51.1, "cpu_dl": {"gnb1": 178.8, "srsue1": 172.2, "iperf3": 7.0, "upfd": 6.8, "systemd": 1.1}, "cpu_ul": {"gnb1": 199.6, "srsue1": 131.0, "iperf3": 6.5, "upfd": 5.3, "systemd": 1.2}, "metric_rows": 62, "sample": ["   1 4601 |  15 1.0   28    59M 1000    0   0%  1.98M |  65.3   ovl   28   835k  171    0   0%  1.04k      0  n/a\n", "   1 4601 |  15 1.0   28    59M 1000    0   0%  2.04M |  65.4   ovl   28   943k  206    0   0%  1.04k      0  n/a\n", "   1 4601 |  15 1.0   28    59M 1000    0   0%  2.07M |  65.5   ovl   28   739k  193    0   0%    535      0  n/a\n"]}
+ pci rnti | cqi  ri  mcs  brate   ok  nok  (%)  dl_bs | pusch  rsrp  mcs  brate   ok  nok  (%)    bsr     ta  phr
+ pci rnti | cqi  ri  mcs  brate   ok  nok  (%)  dl_bs | pusch  rsrp  mcs  brate   ok  nok  (%)    bsr     ta  phr
+ pci rnti | cqi  ri  mcs  brate   ok  nok  (%)  dl_bs | pusch  rsrp  mcs  brate   ok  nok  (%)    bsr     ta  phr

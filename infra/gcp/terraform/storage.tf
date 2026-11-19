@@ -164,6 +164,12 @@ locals {
     [for f in fileset("${path.module}/../sesi-c", "*.{sh,py}") : "sesi-c/${f}"],
     [for f in fileset("${path.module}/../vnc", "*.{sh,py,html}") : "vnc/${f}"],
     ["vnc/emu-image/Dockerfile", "vnc/emu-image/patch-cli.py"], # custom emulator image (Android 16 Play Store + ARM translation)
+    # Sesi D (Fase 0 closeout): Zeek pkthash taps, QUIC/STR/TCP-UL runners, ClickHouse/Grafana per-packet assets
+    [for f in fileset("${path.module}/../sesi-d", "**/*.{sh,py,zeek,sql,json}") : "sesi-d/${f}" if !startswith(f, "test/")],
+    # 5G SA profile (ran_mode = sa-*): 5GC SA + srsRAN Project gNB / srsUE or UERANSIM
+    [for f in fileset("${path.module}/../sa", "*.{sh,py,tmpl}") : "sa/${f}"],
+    [for f in fileset("${path.module}/../sesi-a", "*.{sh,tmpl}") : "sesi-a/${f}"],
+    ["prebuild/build-srsran.sh"],
   )) : toset([])
 }
 

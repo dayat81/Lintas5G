@@ -1,0 +1,23 @@
+pair1 gnb=active ue=active keepalive=active ip=OK
+pair2 gnb=active ue=active keepalive=active ip=OK
+pair3 gnb=active ue=active keepalive=active ip=OK
+pair4 gnb=active ue=active keepalive=active ip=OK
+udp40M dl [23.6, 23.3, 23.3, 23.7] agg 93.9
+udp40M ul [20.7, 20.4, 20.3, 20.5] agg 81.9
+busy dl 70.8 ul 66.6
+pair1 rows=20 dl_mcs=1.0 dl_bler=90.84% ul_mcs=0.0 ul_bler=73.98%
+pair2 rows=20 dl_mcs=1.0 dl_bler=90.74% ul_mcs=0.0 ul_bler=75.14%
+pair3 rows=19 dl_mcs=1.0 dl_bler=91.16% ul_mcs=0.0 ul_bler=73.48%
+pair4 rows=20 dl_mcs=1.0 dl_bler=90.88% ul_mcs=0.0 ul_bler=75.21%
+   1 4601 |  15 1.0   26   1.8k    2    0   0%      0 |  65.5   ovl   28    11k    4    0   0%      0      0  n/a
+   1 4601 |  15 1.0   28   3.4M   71    0   0%   507k |  65.5   ovl   28    51k   19    0   0%      0      0  n/a
+   1 4601 |  15 1.0   28    59M 1000    0   0%  5.59M |  65.5   ovl   27   238k   97    0   0%      0      0  n/a
+{"rlf_events":0,"late_underflow_lines":0,"keepalive_active":4,"pairs":4}
+/var/log/lab5g/sa/gnb1.out:0
+/var/log/lab5g/sa/gnb2.out:0
+/var/log/lab5g/sa/gnb3.out:0
+/var/log/lab5g/sa/gnb4.out:0
+pair1 dl_rows=9 dl_mcs=28.0 dl_bler=0.00% ul_rows=20 ul_mcs=27.7 ul_bler=0.00%
+pair2 dl_rows=8 dl_mcs=28.0 dl_bler=0.00% ul_rows=20 ul_mcs=27.6 ul_bler=0.00%
+pair3 dl_rows=9 dl_mcs=28.0 dl_bler=0.00% ul_rows=19 ul_mcs=27.6 ul_bler=0.00%
+pair4 dl_rows=9 dl_mcs=27.9 dl_bler=0.00% ul_rows=20 ul_mcs=27.6 ul_bler=0.00%

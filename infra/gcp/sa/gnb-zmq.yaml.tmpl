@@ -1,0 +1,44 @@
+# srsRAN Project gNB, ZMQ RF (lab5g 5G SA profile). Based on the srsRAN "srsUE + ZMQ" reference config.
+# N2/N3 bind 127.0.1.1 (same as the 4G eNB) so zeek-taps n3 BPF "udp port 2152 and host 127.0.1.1" works unchanged.
+cu_cp:
+  amf:
+    addr: 127.0.0.5
+    port: 38412
+    bind_addr: 127.0.1.1
+    supported_tracking_areas:
+      - tac: 1
+        plmn_list:
+          - plmn: "00101"
+            tai_slice_support_list:
+              - sst: 1
+cu_up:
+  upf:
+    bind_addr: 127.0.1.1
+ru_sdr:
+  device_driver: zmq
+  device_args: tx_port=tcp://127.0.0.1:2000,rx_port=tcp://127.0.0.1:2001,base_srate=__SR__e6
+  srate: __SR__
+  tx_gain: 75
+  rx_gain: 75
+cell_cfg:
+  dl_arfcn: 368500
+  band: 3
+  channel_bandwidth_MHz: __BW__
+  common_scs: 15
+  plmn: "00101"
+  tac: 1
+  pci: 1
+  pdcch:
+    common:
+      ss0_index: 0
+      coreset0_index: __CS0__
+    dedicated:
+      ss2_type: common
+      dci_format_0_1_and_1_1: false
+  prach:
+    prach_config_index: 1
+log:
+  filename: /var/log/lab5g/sa/gnb.log
+  all_level: warning
+pcap:
+  ngap_enable: false

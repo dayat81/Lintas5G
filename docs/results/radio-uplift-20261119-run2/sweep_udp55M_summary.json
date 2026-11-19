@@ -1,0 +1,41 @@
+{
+  "pairs": 1,
+  "dirs": {
+    "dl": {
+      "per_pair_mbps": {
+        "1": 55.0
+      },
+      "aggregate_mbps": 55.0,
+      "aggregate_sec_min": 34.35,
+      "aggregate_sec_p50": 35.36,
+      "retransmits": {
+        "1": null
+      }
+    }
+  },
+  "verdict": "PASS",
+  "reasons": [],
+  "cpu": {
+    "dl": {
+      "procs_pct_of_1cpu": {
+        "srsue1": 199.3,
+        "gnb1": 184.7,
+        "iperf3": 10.5,
+        "upfd": 9.8,
+        "systemd": 1.8
+      },
+      "mean_busy_pct": 58.7,
+      "max_sec_busy_pct": 61.1,
+      "per_cpu_peak_pct": {
+        "cpu0": 51.9,
+        "cpu1": 47.0,
+        "cpu2": 85.1,
+        "cpu3": 75.3,
+        "cpu4": 89.7,
+        "cpu5": 76.8,
+        "cpu6": 84.4,
+        "cpu7": 48.6
+      }
+    }
+  }
+}

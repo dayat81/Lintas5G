@@ -1,0 +1,7 @@
+# Radio uplift re-run on faster CPU (19 Nov 2026, user t237u "setuju usulan"): core n2-custom-12 on Ice Lake, emulator not created.
+ran_mode              = "sa-srsran"
+ran_prebuild_object   = "prebuild/srsran-release_24_10_1-release_23_11-x86-64-v3-jammy-x86_64.tar.zst"
+core_machine_type     = "n2-custom-12-49152"
+core_min_cpu_platform = "Intel Ice Lake"
+emu_enabled           = false
+nr_pairs              = 1

@@ -25,6 +25,7 @@ providers:
   options: {path: /var/lib/grafana/dashboards}
 Y
 cp /opt/lab5g/sesi-c/obs/dashboard-fase0.json $D/dash/
+[ -f /opt/lab5g/sesi-d/obs/dashboard-pktlat.json ] && cp /opt/lab5g/sesi-d/obs/dashboard-pktlat.json $D/dash/   # Sesi D per-packet
 docker network create lab5g-obs 2>/dev/null || true
 docker rm -f clickhouse grafana renderer 2>/dev/null || true
 docker run -d --name clickhouse --network lab5g-obs --ulimit nofile=262144:262144 -e CLICKHOUSE_USER=lab -e CLICKHOUSE_PASSWORD=$CH_PASS \
@@ -36,6 +37,7 @@ docker run -d --name grafana --network lab5g-obs -p 127.0.0.1:3000:3000 -e CH_PA
   -v $D/prov:/etc/grafana/provisioning -v $D/dash:/var/lib/grafana/dashboards grafana/grafana:11.3.0
 for i in $(seq 1 60); do docker exec clickhouse clickhouse-client --user lab --password "$CH_PASS" -q "SELECT 1" >/dev/null 2>&1 && break; sleep 2; done
 docker exec -i clickhouse clickhouse-client --user lab --password "$CH_PASS" --multiquery < /opt/lab5g/sesi-c/obs/obs-schema.sql
+[ -f /opt/lab5g/sesi-d/obs/pkt-schema.sql ] && docker exec -i clickhouse clickhouse-client --user lab --password "$CH_PASS" --multiquery < /opt/lab5g/sesi-d/obs/pkt-schema.sql
 for i in $(seq 1 90); do curl -sf http://127.0.0.1:3000/api/health >/dev/null && break; sleep 2; done
 curl -s http://127.0.0.1:3000/api/health; echo; docker ps --format '{{.Names}} {{.Image}} {{.Ports}}'
 ss -ltnp | grep -E ':3000|:8123|:9000' || true

@@ -1,0 +1,306 @@
+[
+ {
+  "test": "rf1",
+  "proto": "tcp",
+  "dir": "dl",
+  "per": {
+   "1": 106.76
+  },
+  "agg": 106.76,
+  "ratio": 1.455,
+  "air": 73.37,
+  "busy": 44.9,
+  "maxbusy": 55.3,
+  "procs": {
+   "nr-uesoftmodem": 288.3,
+   "nr-softmodem": 214.4,
+   "upfd": 11.8
+  }
+ },
+ {
+  "test": "rf1",
+  "proto": "tcp",
+  "dir": "ul",
+  "per": {
+   "1": 122.25
+  },
+  "agg": 122.25,
+  "ratio": 1.372,
+  "air": 89.1,
+  "busy": 52.1,
+  "maxbusy": 53.3,
+  "procs": {
+   "nr-softmodem": 361.0,
+   "nr-uesoftmodem": 209.9,
+   "upfd": 15.5
+  }
+ },
+ {
+  "test": "rf1",
+  "proto": "udp",
+  "dir": "dl",
+  "per": {
+   "1": 244.9
+  },
+  "agg": 244.9,
+  "ratio": 1.066,
+  "air": 229.74,
+  "busy": 59.1,
+  "maxbusy": 67.7,
+  "procs": {
+   "nr-uesoftmodem": 448.6,
+   "nr-softmodem": 203.5,
+   "upfd": 22.6
+  }
+ },
+ {
+  "test": "rf1",
+  "proto": "udp",
+  "dir": "ul",
+  "per": {
+   "1": 128.56
+  },
+  "agg": 128.56,
+  "ratio": 1.41,
+  "air": 91.18,
+  "busy": 50.6,
+  "maxbusy": 51.8,
+  "procs": {
+   "nr-softmodem": 370.5,
+   "nr-uesoftmodem": 185.7,
+   "upfd": 7.4
+  }
+ },
+ {
+  "test": "vrt10",
+  "proto": "tcp",
+  "dir": "dl",
+  "per": {
+   "1": 102.84
+  },
+  "agg": 102.84,
+  "ratio": 1.0,
+  "air": 102.84,
+  "busy": 27.3,
+  "maxbusy": 33.8,
+  "procs": {
+   "nr-uesoftmodem": 187.2,
+   "nr-softmodem": 139.1,
+   "upfd": 10.6
+  }
+ },
+ {
+  "test": "vrt10",
+  "proto": "tcp",
+  "dir": "ul",
+  "per": {
+   "1": 87.03
+  },
+  "agg": 87.03,
+  "ratio": 1.0,
+  "air": 87.03,
+  "busy": 26.3,
+  "maxbusy": 28.0,
+  "procs": {
+   "nr-softmodem": 237.0,
+   "nr-uesoftmodem": 93.6,
+   "upfd": 10.6
+  }
+ },
+ {
+  "test": "vrt10",
+  "proto": "udp",
+  "dir": "dl",
+  "per": {
+   "1": 158.05
+  },
+  "agg": 158.05,
+  "ratio": 1.0,
+  "air": 158.05,
+  "busy": 55.0,
+  "maxbusy": 61.2,
+  "procs": {
+   "nr-uesoftmodem": 385.3,
+   "nr-softmodem": 163.0,
+   "upfd": 23.5
+  }
+ },
+ {
+  "test": "vrt10",
+  "proto": "udp",
+  "dir": "ul",
+  "per": {
+   "1": 88.51
+  },
+  "agg": 88.51,
+  "ratio": 1.0,
+  "air": 88.51,
+  "busy": 27.4,
+  "maxbusy": 29.1,
+  "procs": {
+   "nr-softmodem": 238.4,
+   "nr-uesoftmodem": 80.2,
+   "upfd": 4.6
+  }
+ },
+ {
+  "test": "rf3",
+  "proto": "tcp",
+  "dir": "dl",
+  "per": {
+   "1": 33.36,
+   "2": 32.85,
+   "3": 30.61
+  },
+  "agg": 96.82,
+  "ratio": 0.61,
+  "air": 96.82,
+  "busy": 49.3,
+  "maxbusy": 56.3,
+  "procs": {
+   "nr-uesoftmodem": 357.8,
+   "nr-softmodem": 192.8,
+   "upfd": 11.4
+  }
+ },
+ {
+  "test": "rf3",
+  "proto": "tcp",
+  "dir": "ul",
+  "per": {
+   "1": 18.05,
+   "2": 18.34,
+   "3": 18.47
+  },
+  "agg": 54.86,
+  "ratio": 0.62,
+  "air": 54.86,
+  "busy": 47.3,
+  "maxbusy": 48.4,
+  "procs": {
+   "nr-uesoftmodem": 268.8,
+   "nr-softmodem": 258.9,
+   "upfd": 7.8
+  }
+ },
+ {
+  "test": "rf3",
+  "proto": "udp",
+  "dir": "dl",
+  "per": {
+   "1": 56.43,
+   "2": 56.5,
+   "3": 56.52
+  },
+  "agg": 169.45,
+  "ratio": 0.574,
+  "air": 169.45,
+  "busy": 58.4,
+  "maxbusy": 59.5,
+  "procs": {
+   "nr-uesoftmodem": 426.2,
+   "nr-softmodem": 206.6,
+   "upfd": 28.6
+  }
+ },
+ {
+  "test": "rf3",
+  "proto": "udp",
+  "dir": "ul",
+  "per": {
+   "1": 23.98,
+   "2": 23.75,
+   "3": 23.69
+  },
+  "agg": 71.42,
+  "ratio": 0.611,
+  "air": 71.42,
+  "busy": 45.1,
+  "maxbusy": 46.4,
+  "procs": {
+   "nr-softmodem": 250.5,
+   "nr-uesoftmodem": 243.5,
+   "upfd": 3.8
+  }
+ },
+ {
+  "test": "vrt3",
+  "proto": "tcp",
+  "dir": "dl",
+  "per": {
+   "1": 45.73,
+   "2": 35.3,
+   "3": 37.19
+  },
+  "agg": 118.22,
+  "ratio": 1.0,
+  "air": 118.22,
+  "busy": 55.6,
+  "maxbusy": 67.8,
+  "procs": {
+   "nr-uesoftmodem": 360.9,
+   "nr-softmodem": 240.0,
+   "upfd": 15.7
+  }
+ },
+ {
+  "test": "vrt3",
+  "proto": "tcp",
+  "dir": "ul",
+  "per": {
+   "1": 29.43,
+   "2": 29.26,
+   "3": 29.5
+  },
+  "agg": 88.19,
+  "ratio": 1.0,
+  "air": 88.19,
+  "busy": 60.9,
+  "maxbusy": 62.4,
+  "procs": {
+   "nr-softmodem": 371.5,
+   "nr-uesoftmodem": 289.6,
+   "upfd": 13.9
+  }
+ },
+ {
+  "test": "vrt3",
+  "proto": "udp",
+  "dir": "dl",
+  "per": {
+   "1": 75.77,
+   "2": 72.73,
+   "3": 72.72
+  },
+  "agg": 221.22,
+  "ratio": 1.0,
+  "air": 221.22,
+  "busy": 79.4,
+  "maxbusy": 81.0,
+  "procs": {
+   "nr-uesoftmodem": 564.7,
+   "nr-softmodem": 268.5,
+   "upfd": 32.1
+  }
+ },
+ {
+  "test": "vrt3",
+  "proto": "udp",
+  "dir": "ul",
+  "per": {
+   "1": 35.66,
+   "2": 35.22,
+   "3": 35.44
+  },
+  "agg": 106.32,
+  "ratio": 1.0,
+  "air": 106.32,
+  "busy": 54.3,
+  "maxbusy": 56.2,
+  "procs": {
+   "nr-softmodem": 351.1,
+   "nr-uesoftmodem": 229.4,
+   "upfd": 6.5
+  }
+ }
+]

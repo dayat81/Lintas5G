@@ -62,3 +62,16 @@ mpls_tunnel_mode   = "gre"   # atau "vxlan"
 # gui_emu_gpu       = "none"    # none | t4 (n1-standard-8 + T4, zona a/b, butuh kuota GPU)
 # gui_emu_userdata_uri = ""     # gs://<bucket-privat>/emu/session-api36-pixelc.tar.zst (SENSITIF, bucket di luar terraform)
 # gui_cost_per_hour = "0.80"
+
+# ---- Radio uplift (19 Nov 2026): budget TETAP 12 vCPU, tanpa kenaikan kuota ----
+# Profil P1 (1 pasang NR + AVD):   core n2-standard-8 + emu n2-standard-4           = 12
+# Profil P2/P3 (radio-only 2-3 pasang NR, emulator mati):
+#   emu_enabled = false, core_machine_type = "n2-standard-8" + UE VM terpisah (belum ada IaC) ATAU
+#   core_machine_type = "n2-custom-12-49152" (12 vCPU, 48 GB), enable_obs = false   = 12
+# ran_mode = "sa-srsran"; nr_pairs = 1..4 (default 1; optimal 3). core_min_cpu_platform otomatis Ice Lake untuk sa-srsran. Jangan aktifkan enable_obs/enable_mpls di profil 12 vCPU.
+# core_machine_type          = "n2-standard-8"
+# emu_machine_type           = "n2-standard-4"
+# emu_enabled                = true    # false = radio-only
+# nr_pairs                   = 3
+# nr_exclude_zmq_from_n3_tap = true
+# vcpu_budget                = 12

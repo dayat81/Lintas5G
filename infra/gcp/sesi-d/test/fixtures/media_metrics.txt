@@ -1,0 +1,1 @@
+metrics: width=1280 height=720 bitrate=2500000 itag=22 mime=video/avc

@@ -10,7 +10,7 @@ resource "google_compute_firewall" "allow_iap" {
 
   allow {
     protocol = "tcp"
-    ports    = ["22", "5900", "6080", "3000"]
+    ports    = concat(["22", "3000"], var.gui_vnc ? ["5900", "6080"] : []) # headless (gui_vnc=false): no VNC ports
   }
 
   source_ranges = ["35.235.240.0/20"]

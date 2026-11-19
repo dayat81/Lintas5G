@@ -1,0 +1,1 @@
+11-18 10:00:00.000  1234  1234 I ExoPlayerImpl: Format(1, video/avc, 1280x720, br=2500000)

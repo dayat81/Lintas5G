@@ -55,7 +55,9 @@ def add(req):
     ue, rem, port = req['ueIpv4'], req['remote'], int(req.get('port', 9000))
     with LOCK: pref = NEXT[0]; NEXT[0] += 1
     # DL (ogstun egress): remote -> UE ; UL (ifb0): UE -> remote. TCP port app + ICMP (probe ping).
-    for dev, m in ((IF, f"match ip src {rem}/32 match ip dst {ue}/32"), (IFB, f"match ip src {ue}/32 match ip dst {rem}/32")):
+    # remote: IPv4 (/32), CIDR, or "any" (Sesi D: QUIC udp/443 to any internet server)
+    rc = None if rem in ("any", "0.0.0.0/0") else (rem if "/" in rem else f"{rem}/32")
+    for dev, m in ((IF, (f"match ip src {rc} " if rc else "") + f"match ip dst {ue}/32"), (IFB, f"match ip src {ue}/32" + (f" match ip dst {rc}" if rc else ""))):
         pm = "sport" if dev == IF else "dport"
         sh(f"tc filter add dev {dev} parent 1: protocol ip prio {pref} u32 {m} match ip protocol 6 0xff match ip {pm} {port} 0xffff flowid 1:10")
         sh(f"tc filter add dev {dev} parent 1: protocol ip prio {pref} u32 {m} match ip protocol 17 0xff match ip {pm} {port} 0xffff flowid 1:10")

@@ -1,0 +1,16 @@
+nof_antennas = 2
+device_args = tx_port0=2001,rx_port0=2000,tx_port1=2003,rx_port1=2002,base_srate=23.04e6
+pair lab5g-nr1-gnb try 1: gNB not ready after 3s (failed)
+pair1 start FAILED
+pair1 gnb=failed ue=inactive keepalive=inactive ip=
+--== srsRAN gNB (commit ef4b074) ==--
+The PRACH detector will not meet the performance requirements with the configuration {Format 0, ZCZ 0, SCS 1.25kHz, Rx ports 1}.
+Lower PHY in executor blocking mode.
+srsRAN ERROR: Invalid configuration DU cell detected.
+> Nof. DL antennas 2 cannot be greater than 1 when using fallback DCI format
+PDU Session Establishment successful. IP: <UE_IP>
+RRC NR reconfiguration successful.
+Stopping ..
+---  exiting  ---
+Device "tun_srsue" does not exist.
+{"rlf_events":0,"late_underflow_lines":0,"keepalive_active":0,"pairs":1}

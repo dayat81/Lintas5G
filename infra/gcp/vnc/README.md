@@ -185,23 +185,41 @@ gcloud storage buckets update gs://<bucket-privat> --versioning
 # hanya owner + SA lab yang boleh akses; hapus binding projectViewer/projectEditor bawaan
 ```
 
+- **Direct mount (Fase 0 closeout).** Userdata tinggal di host `/var/lib/lab5g/emu-userdata/{emulator,avd}` (root 0711, isi milik
+  uid 1300:1301, 0700) dan di-bind-mount ke `/home/androidusr/emulator` dan `/home/androidusr/.android/avd`. Tidak ada `docker cp`.
 - Simpan (di vm-emu, setelah login): `sudo EMU_USERDATA_URI=gs://<bucket-privat>/emu/session-api36-pixelc.tar.zst bash /opt/lab5g/vnc/emu-session-save.sh`
-  (sync, stop emulator, `docker cp`, strip snapshot/lock, manifest `lab5g-session.json`, zstd, upload `.tar.zst` + `.sha256` + `.json`, start lagi).
+  (adb sync, `adb emu kill`, `docker stop`, tar.zst langsung dari direktori host: `emulator/`, `avd/`, `adb/` (pasangan adbkey) +
+  manifest `lab5g-session.json`; strip snapshot/lock/bootcompleted; upload `.tar.zst` + `.sha256` + `.json`; start lagi).
   Butuh `roles/storage.objectAdmin` untuk SA `lab5g-emu` di bucket itu, diberikan manual.
-- Restore: set `gui_emu_userdata_uri` di tfvars. Terraform memberi SA `lab5g-emu` `roles/storage.objectViewer` di bucket itu dan mengisi metadata `gui-emu-userdata-uri`.
-  `emu-vnc-start.sh` lalu memanggil `emu-session-restore.sh` di antara `docker create` dan `docker start`: verifikasi sha256, cocokkan manifest
-  (api/img_type/device) dengan container. Kalau tidak cocok atau gagal, muncul peringatan dan emulator boot fresh (tidak fatal).
+- Restore: set `gui_emu_userdata_uri` di tfvars (metadata `gui-emu-userdata-uri`, SA `lab5g-emu` dapat `objectViewer`).
+  `emu-session-restore.sh` jalan **sebelum** `docker create`: stream `gcloud storage cat` → sha256 (tee) → zstd → tar ke `$UD.new`, verifikasi
+  sha256 + manifest (api/img_type/device), lalu rename atomik. Userdata lokal yang sudah ada dipertahankan (`FORCE_RESTORE=1` untuk menimpa).
+  Gagal/tidak cocok → peringatan, emulator boot fresh (tidak fatal). Log hanya `session_uri=set|none`, tanpa nama bucket.
+- **Pasangan adbkey ikut sesi (SENSITIF).** Userdata Android menyimpan `adb_keys` (kunci publik host yang dipercaya). Container baru membuat
+  adbkey baru, sehingga tanpa kunci lama adb `unauthorized` dan dialog "Allow USB debugging" muncul (tidak bisa diklik tanpa VNC).
+  `emu-vnc-start.sh` menyalin `$UD/adb/adbkey{,.pub}` (root 0700, file 0600) ke container di antara `docker create` dan `docker start`,
+  dan menangkap kunci container setelah boot pertama bila belum ada. Kunci tidak pernah dicetak/di-commit. Emulator juga diberi
+  `-skip-adb-auth` (`EMU_EXTRA_ARGS`), tetapi pada image `google_apis_playstore` (user build) flag ini **tidak berpengaruh** (Sesi D).
+  Arsip lama (dibuat sebelum perbaikan ini) tidak berisi adbkey: perlu satu kali "Always allow" (VNC lewat IAP SSH, butuh approval)
+  lalu simpan ulang.
 - Arsip terikat pada image/API/device. Ganti `gui_emu_api`/`gui_emu_device` berarti login ulang lalu simpan ulang.
 
-**Known issue:** CLI budtmo (`is_initialized`) membandingkan "Pixel C" dengan `hw.device.name=pixel_c`, jadi selalu False.
-Akibatnya AVD dibuat ulang dan `-wipe-data` jalan di setiap start, sehingga sesi hasil restore terhapus. `vnc/emu-image/patch-cli.py`
-memperbaiki regex ini (case-insensitive, bentuk `pixel_c`). Lihat hasil verifikasi restore di `test-run-logs/apply-1313/SUMMARY.md`.
-Status restore: **BELUM TERVERIFIKASI**. Uji ke-2 (image dengan patch-cli.py) dihentikan karena melewati timebox:
-download + extract ~1 menit, lalu `docker cp -a` 3.2 GB ke container berjalan >7 menit (writeback disk standar, load ~6).
-Arsip asli (diambil sebelum wipe, accounts=1) tetap aman di bucket.
-**Usulan perbaikan:** jangan pakai `docker cp`. Extract langsung ke direktori host (mis. `/var/lib/lab5g/emu-userdata`,
-chown 1300:1301) dan mount sebagai volume (`-v /var/lib/lab5g/emu-userdata:/home/androidusr/emulator`). Restore jadi cukup sekali
-extract tanpa copy kedua, dan sesi tetap ada walau container dibuat ulang. Pertimbangkan pula disk pd-balanced/pd-ssd untuk vm-emu.
+**Known issue (diperbaiki):** CLI budtmo (`is_initialized`) membandingkan "Pixel C" dengan `hw.device.name=pixel_c` → AVD dibuat ulang
+dengan `-wipe-data`. `vnc/emu-image/patch-cli.py` memperbaiki regex ini.
+
+Status restore (Sesi D, 18 Nov 2026, disk pd-standard 250 GB): stream + extract **27 s** (sebelumnya `docker cp` >7 menit), sha256 dan
+manifest cocok, emulator boot dengan userdata hasil restore (home screen + app akun tes, tanpa wizard). Verifikasi akun via adb
+**belum** (adb `unauthorized`, lihat pasangan adbkey di atas).
+
+**Known issue:** `docker start` pada container emulator yang sudah ada gagal (`sudo chown 1300:1301 /dev/kvm` di entrypoint
+budtmo, exit 1). Jangan stop/start; buat ulang container (`FORCE=1 bash emu-vnc-start.sh`, ~20 s dengan direct mount, userdata
+dan adbkey tetap). Simpan sesi butuh `objectAdmin` sementara untuk SA `lab5g-emu` di bucket sesi (cabut setelah upload).
+
+### Mode headless (`gui_vnc = false`)
+
+Tanpa port 5900/6080 (tidak dipublish, firewall IAP hanya 22/3000), `WEB_VNC=false`, tanpa caddy dan cloudflared; hanya adb
+`127.0.0.1:5555` + collector. `gui_public_tunnel` harus `false` (precondition). Cek YouTube/K4 headless: `emu-youtube-headless.sh`
+(media_session + posisi, screenshot ke `/var/lib/lab5g/private-shots`, root-only, tidak untuk evidence publik). Butuh adb authorized.
 
 ### Uji Emulator Usability (sesi fresh apply)
 

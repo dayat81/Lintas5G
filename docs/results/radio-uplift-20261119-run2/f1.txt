@@ -1,0 +1,8 @@
+Model name:                              Intel(R) Xeon(R) CPU @ 2.80GHz
+8
+{"rlf_events":0,"late_underflow_lines":0,"keepalive_active":1,"pairs":1}
+{"n3_captured": 256124, "n3_dropped": 0, "n3_drop_pct": 0.0}
+dl {'1': 35.54} agg 35.54 {'srsue1': 255.0, 'gnb1': 231.5, 'upfd': 8.3, 'iperf3': 2.5, 'systemd': 1.6} busy 63.7 max 66.9
+ul {'1': 29.19} agg 29.19 {'gnb1': 244.2, 'srsue1': 161.2, 'upfd': 7.5, 'iperf3': 3.2, 'systemd': 1.6} busy 52.8 max 54.8
+FAIL ['dl pair1=35.54 < 50.0', 'dl aggregate 35.54 < 50.0', 'ul pair1=29.19 < 50.0']
+0

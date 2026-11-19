@@ -1,0 +1,24 @@
+dir QFI proto port(min) ue_hash  pkts  MB(orig)
+DL 1 icmp 0 166e83 34 0.0
+DL 1 tcp 18080 166e83 1567 2.25
+DL 1 tcp 18081 166e83 1567 2.25
+DL 1 tcp 5203 166e83 798 0.09
+UL 1 icmp 0 166e83 34 0.0
+UL 1 tcp 18080 166e83 694 0.08
+UL 1 tcp 18081 166e83 814 0.09
+UL 1 tcp 5203 166e83 1506 2.15
+DL 1 icmp 0 85f9b1 34 0.0
+DL 1 tcp 18080 85f9b1 1566 2.25
+DL 2 tcp 18081 85f9b1 1580 2.25
+DL 2 udp 18081 85f9b1 1415 2.03
+UL 1 icmp 0 85f9b1 34 0.0
+UL 1 tcp 18080 85f9b1 702 0.08
+UL 2 tcp 18081 85f9b1 702 0.08
+UL 2 udp 18081 85f9b1 1 0.0
+DL 1 icmp 0 b5340c 34 0.0
+UL 1 icmp 0 b5340c 34 0.0
+/usr/bin/tshark
+      1 	gtp.ext_hdr.pdu_ses_cont.pdu_type
+      1 	gtp.ext_hdr.pdu_ses_cont.qos_flow_id
+      1 Running as user "root" and group "root". This could be dangerous.
+      1 tshark: Some fields aren't valid:

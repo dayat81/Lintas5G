@@ -1,0 +1,6 @@
+ran_mode          = "sa-oai"
+core_machine_type = "n2-custom-12-49152"
+emu_enabled       = false
+nr_pairs          = 3
+oai_rf            = "vrtsim"
+oai_mimo          = 2

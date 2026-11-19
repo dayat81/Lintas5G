@@ -1,0 +1,91 @@
+{
+  "pairs": 1,
+  "dirs": {
+    "dl": {
+      "per_pair_mbps": {
+        "1": 244.9
+      },
+      "aggregate_mbps": 244.9,
+      "aggregate_sec_min": 97.37,
+      "aggregate_sec_p50": 288.57,
+      "retransmits": {
+        "1": null
+      },
+      "sim_ratio": 1.066,
+      "air_mbps": 229.74,
+      "air_per_pair_mbps": {
+        "1": 229.74
+      }
+    },
+    "ul": {
+      "per_pair_mbps": {
+        "1": 128.56
+      },
+      "aggregate_mbps": 128.56,
+      "aggregate_sec_min": 299.74,
+      "aggregate_sec_p50": 300.0,
+      "retransmits": {
+        "1": null
+      },
+      "sim_ratio": 1.41,
+      "air_mbps": 91.18,
+      "air_per_pair_mbps": {
+        "1": 91.18
+      }
+    }
+  },
+  "verdict": "PASS",
+  "reasons": [],
+  "cpu": {
+    "dl": {
+      "procs_pct_of_1cpu": {
+        "nr-uesoftmodem": 448.6,
+        "nr-softmodem": 203.5,
+        "upfd": 22.6,
+        "iperf3": 18.9,
+        "systemd": 1.1
+      },
+      "mean_busy_pct": 59.1,
+      "max_sec_busy_pct": 67.7,
+      "per_cpu_peak_pct": {
+        "cpu0": 46.6,
+        "cpu1": 17.0,
+        "cpu10": 78.6,
+        "cpu11": 76.5,
+        "cpu2": 77.3,
+        "cpu3": 77.0,
+        "cpu4": 77.3,
+        "cpu5": 78.6,
+        "cpu6": 79.4,
+        "cpu7": 75.0,
+        "cpu8": 78.4,
+        "cpu9": 78.1
+      }
+    },
+    "ul": {
+      "procs_pct_of_1cpu": {
+        "nr-softmodem": 370.5,
+        "nr-uesoftmodem": 185.7,
+        "iperf3": 15.2,
+        "upfd": 7.4,
+        "systemd": 1.1
+      },
+      "mean_busy_pct": 50.6,
+      "max_sec_busy_pct": 51.8,
+      "per_cpu_peak_pct": {
+        "cpu0": 43.2,
+        "cpu1": 12.0,
+        "cpu10": 66.0,
+        "cpu11": 64.6,
+        "cpu2": 63.3,
+        "cpu3": 65.0,
+        "cpu4": 65.3,
+        "cpu5": 62.6,
+        "cpu6": 54.1,
+        "cpu7": 54.5,
+        "cpu8": 67.0,
+        "cpu9": 65.0
+      }
+    }
+  }
+}

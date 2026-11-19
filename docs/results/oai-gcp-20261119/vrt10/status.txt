@@ -1,0 +1,1 @@
+ue1 gnb=active ue=active keepalive=active ip=10.45.0.x/24

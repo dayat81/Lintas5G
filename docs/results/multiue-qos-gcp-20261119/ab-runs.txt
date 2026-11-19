@@ -1,0 +1,109 @@
+=== a0-base-intra 15:18:40
+app.ue1.p5201 Mbit/s 0.3 
+bulk.ue1 Mbit/s 78.9  loss 21%
+bulk.ue2 Mbit/s 78.5  loss 21%
+bulk.ue3 Mbit/s 79.1  loss 21%
+rtt.ue1.p5201 RTT p50/p90/p99/max ms 3115.09 4682.9 4980.33 4999.06 loss% 63.55
+ratio {'sim_ratio': 1.0, 'sim_s': 44.8, 'wall_s': 44.8, 'source': 'oai', 'samples': 36}
+cpu busy 75.4 max 78.2 procs {'nr-uesoftmodem': 550.7, 'nr-softmodem': 267.7, 'iperf3': 32.3, 'upfd': 28.0, 'python3': 1.3, 'systemd': 1.2}
+MAC 7381 CQI/RI ('15', '2') DL rounds/err/BLER/tbl/MCS ('142619/1798/1506/308', '224', '0.04334', '1', '27') UL ('32672/212/68/62', '50', '0.05470', '1', '27')
+MAC 2414 CQI/RI ('15', '2') DL rounds/err/BLER/tbl/MCS ('142479/1813/1528/371', '277', '0.04917', '1', '27') UL ('32295/177/73/65', '57', '0.06744', '1', '27')
+MAC 55d8 CQI/RI ('15', '2') DL rounds/err/BLER/tbl/MCS ('140428/1835/1534/349', '267', '0.04966', '1', '27') UL ('28809/160/64/57', '49', '0.07107', '1', '27')
+reestablish 0 ULfailure 0 RRCRelease 0 late/underflow 0
+{"rlf_events":1,"late_underflow_lines":0,"keepalive_active":3,"pairs":3}
+=== a1-qod-intra 15:19:28
+app.ue1.p18080 Mbit/s 20.5 
+bulk.ue1 Mbit/s 67.0  loss 33%
+bulk.ue2 Mbit/s 80.6  loss 19%
+bulk.ue3 Mbit/s 78.7  loss 21%
+rtt.ue1.p18080 RTT p50/p90/p99/max ms 23.49 58.12 113.18 199.28 loss% 0.25
+ratio {'sim_ratio': 1.0, 'sim_s': 46.08, 'wall_s': 46.08, 'source': 'oai', 'samples': 37}
+cpu busy 75.4 max 77.3 procs {'nr-uesoftmodem': 560.9, 'nr-softmodem': 270.8, 'upfd': 29.5, 'iperf3': 27.8, 'python3': 1.3, 'systemd': 1.2}
+MAC 7381 CQI/RI ('15', '2') DL rounds/err/BLER/tbl/MCS ('196238/2804/2366/518', '377', '0.04480', '1', '25') UL ('38208/334/105/99', '80', '0.04387', '1', '27')
+MAC 2414 CQI/RI ('15', '2') DL rounds/err/BLER/tbl/MCS ('196756/2812/2377/605', '458', '0.03315', '1', '17') UL ('35287/245/100/91', '77', '0.07506', '1', '22')
+MAC 55d8 CQI/RI ('15', '2') DL rounds/err/BLER/tbl/MCS ('194161/2839/2395/533', '406', '0.04227', '1', '27') UL ('31863/229/95/86', '71', '0.05162', '1', '27')
+reestablish 0 ULfailure 0 RRCRelease 0 late/underflow 0
+{"rlf_events":1,"late_underflow_lines":0,"keepalive_active":3,"pairs":3}
+=== b0-base-inter 15:20:17
+app.ue1.p5201 Mbit/s 31.0 
+bulk.ue2 Mbit/s 97.6  loss 2%
+bulk.ue3 Mbit/s 98.0  loss 2%
+rtt.ue1.p5201 RTT p50/p90/p99/max ms 23.06 40.63 78.42 114.74 loss% 0.55
+ratio {'sim_ratio': 1.0, 'sim_s': 44.8, 'wall_s': 44.8, 'source': 'oai', 'samples': 36}
+cpu busy 73.5 max 75.5 procs {'nr-uesoftmodem': 541.9, 'nr-softmodem': 266.3, 'upfd': 23.6, 'iperf3': 22.7, 'python3': 1.4, 'systemd': 1.3}
+MAC 7381 CQI/RI ('15', '2') DL rounds/err/BLER/tbl/MCS ('214350/3010/2534/534', '382', '0.00329', '1', '14') UL ('43653/387/126/118', '97', '0.00015', '1', '0')
+MAC 2414 CQI/RI ('15', '2') DL rounds/err/BLER/tbl/MCS ('245215/3204/2678/672', '505', '0.00290', '1', '24') UL ('37989/286/121/112', '97', '0.00064', '1', '5')
+MAC 55d8 CQI/RI ('15', '2') DL rounds/err/BLER/tbl/MCS ('244545/3231/2693/586', '447', '0.00123', '1', '25') UL ('34687/278/124/115', '99', '0.00030', '1', '6')
+reestablish 0 ULfailure 0 RRCRelease 0 late/underflow 0
+{"rlf_events":1,"late_underflow_lines":0,"keepalive_active":3,"pairs":3}
+=== b1-qod-inter 15:21:04
+app.ue1.p18080 Mbit/s 34.0 
+bulk.ue2 Mbit/s 98.0  loss 2%
+bulk.ue3 Mbit/s 98.1  loss 2%
+rtt.ue1.p18080 RTT p50/p90/p99/max ms 23.13 38.29 77.28 98.6 loss% 0.3
+ratio {'sim_ratio': 1.0, 'sim_s': 44.8, 'wall_s': 44.8, 'source': 'oai', 'samples': 36}
+cpu busy 72.6 max 75.1 procs {'nr-uesoftmodem': 535.6, 'nr-softmodem': 266.0, 'upfd': 24.0, 'iperf3': 22.6, 'python3': 1.4, 'systemd': 1.3}
+MAC 7381 CQI/RI ('15', '2') DL rounds/err/BLER/tbl/MCS ('232839/3224/2705/543', '385', '0.00799', '1', '16') UL ('49159/450/150/141', '117', '0.00057', '1', '2')
+MAC 2414 CQI/RI ('15', '2') DL rounds/err/BLER/tbl/MCS ('293423/3610/3000/731', '545', '0.00420', '1', '20') UL ('40713/327/142/132', '116', '0.00044', '1', '6')
+MAC 55d8 CQI/RI ('15', '2') DL rounds/err/BLER/tbl/MCS ('293923/3629/3012/634', '486', '0.00450', '1', '21') UL ('37490/316/143/134', '117', '0.00055', '1', '5')
+reestablish 0 ULfailure 0 RRCRelease 0 late/underflow 0
+{"rlf_events":1,"late_underflow_lines":0,"keepalive_active":3,"pairs":3}
+=== c0-base-2app 15:21:52
+app.ue1.p5201 Mbit/s 0.2 
+app.ue2.p5202 Mbit/s 0.3 
+bulk.ue1 Mbit/s 80.1  loss 20%
+bulk.ue2 Mbit/s 76.5  loss 23%
+bulk.ue3 Mbit/s 72.7  loss 27%
+rtt.ue1.p5201 RTT p50/p90/p99/max ms 2861.85 4615.48 4970.4 4995.41 loss% 64.45
+rtt.ue2.p5202 RTT p50/p90/p99/max ms 1707.26 3920.61 4977.18 4998.12 loss% 73.9
+ratio {'sim_ratio': 1.0, 'sim_s': 46.08, 'wall_s': 46.08, 'source': 'oai', 'samples': 37}
+cpu busy 75.5 max 78.1 procs {'nr-uesoftmodem': 554.4, 'nr-softmodem': 267.5, 'iperf3': 28.5, 'upfd': 27.3, 'python3': 2.1, 'systemd': 1.3}
+MAC 7381 CQI/RI ('15', '2') DL rounds/err/BLER/tbl/MCS ('287062/4224/3548/724', '519', '0.03142', '1', '25') UL ('52524/544/180/171', '138', '0.05621', '1', '27')
+MAC 2414 CQI/RI ('15', '2') DL rounds/err/BLER/tbl/MCS ('347900/4602/3817/903', '670', '0.02663', '1', '24') UL ('44087/442/177/164', '140', '0.03756', '1', '27')
+MAC 55d8 CQI/RI ('15', '2') DL rounds/err/BLER/tbl/MCS ('347914/4625/3841/816', '625', '0.02914', '1', '8') UL ('40545/392/163/154', '134', '0.04118', '1', '27')
+reestablish 0 ULfailure 0 RRCRelease 0 late/underflow 0
+{"rlf_events":1,"late_underflow_lines":0,"keepalive_active":3,"pairs":3}
+=== c1-qod-2app 15:22:41
+app.ue1.p18080 Mbit/s 19.2 
+app.ue2.p18081 Mbit/s 13.6 
+bulk.ue1 Mbit/s 62.7  loss 37%
+bulk.ue2 Mbit/s 67.4  loss 33%
+bulk.ue3 Mbit/s 73.9  loss 26%
+rtt.ue1.p18080 RTT p50/p90/p99/max ms 24.11 63.76 113.99 159.06 loss% 0.95
+rtt.ue2.p18081 RTT p50/p90/p99/max ms 24.92 67.01 137.9 242.0 loss% 0.6
+ratio {'sim_ratio': 1.0, 'sim_s': 44.8, 'wall_s': 44.8, 'source': 'oai', 'samples': 36}
+cpu busy 77.3 max 79.5 procs {'nr-uesoftmodem': 567.2, 'nr-softmodem': 275.8, 'upfd': 35.8, 'iperf3': 27.5, 'python3': 2.1, 'systemd': 1.3, 'tcpdump': 1.0}
+MAC 7381 CQI/RI ('15', '2') DL rounds/err/BLER/tbl/MCS ('340447/5257/4389/905', '650', '0.02692', '1', '27') UL ('58034/691/218/206', '169', '0.04777', '1', '25')
+MAC 2414 CQI/RI ('15', '2') DL rounds/err/BLER/tbl/MCS ('401601/5672/4672/1117', '839', '0.03908', '1', '27') UL ('49457/591/235/219', '190', '0.02961', '1', '26')
+MAC 55d8 CQI/RI ('15', '2') DL rounds/err/BLER/tbl/MCS ('401101/5662/4700/976', '737', '0.01284', '1', '26') UL ('43562/472/206/195', '170', '0.02688', '1', '26')
+reestablish 0 ULfailure 0 RRCRelease 0 late/underflow 0
+ue1=b5340c ue2=85f9b1 ue3=166e83 
+dir QFI proto port(min) ue_hash  pkts  MB(orig)
+DL 1 tcp 5213 166e83 16 0.0
+DL 1 udp 5213 166e83 385195 533.88
+DL 1 icmp 0 166e83 43 0.01
+UL 1 tcp 5213 166e83 13 0.0
+UL 1 udp 5213 166e83 1 0.0
+UL 1 icmp 0 166e83 43 0.01
+DL 1 tcp 5212 85f9b1 16 0.0
+DL 1 udp 5212 85f9b1 385128 533.79
+DL 1 icmp 0 85f9b1 43 0.01
+DL 2 tcp 18081 85f9b1 51132 74.53
+DL 2 udp 18081 85f9b1 2000 0.3
+UL 1 tcp 5212 85f9b1 13 0.0
+UL 1 udp 5212 85f9b1 1 0.0
+UL 1 icmp 0 85f9b1 43 0.01
+UL 2 tcp 18081 85f9b1 19020 2.1
+UL 2 udp 18081 85f9b1 2000 0.3
+DL 1 tcp 5211 b5340c 16 0.0
+DL 1 udp 5211 b5340c 386243 535.33
+DL 1 icmp 0 b5340c 43 0.01
+DL 2 tcp 18080 b5340c 71836 104.72
+DL 2 udp 18080 b5340c 2000 0.3
+UL 1 tcp 5211 b5340c 13 0.0
+UL 1 udp 5211 b5340c 1 0.0
+UL 1 icmp 0 b5340c 43 0.01
+UL 2 tcp 18080 b5340c 26545 2.93
+UL 2 udp 18080 b5340c 2000 0.3
+{"rlf_events":1,"late_underflow_lines":0,"keepalive_active":3,"pairs":3}
+ALLDONE

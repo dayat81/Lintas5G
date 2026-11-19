@@ -4,9 +4,11 @@
 # internal network, tcp 8099), and everything else proxied to noVNC 127.0.0.1:6080 (incl. /websockify).
 # Reached via IAP SSH tunnel (-L 6081:localhost:6081) or, opt-in, via the Cloudflare Quick Tunnel.
 # usage: CORE_IP=<internal ip vm-core-ran> bash emu-dashboard-setup.sh
+# HEADLESS=1: skip caddy/basic auth/noVNC page entirely (Fase 0 closeout), install only the emu collector.
 set -e
 export DEBIAN_FRONTEND=noninteractive
 V=/opt/lab5g/vnc; CORE_IP=${CORE_IP:?CORE_IP wajib}; COST_PER_HOUR=${COST_PER_HOUR:-0.80}
+if [ "${HEADLESS:-0}" != 1 ]; then
 if ! command -v caddy >/dev/null; then
   apt-get install -y -q debian-keyring debian-archive-keyring apt-transport-https curl gnupg >/dev/null
   curl -1sLf https://dl.cloudsmith.io/public/caddy/stable/gpg.key | gpg --dearmor --yes -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
@@ -61,7 +63,9 @@ C
 chown root:caddy /etc/caddy/Caddyfile; chmod 0640 /etc/caddy/Caddyfile
 caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null 2>&1 && echo caddyfile_valid
 systemctl enable -q caddy; systemctl restart caddy
+fi
 # emu collector (persistent, survives reboot)
+install -d -m 0755 /opt/lab5g/dash /opt/lab5g/dash/api
 install -m 0755 $V/emu-collector.py /opt/lab5g/emu-collector.py
 cat > /etc/systemd/system/lab5g-emu-collector.service <<U
 [Unit]
@@ -76,4 +80,4 @@ RestartSec=3
 WantedBy=multi-user.target
 U
 systemctl daemon-reload; systemctl enable -q lab5g-emu-collector; systemctl restart lab5g-emu-collector
-systemctl is-active caddy lab5g-emu-collector | tr '\n' ' '; echo
+if [ "${HEADLESS:-0}" = 1 ]; then systemctl is-active lab5g-emu-collector; else systemctl is-active caddy lab5g-emu-collector | tr '\n' ' '; echo; fi

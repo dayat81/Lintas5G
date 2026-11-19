@@ -1,0 +1,38 @@
+{
+  "pairs": 1,
+  "dirs": {
+    "dl": {
+      "per_pair_mbps": {
+        "1": 0.0
+      },
+      "aggregate_mbps": 0,
+      "aggregate_sec_min": null,
+      "aggregate_sec_p50": null,
+      "retransmits": {
+        "1": null
+      }
+    }
+  },
+  "verdict": "FAIL",
+  "reasons": [
+    "dl pair1=0.0 < 50.0",
+    "dl aggregate 0 < 50.0"
+  ],
+  "cpu": {
+    "dl": {
+      "procs_pct_of_1cpu": {},
+      "mean_busy_pct": 0.6,
+      "max_sec_busy_pct": 1.2,
+      "per_cpu_peak_pct": {
+        "cpu0": 2.0,
+        "cpu1": 2.0,
+        "cpu2": 2.9,
+        "cpu3": 2.9,
+        "cpu4": 2.0,
+        "cpu5": 4.0,
+        "cpu6": 3.0,
+        "cpu7": 1.0
+      }
+    }
+  }
+}
