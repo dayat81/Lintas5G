@@ -1,0 +1,271 @@
+{
+  "uid": "lintas5g-pktlat",
+  "title": "Lintas5G Fase 0 - per-packet latency QUIC (Zeek pkthash, batch)",
+  "schemaVersion": 39,
+  "version": 1,
+  "time": {
+    "from": "now-30d",
+    "to": "now"
+  },
+  "tags": [
+    "lintas5g",
+    "fase0",
+    "zeek"
+  ],
+  "templating": {
+    "list": [
+      {
+        "name": "session",
+        "type": "query",
+        "datasource": {
+          "type": "grafana-clickhouse-datasource",
+          "uid": "ch"
+        },
+        "query": "SELECT DISTINCT session FROM poc_latency.pkt_tap ORDER BY session",
+        "definition": "SELECT DISTINCT session FROM poc_latency.pkt_tap ORDER BY session",
+        "refresh": 1,
+        "current": {}
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Per-packet one-way UL (ms): p50/p99 per kondisi x segmen (radio = UE->N3, core = N3->N6, total = UE->N6)",
+      "type": "barchart",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "ch"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 11
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "ch"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "queryType": "table",
+          "rawSql": "SELECT concat(cond,' / ',seg) AS kondisi, p50, p99 FROM poc_latency.v_pkt_q WHERE session = '${session}' AND dir='UL' AND cond != 'other' ORDER BY seg, indexOf(['idle','load','load+qod'], cond)",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "decimals": 1
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "showValue": "always",
+        "stacking": "none",
+        "xField": "kondisi",
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      }
+    },
+    {
+      "id": 2,
+      "title": "Per-packet one-way DL (ms): p50/p99 per kondisi x segmen (radio = N3->UE, core = N6->N3, total = N6->UE)",
+      "type": "barchart",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "ch"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 12,
+        "h": 11
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "ch"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "queryType": "table",
+          "rawSql": "SELECT concat(cond,' / ',seg) AS kondisi, p50, p99 FROM poc_latency.v_pkt_q WHERE session = '${session}' AND dir='DL' AND cond != 'other' ORDER BY seg, indexOf(['idle','load','load+qod'], cond)",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "decimals": 1
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "showValue": "always",
+        "stacking": "none",
+        "xField": "kondisi",
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      }
+    },
+    {
+      "id": 3,
+      "title": "Cakupan pasangan paket (semua tap), QFI 2 di N3, miss/loss",
+      "type": "table",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "ch"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 11,
+        "w": 12,
+        "h": 9
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "ch"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "queryType": "table",
+          "rawSql": "SELECT cond, dir, pkts, all_taps, coverage_pct, qfi2_pkts, lost_or_miss FROM poc_latency.v_pkt_cov WHERE session = '${session}' ORDER BY dir, cond",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "options": {
+        "showHeader": true
+      }
+    },
+    {
+      "id": 4,
+      "title": "Tabel p50/p99/max per kondisi x arah x segmen (n paket)",
+      "type": "table",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "ch"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 11,
+        "w": 12,
+        "h": 9
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "ch"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "queryType": "table",
+          "rawSql": "SELECT cond, dir, seg, n, p50, p99, max_ms FROM poc_latency.v_pkt_q WHERE session = '${session}' AND cond != 'other' ORDER BY dir, seg, cond",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "n"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true
+      }
+    },
+    {
+      "id": 5,
+      "title": "Per-packet total one-way (ms) dari waktu ke waktu, UL dan DL",
+      "type": "timeseries",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "ch"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 20,
+        "w": 24,
+        "h": 10
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "ch"
+          },
+          "editorType": "sql",
+          "format": 0,
+          "queryType": "table",
+          "rawSql": "SELECT toDateTime64(t0, 3) AS time, ms AS \"UL total\" FROM poc_latency.v_pkt_seg WHERE session = '${session}' AND dir='UL' AND seg='total' ORDER BY time",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "ch"
+          },
+          "editorType": "sql",
+          "format": 0,
+          "queryType": "table",
+          "rawSql": "SELECT toDateTime64(t0, 3) AS time, ms AS \"DL total\" FROM poc_latency.v_pkt_seg WHERE session = '${session}' AND dir='DL' AND seg='total' ORDER BY time",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "custom": {
+            "drawStyle": "points",
+            "pointSize": 3,
+            "showPoints": "always"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      }
+    }
+  ]
+}

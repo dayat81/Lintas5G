@@ -10,6 +10,9 @@ log "start"
 # 0. collector first, so the dashboard shows progress during the (long) first install
 bash $V/install-collector.sh >>$L/gui-core-up.log 2>&1 || log "collector install failed"
 echo installing > /run/lab5g-phase 2>/dev/null || true
+# 0b. 5G SA profile (terraform var ran_mode = sa-srsran | sa-ueransim | sa-oai): separate bring-up, same netns/tun names
+RAN_MODE=$(curl -fsS -H 'Metadata-Flavor: Google' http://metadata.google.internal/computeMetadata/v1/instance/attributes/ran-mode 2>/dev/null || echo epc-srsran4g)
+case "$RAN_MODE" in sa-*) log "ran_mode=$RAN_MODE -> sa-up.sh"; exec bash /opt/lab5g/sa/sa-up.sh "$RAN_MODE";; esac
 # 1. install Open5GS + srsRAN (first boot only, ~12 min)
 if [ ! -x /opt/lab5g/srsran/srsRAN_4G/build/srsue/src/srsue ] || ! dpkg -s open5gs >/dev/null 2>&1; then
   log "install"; bash $S/core-install.sh > $L/install.log 2>&1; log "install rc=$?"

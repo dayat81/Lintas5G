@@ -1,0 +1,5 @@
+#fields	ts	tap	dir	proto	flow	h	len	teid	qfi	run_id	cond
+1001.000	sgiq	DL	quic	10.45.0.2:40000>203.0.113.10:443	aaaaaaaaaaaaaaaa	1200	-	-	ytqod-fixture	idle
+1001.501	sgiq	UL	quic	10.45.0.2:40000>203.0.113.10:443	bbbbbbbbbbbbbbbb	80	-	-	ytqod-fixture	idle
+1100.000	sgiq	DL	quic	10.45.0.2:40001>203.0.113.10:443	cccccccccccccccc	1200	-	-	ytqod-fixture	load
+1200.000	sgiq	DL	quic	10.45.0.2:40002>203.0.113.10:443	dddddddddddddddd	1200	-	-	ytqod-fixture	load+qod
