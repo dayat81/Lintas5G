@@ -68,8 +68,8 @@ variable "core_machine_type" {
   default     = "n2-standard-8"
 
   validation {
-    condition     = can(regex("^n2-standard-(2|4|8|16)$", var.core_machine_type))
-    error_message = "core_machine_type harus n2-standard-2, 4, 8, atau 16 (Intel N2)."
+    condition     = can(regex("^n2-(standard-(2|4|8|16)|custom-(2|4|6|8|10|12)-[0-9]+)$", var.core_machine_type))
+    error_message = "core_machine_type harus n2-standard-2, 4, 8, 16 atau n2-custom-<2|4|6|8|10|12>-<MB> (Intel N2). Budget 12 vCPU: lihat vcpu_budget."
   }
 }
 
@@ -177,6 +177,28 @@ variable "gui_session" {
   default     = false
 }
 
+variable "ran_mode" {
+  description = "RAN/core profile of vm-core-ran (gui_session=true). epc-srsran4g (default): Open5GS EPC + srsRAN_4G eNB/UE ZMQ. sa-srsran: Open5GS 5GC SA + srsRAN Project gNB + srsUE (5G SA, ZMQ) with a static PCC rule -> second QoS flow (QFI 2). sa-ueransim: Open5GS 5GC SA + UERANSIM (control-plane/N3 only). sa-oai: Open5GS 5GC SA + OAI v3.0.0 gNB + nrUE (docker images by digest, rfsim/vrtsim, n78 TDD 40 MHz, 2x2 + 256QAM, nr_pairs = number of UEs 1..3, native SCTP)."
+  type        = string
+  default     = "epc-srsran4g"
+  validation {
+    condition     = contains(["epc-srsran4g", "sa-srsran", "sa-ueransim", "sa-oai"], var.ran_mode)
+    error_message = "ran_mode harus epc-srsran4g, sa-srsran, sa-ueransim, atau sa-oai."
+  }
+}
+
+variable "ran_prebuild_object" {
+  description = "Opsional: objek GCS (di bucket runs) berisi tarball prebuild srsRAN (gnb+srsue, /opt/srsran) + .sha256, mis. prebuild/srsran-release_24_10_1-release_23_11-x86-64-v3-jammy-x86_64.tar.zst (portabel, jalan di Cascade Lake; tarball v1 tanpa -x86-64-v3 butuh Ice Lake). Kosong = build dari source di VM (~30-40 menit)."
+  type        = string
+  default     = ""
+}
+
+variable "gui_vnc" {
+  description = "true (default): emulator publishes VNC/noVNC on 127.0.0.1 + caddy dashboard (IAP SSH tunnel). false = HEADLESS (Fase 0 closeout): no VNC/noVNC ports, no caddy, no public tunnel; only adb 127.0.0.1:5555 + collectors. gui_public_tunnel must be false."
+  type        = bool
+  default     = true
+}
+
 variable "gui_public_tunnel" {
   description = "OPT-IN: Cloudflare Quick Tunnel publik ke halaman dashboard+noVNC (basic auth + password VNC). Tanpa SLA, TLS diputus di Cloudflare."
   type        = bool
@@ -268,5 +290,83 @@ variable "gui_emu_userdata_uri" {
   validation {
     condition     = var.gui_emu_userdata_uri == "" || can(regex("^gs://[a-z0-9._-]+/.+\\.tar\\.zst$", var.gui_emu_userdata_uri))
     error_message = "gui_emu_userdata_uri harus kosong atau gs://<bucket>/<path>.tar.zst."
+  }
+}
+
+# ---- Radio capacity uplift (Fase 0 offline, 19 Nov 2026). Semua default = perilaku lama (tidak ada diff). ----
+variable "emu_enabled" {
+  description = "false = profil radio-only: vm-emu tidak dibuat (count 0), vCPU emulator dipakai core/RAN. Disk emu tetap ada (state sesi)."
+  type        = bool
+  default     = true
+}
+
+variable "nr_pairs" {
+  description = "Jumlah pasangan srsRAN Project gNB + srsUE NR 20 MHz ZMQ pada ran_mode=sa-srsran (1..4; 4 = 1 vCPU gNB + 1 vCPU UE per pasangan di 12 vCPU, NR_PIN=0 berbagi CPU). 1 = perilaku lama. Dikirim ke core via metadata nr-pairs hanya bila > 1."
+  type        = number
+  default     = 1
+
+  validation {
+    condition     = var.nr_pairs >= 1 && var.nr_pairs <= 4 && floor(var.nr_pairs) == var.nr_pairs
+    error_message = "nr_pairs harus bilangan bulat 1..4 (batas 12 vCPU)."
+  }
+}
+
+variable "nr_exclude_zmq_from_n3_tap" {
+  description = "true = tap N3 hanya menangkap GTP-U (BPF udp port 2152) dan menolak I/Q ZMQ (tcp 2000-2299) pada lo."
+  type        = bool
+  default     = true
+}
+
+variable "vcpu_budget" {
+  description = "Batas vCPU total lab (CPUS_ALL_REGIONS). check{} memberi peringatan bila total VM melebihi ini. Tidak menaikkan kuota."
+  type        = number
+  default     = 12
+}
+
+variable "core_min_cpu_platform" {
+  description = "min_cpu_platform vm-core-ran. null (default) = otomatis: \"Intel Ice Lake\" bila ran_mode=sa-srsran atau sa-oai (sesi radio; FAKTA GCP 19 Nov 2026, n2-custom-12: Ice Lake +44-48% DL vs Cascade Lake pada vCPU sama, kernel AVX512 srsRAN aktif via runtime dispatch, tarif n2 sama), selain itu default GCP. \"\" = paksa default GCP (prebuild x86-64-v3 juga jalan di Cascade Lake). Nilai lain (mis. \"Intel Cascade Lake\") dipakai apa adanya."
+  type        = string
+  default     = null
+  nullable    = true
+}
+
+# ---- ran_mode = sa-oai (OAI gNB + nrUE, user approval 19 Nov 2026 13:43 WIB). Hanya dipakai bila ran_mode = sa-oai. ----
+variable "oai_gnb_image" {
+  description = "Image OAI gNB, wajib dipin dengan digest (FAKTA offline 19 Nov 2026: v3.0.0, banner commit 6f89078)."
+  type        = string
+  default     = "oaisoftwarealliance/oai-gnb:v3.0.0@sha256:170b4878a79086bd343d0abef8e327e7c6179cd5995618217db4417395665cbd"
+  validation {
+    condition     = can(regex("@sha256:[0-9a-f]{64}$", var.oai_gnb_image))
+    error_message = "oai_gnb_image harus dipin dengan @sha256:<digest>."
+  }
+}
+
+variable "oai_ue_image" {
+  description = "Image OAI nrUE, wajib dipin dengan digest."
+  type        = string
+  default     = "oaisoftwarealliance/oai-nr-ue:v3.0.0@sha256:b482191d636dc8f743923cdc8ef5cbf35722ad0f8def21598fbdc364ffd7910f"
+  validation {
+    condition     = can(regex("@sha256:[0-9a-f]{64}$", var.oai_ue_image))
+    error_message = "oai_ue_image harus dipin dengan @sha256:<digest>."
+  }
+}
+
+variable "oai_rf" {
+  description = "RF OAI: rfsim (default, multi-UE, tidak di-pacing: laporkan sim/real ratio) atau vrtsim (shared memory, di-pacing real-time, 1..3 UE via num_ues/ue_id; FAKTA GCP 19 Nov 2026 n2-custom-12 Ice Lake: timescale 1.0 stabil untuk 1 dan 3 UE 2x2)."
+  type        = string
+  default     = "rfsim"
+  validation {
+    condition     = contains(["rfsim", "vrtsim"], var.oai_rf)
+    error_message = "oai_rf harus rfsim atau vrtsim."
+  }
+}
+
+variable "oai_mimo" {
+  description = "Jumlah antena/layer OAI: 2 (default, 2x2 + 256QAM via uecap_ports2) atau 1 (1x1 + 256QAM via uecap_ports1)."
+  type        = number
+  default     = 2
+  validation {
+    condition     = contains([1, 2], var.oai_mimo)
+    error_message = "oai_mimo harus 1 atau 2."
   }
 }

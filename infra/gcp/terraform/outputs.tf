@@ -15,8 +15,10 @@ output "vm_internal_ips" {
   value = merge(
     {
       vm-core-ran = google_compute_instance.core.network_interface[0].network_ip
-      vm-emu      = google_compute_instance.emu.network_interface[0].network_ip
     },
+    var.emu_enabled ? {
+      vm-emu = google_compute_instance.emu[0].network_interface[0].network_ip
+    } : {},
     var.enable_obs ? {
       vm-obs = google_compute_instance.obs[0].network_interface[0].network_ip
     } : {},
@@ -80,4 +82,9 @@ output "mpls_backhaul" {
     "MTU: VPC 1460, gretap+key ~28 B + Ethernet 14 B -> MTU terowongan 1400;",
     "     GTP-U (~36 B) + inner IP -> tun aplikasi 1360-1400.",
   ]) : "enable_mpls=false; vm-mpls tidak dibuat."
+}
+
+output "vcpu_total" {
+  description = "Total vCPU VM lab yang dikonfigurasi (budget: var.vcpu_budget)."
+  value       = local.vcpu_total
 }

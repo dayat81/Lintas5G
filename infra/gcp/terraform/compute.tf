@@ -1,4 +1,6 @@
 locals {
+  # null = auto (Ice Lake for radio sessions ran_mode=sa-srsran|sa-oai), "" = GCP default, else as given. See variables.tf.
+  core_cpu_platform = var.core_min_cpu_platform == null ? (contains(["sa-srsran", "sa-oai"], var.ran_mode) ? "Intel Ice Lake" : null) : (var.core_min_cpu_platform == "" ? null : var.core_min_cpu_platform)
   core_internal_dns = "vm-core-ran.${var.zone}.c.${var.project_id}.internal"
   mpls_internal_dns = "vm-mpls.${var.zone}.c.${var.project_id}.internal"
   startup_core      = file("${path.module}/../startup/core-ran.sh")
@@ -21,6 +23,7 @@ resource "google_compute_instance" "core" {
   allow_stopping_for_update = true
   can_ip_forward            = true
   deletion_protection       = false
+  min_cpu_platform          = local.core_cpu_platform
 
   boot_disk {
     source      = google_compute_disk.core.id
@@ -32,19 +35,23 @@ resource "google_compute_instance" "core" {
     # Tanpa access_config: tidak ada IP publik.
   }
 
-  metadata = {
+  metadata = merge({
     enable-oslogin         = "TRUE"
     block-project-ssh-keys = "TRUE"
     serial-port-enable     = "TRUE"
     lab-role               = "core-ran"
     startup-script         = local.startup_core
     gui-session            = var.gui_session ? "true" : "false"
+    ran-mode               = var.ran_mode
+    ran-prebuild           = var.ran_prebuild_object
     lab5g-bucket           = google_storage_bucket.runs.name
     mpls-enabled           = var.enable_mpls ? "true" : "false"
     mpls-peer-host         = var.enable_mpls ? local.mpls_internal_dns : ""
     mpls-tunnel-mode       = var.mpls_tunnel_mode
     mpls-ce-script         = file("${path.module}/../startup/mpls-ce-tunnels.sh")
-  }
+    }, var.nr_pairs > 1 ? { nr-pairs = tostring(var.nr_pairs), nr-n3-tap-bpf-only = var.nr_exclude_zmq_from_n3_tap ? "true" : "false" } : {},
+    var.ran_mode == "sa-oai" ? { oai-gnb-image = var.oai_gnb_image, oai-ue-image = var.oai_ue_image, oai-rf = var.oai_rf, oai-mimo = tostring(var.oai_mimo) } : {}
+  )
 
   service_account {
     email  = google_service_account.core.email
@@ -62,6 +69,21 @@ resource "google_compute_instance" "core" {
     on_host_maintenance = "MIGRATE"
     provisioning_model  = "STANDARD"
   }
+
+  lifecycle {
+    precondition {
+      condition     = var.nr_pairs == 1 || contains(["sa-srsran", "sa-oai"], var.ran_mode)
+      error_message = "nr_pairs > 1 hanya untuk ran_mode = sa-srsran atau sa-oai."
+    }
+    precondition {
+      condition     = var.ran_mode != "sa-oai" || var.nr_pairs <= 3
+      error_message = "sa-oai: nr_pairs (jumlah UE) 1..3."
+    }
+    precondition {
+      condition     = var.ran_mode == "epc-srsran4g" || var.gui_session
+      error_message = "ran_mode sa-* dijalankan oleh bring-up sesi (gui-core-up.sh): butuh gui_session = true."
+    }
+  }
 }
 
 locals {
@@ -73,7 +95,13 @@ locals {
   t4_zones         = ["asia-southeast2-a", "asia-southeast2-b"] # gcloud compute accelerator-types list, 18 Nov 2026
 }
 
+moved {
+  from = google_compute_instance.emu
+  to   = google_compute_instance.emu[0]
+}
+
 resource "google_compute_instance" "emu" {
+  count        = var.emu_enabled ? 1 : 0
   depends_on   = [google_storage_bucket_object.gui_files]
   name         = "vm-emu"
   machine_type = local.emu_machine_type
@@ -83,6 +111,10 @@ resource "google_compute_instance" "emu" {
     precondition {
       condition     = !local.emu_gpu || contains(local.t4_zones, var.zone)
       error_message = "gui_emu_gpu=t4 butuh zona dengan T4: asia-southeast2-a atau asia-southeast2-b."
+    }
+    precondition {
+      condition     = var.gui_vnc || !var.gui_public_tunnel
+      error_message = "gui_vnc=false (headless) tidak boleh dikombinasikan dengan gui_public_tunnel=true."
     }
     precondition {
       condition     = !(local.emu_gpu && var.emu_spot)
@@ -127,6 +159,7 @@ resource "google_compute_instance" "emu" {
     startup-script         = local.startup_emu
     gui-session            = var.gui_session ? "true" : "false"
     gui-public-tunnel      = var.gui_public_tunnel ? "true" : "false"
+    gui-vnc                = var.gui_vnc ? "true" : "false"
     gui-emu-egress         = var.gui_emu_egress
     gui-emu-api            = var.gui_emu_api
     gui-emu-img-type       = var.gui_emu_img_type
@@ -262,4 +295,28 @@ resource "google_storage_bucket_iam_member" "emu_userdata_reader" {
   bucket = split("/", trimprefix(var.gui_emu_userdata_uri, "gs://"))[0]
   role   = "roles/storage.objectViewer"
   member = "serviceAccount:${google_service_account.emu.email}"
+}
+
+locals {
+  vcpu_of = {
+    for k, t in {
+      core = var.core_machine_type
+      emu  = var.emu_enabled ? var.emu_machine_type : ""
+      obs  = var.enable_obs ? var.obs_machine_type : ""
+      mpls = var.enable_mpls ? var.mpls_machine_type : ""
+      } : k => (
+      t == "" ? 0 :
+      can(regex("-custom-([0-9]+)-", t)) ? tonumber(regex("-custom-([0-9]+)-", t)[0]) :
+      can(regex("-([0-9]+)$", t)) ? tonumber(regex("-([0-9]+)$", t)[0]) :
+      t == "e2-medium" ? 2 : t == "e2-small" ? 2 : 0
+    )
+  }
+  vcpu_total = sum(values(local.vcpu_of))
+}
+
+check "vcpu_budget" {
+  assert {
+    condition     = local.vcpu_total <= var.vcpu_budget
+    error_message = "Total vCPU VM lab (${local.vcpu_total}) melebihi vcpu_budget (${var.vcpu_budget}). Kuota CPUS_ALL_REGIONS tidak dinaikkan."
+  }
 }

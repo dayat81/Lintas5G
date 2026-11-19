@@ -1,0 +1,45 @@
+# srsRAN Project gNB, pair __I__ (NR 20 MHz FDD band 3, SCS 15 kHz, ZMQ). Rendered by nr-pairs-config.sh.
+# Pair i: ZMQ ports base 2000+10*(i-1) (tx=base, rx=base+1), N2/N3 bind 127.0.1.<i>, PCI i, gnb_id 410+i.
+gnb_id: __GNBID__
+cu_cp:
+  amf:
+    addr: 127.0.0.5
+    port: 38412
+    bind_addr: __BIND__
+    supported_tracking_areas:
+      - tac: 1
+        plmn_list:
+          - plmn: "00101"
+            tai_slice_support_list:
+              - sst: 1
+cu_up:
+  upf:
+    bind_addr: __BIND__
+ru_sdr:
+  device_driver: zmq
+  device_args: tx_port=tcp://127.0.0.1:__TXP__,rx_port=tcp://127.0.0.1:__RXP__,base_srate=__SR__e6
+  srate: __SR__
+  tx_gain: 75
+  rx_gain: 75
+cell_cfg:
+  dl_arfcn: 368500
+  band: 3
+  channel_bandwidth_MHz: __BW__
+  common_scs: 15
+  plmn: "00101"
+  tac: 1
+  pci: __PCI__
+  pdcch:
+    common:
+      ss0_index: 0
+      coreset0_index: __CS0__
+    dedicated:
+      ss2_type: common
+      dci_format_0_1_and_1_1: false
+  prach:
+    prach_config_index: 1
+log:
+  filename: /var/log/lab5g/sa/gnb__I__.log
+  all_level: warning
+pcap:
+  ngap_enable: false
