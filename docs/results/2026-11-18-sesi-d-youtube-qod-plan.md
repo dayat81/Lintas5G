@@ -22,15 +22,15 @@ Di vm-core-ran, `run-youtube-qod.sh <emu_ip>`:
 
 Egress emulator tetap **ue-l3 GRE** (keputusan user: "Pertahankan"). YouTube mengabaikan HTTP proxy Android; jalur L3 sudah diperbaiki di Sesi D.
 
-## 2. Integrasi Magnon examine v0.9.1
+## 2. Integrasi Booster examine v0.9.1
 
 **FAKTA kode / run 17 Nov (emulator API 33, lab sebelumnya):**
 
-- APK `magnon-poc-examine-v0.9.1.apk`, package `id.magnon.poc.examine`, versionName `0.9.1-poc`, sha256 `586720f4…35dd6`.
+- APK `booster-poc-examine-v0.9.1.apk`, package `id.booster.poc.examine`, versionName `0.9.1-poc`, sha256 `586720f4…35dd6`.
 - Mode examine: forwarder userspace (bukan encapsulasi). QUIC udp/443 diteruskan apa adanya lewat socket `protect()` ke tujuan asli. Probe MGLT v2.1 (hash md5 64 B pertama payload, `t_ue`) dikirim ke **`10.99.9.20:9001`** (hardcoded `MARK_HOST`; extra hanya `probeport`, bukan host).
 - Marker v1 ke `:9000` (echo) tetap, per-flow, bukan per paket.
 - TUN `10.111.0.2`, route `0/0`, **MTU 1400**, MSS 1360.
-- Intent kemarin (YouTube): `am start -n id.magnon.poc.examine/.MainActivity --es apps com.google.android.youtube --es pktlog on --es logpkt off --es probe on --es dns 8.8.8.8`.
+- Intent kemarin (YouTube): `am start -n id.booster.poc.examine/.MainActivity --es apps com.google.android.youtube --es pktlog on --es logpkt off --es probe on --es dns 8.8.8.8`.
 - Consent VPN headless: `appops set $PKG ACTIVATE_VPN allow` berhasil di API 33.
 - Overhead probe generator QUIC live (q-ue-20261117-174218): **13 % dari byte UL** (12,8 % UL+DL). Sesi Chrome H3 pendek bisa jauh lebih tinggi di UL karena volume kecil + kirim ulang.
 
@@ -112,14 +112,14 @@ Sekitar **USD 2**, **±1,5 jam**. Budget kumulatif hari ini sudah ~USD 3,4; hard
 
 Dibangun dari `phase2/app` (snapshot v0.9.1 di `app-v0.9.1-src/`), toolchain JDK17 + build-tools 36.0.0 + `platforms;android-36`, ditandatangani keystore debug yang sama (alias `poc`, cert SHA-256 `8e8049e0…826ac6c`).
 
-- File: `/workspace/poc-latency/phase2/magnon-poc-examine-v0.10.0.apk`
+- File: `/workspace/poc-latency/phase2/booster-poc-examine-v0.10.0.apk`
 - sha256: `9783a2fa4b266e495f6869fd66b96bdf5301ebcc27b5820db85f437e08bcbb43`
 - versionName `0.10.0-poc`, versionCode 11, minSdk 29, **targetSdk/compileSdk 36**
 - Izin baru: `FOREGROUND_SERVICE_SPECIAL_USE`, `POST_NOTIFICATIONS`
 - Service: `foregroundServiceType=specialUse` (0x40000000) + property `PROPERTY_SPECIAL_USE_FGS_SUBTYPE=dummy-vpn-latency-probe`. Bukan `systemExempted` (izin itu tidak diberikan ke app biasa).
 - Extra intent: `probehost` / `markhost`, `probeport` (default 9001), `markport` (default 9000). Host default tetap `10.99.9.20`. Format kawat MGLT v2.1 tidak diubah.
 - `POST_NOTIFICATIONS` diminta di MainActivity secara non-blocking; start VPN tidak menunggu hasil. Headless: `pm grant`.
-- Consent dilaporkan ke logcat: `VPN_CONSENT=ok|needed` (tag `MAGNON_EXAMINE`).
+- Consent dilaporkan ke logcat: `VPN_CONSENT=ok|needed` (tag `BOOSTER_EXAMINE`).
 - `am start-foreground-service` didukung (service `exported=true`; bind tetap `BIND_VPN_SERVICE`).
 - **Belum di-smoke-test di emulator API 36** (tidak ada system image/emulator di box; lihat laporan).
 

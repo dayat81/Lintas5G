@@ -1,0 +1,59 @@
+diff -ruN a/openair2/RRC/NR/nr_rrc_defs.h b/openair2/RRC/NR/nr_rrc_defs.h
+--- a/openair2/RRC/NR/nr_rrc_defs.h	2026-11-19 17:47:31.137645562 +0700
++++ b/openair2/RRC/NR/nr_rrc_defs.h	2026-11-19 17:47:31.137645562 +0700
+@@ -188,6 +188,10 @@
+ 
+   bool as_security_active;
+   bool f1_ue_context_active;
++  /* Lintas5G (N3): DRBs removed by a QoS-flow release inside PDU Session Modify; released at the DU
++   * (F1 UE Context Modification drbs-ToBeReleased: RLC entity + LCID) and at the UE (drb-ToReleaseList). */
++  int qos_drb_rel[MAX_DRBS_PER_UE];
++  int n_qos_drb_rel;
+ 
+   byte_array_t ue_cap_buffer;
+   NR_UE_NR_Capability_t*             UE_Capability_nr;
+diff -ruN a/openair2/RRC/NR/rrc_gNB.c b/openair2/RRC/NR/rrc_gNB.c
+--- a/openair2/RRC/NR/rrc_gNB.c	2026-11-19 17:47:31.141645497 +0700
++++ b/openair2/RRC/NR/rrc_gNB.c	2026-11-19 17:47:31.145645433 +0700
+@@ -975,6 +975,15 @@
+     }
+   }
+ 
++  /* Lintas5G (N3): DRBs released by QoS-flow release -> drb-ToReleaseList for the UE */
++  if (UE->n_qos_drb_rel > 0) {
++    if (!params.drb_rel)
++      params.drb_rel = calloc_or_fail(MAX_DRBS_PER_UE, sizeof(int));
++    for (int k = 0; k < UE->n_qos_drb_rel && params.n_drb_rel < MAX_DRBS_PER_UE; k++)
++      params.drb_rel[params.n_drb_rel++] = UE->qos_drb_rel[k];
++    UE->n_qos_drb_rel = 0;
++  }
++
+   if (UE->nas_pdu.len > 0) {
+     params.dedicated_NAS_msg_list[params.num_nas_msg++] = UE->nas_pdu;
+     UE->nas_pdu.buf = NULL;
+@@ -3584,6 +3593,12 @@
+         if (drb_mod->numQosFlowSetup > 0 || drb_mod->numUpParam > 0)
+           do_reconfig = true;
+       }
++      /* Lintas5G (N3): DRBs dropped by a QoS-flow release must also be released at the DU
++       * (otherwise RLC entity / LCID stay behind and a later DRB with the same ID is broken) */
++      for (int k = 0; k < ue->n_qos_drb_rel && n_f1_drbs_rel < MAX_DRBS_PER_UE; k++) {
++        LOG_I(NR_RRC, "UE %d: release DRB %d at DU after QoS flow release\n", ue->rrc_ue_id, ue->qos_drb_rel[k]);
++        f1_drbs_rel[n_f1_drbs_rel++].id = ue->qos_drb_rel[k];
++      }
+       // Collect DRBs to release for PDU sessions marked for release
+     } else if (pdu_session->status == PDU_SESSION_STATUS_TORELEASE) {
+       FOR_EACH_SEQ_ARR(drb_t *, drb, &ue->drbs) {
+diff -ruN a/openair2/RRC/NR/rrc_gNB_NGAP.c b/openair2/RRC/NR/rrc_gNB_NGAP.c
+--- a/openair2/RRC/NR/rrc_gNB_NGAP.c	2026-11-19 17:47:31.165645111 +0700
++++ b/openair2/RRC/NR/rrc_gNB_NGAP.c	2026-11-19 17:47:31.149645369 +0700
+@@ -1058,6 +1058,9 @@
+             drb_id,
+             dst->pdusession_id);
+     }
++    // Lintas5G (N3): remember the DRB so the DU (RLC/MAC LCID) and the UE release it too
++    if (UE->n_qos_drb_rel < MAX_DRBS_PER_UE)
++      UE->qos_drb_rel[UE->n_qos_drb_rel++] = drb_id;
+     // Add DRB to remove directly to e1_req
+     DevAssert(pdu_mod->n_drb_to_remove < E1AP_MAX_NUM_DRBS);
+     drb_to_remove_t *rem = &pdu_mod->drbs_to_remove[pdu_mod->n_drb_to_remove++];

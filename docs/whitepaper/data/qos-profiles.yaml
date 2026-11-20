@@ -1,0 +1,53 @@
+# Static qos-profiles (QoSProfiles r1.2 schema), lab configuration. `network:` is internal (never returned to clients):
+# 5QI must be unique per ACTIVE profile and must match the core PCF `qos_profiles`.
+profiles:
+  - name: QOS_E
+    description: Low-latency boost for interactive apps (gaming, video call). Non-GBR 5QI 80.
+    status: ACTIVE
+    maxDownstreamRate: {value: 10, unit: Mbps}
+    maxUpstreamRate: {value: 5, unit: Mbps}
+    minDuration: {value: 1, unit: Seconds}
+    maxDuration: {value: 3600, unit: Seconds}
+    priority: 20
+    packetDelayBudget: {value: 10, unit: Milliseconds}
+    packetErrorLossRate: 6
+    network: {qi: 80, arp: 6, mbr_dl_kbps: 10000, mbr_ul_kbps: 5000, protocol: both}
+  - name: QOS_S
+    description: Guaranteed 2 Mbit/s downstream (SD streaming). GBR 5QI 2.
+    status: ACTIVE
+    targetMinDownstreamRate: {value: 2, unit: Mbps}
+    maxDownstreamRate: {value: 4, unit: Mbps}
+    targetMinUpstreamRate: {value: 500, unit: kbps}
+    maxUpstreamRate: {value: 1, unit: Mbps}
+    minDuration: {value: 1, unit: Seconds}
+    maxDuration: {value: 3600, unit: Seconds}
+    priority: 40
+    packetDelayBudget: {value: 150, unit: Milliseconds}
+    packetErrorLossRate: 3
+    network: {qi: 2, arp: 6, gbr_dl_kbps: 2000, gbr_ul_kbps: 500, mbr_dl_kbps: 4000, mbr_ul_kbps: 1000, protocol: both}
+  - name: QOS_M
+    description: Guaranteed 5 Mbit/s downstream (HD streaming). GBR 5QI 3.
+    status: ACTIVE
+    targetMinDownstreamRate: {value: 5, unit: Mbps}
+    maxDownstreamRate: {value: 10, unit: Mbps}
+    targetMinUpstreamRate: {value: 1, unit: Mbps}
+    maxUpstreamRate: {value: 2, unit: Mbps}
+    minDuration: {value: 1, unit: Seconds}
+    maxDuration: {value: 3600, unit: Seconds}
+    priority: 30
+    packetDelayBudget: {value: 50, unit: Milliseconds}
+    packetErrorLossRate: 3
+    network: {qi: 3, arp: 6, gbr_dl_kbps: 5000, gbr_ul_kbps: 1000, mbr_dl_kbps: 10000, mbr_ul_kbps: 2000, protocol: both}
+  - name: QOS_L
+    description: Guaranteed 10 Mbit/s downstream (video boost, e.g. YouTube). GBR 5QI 4.
+    status: ACTIVE
+    targetMinDownstreamRate: {value: 10, unit: Mbps}
+    maxDownstreamRate: {value: 20, unit: Mbps}
+    targetMinUpstreamRate: {value: 2, unit: Mbps}
+    maxUpstreamRate: {value: 5, unit: Mbps}
+    minDuration: {value: 1, unit: Seconds}
+    maxDuration: {value: 3600, unit: Seconds}
+    priority: 25
+    packetDelayBudget: {value: 300, unit: Milliseconds}
+    packetErrorLossRate: 6
+    network: {qi: 4, arp: 6, gbr_dl_kbps: 10000, gbr_ul_kbps: 2000, mbr_dl_kbps: 20000, mbr_ul_kbps: 5000, protocol: both}

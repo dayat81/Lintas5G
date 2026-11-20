@@ -1,0 +1,69 @@
+dir QFI proto as_port ue phase pkts
+DL 1 icmp 0 ue1 on 18
+DL 1 icmp 0 ue1 post 21
+DL 1 icmp 0 ue1 pre 15
+UL 1 icmp 0 ue1 on 18
+UL 1 icmp 0 ue1 post 21
+UL 1 icmp 0 ue1 pre 15
+DL 2 tcp 8080 ue1 on 131
+DL 2 tcp 8080 ue1 post 2
+DL 2 tcp 8080 ue1 pre 5
+UL 2 tcp 8080 ue1 on 134
+UL 2 tcp 8080 ue1 post 3
+UL 2 tcp 8080 ue1 pre 4
+DL 1 udp 18080 ue1 on 2
+DL 15 udp 18080 ue1 on 914
+DL 15 tcp 18080 ue1 on 434
+DL 1 udp 18080 ue1 post 944
+DL 1 tcp 18080 ue1 post 417
+DL 15 udp 18080 ue1 post 2
+DL 1 udp 18080 ue1 pre 637
+DL 1 tcp 18080 ue1 pre 416
+UL 1 udp 18080 ue1 on 3
+UL 15 tcp 18080 ue1 on 1638
+UL 15 udp 18080 ue1 on 913
+UL 1 udp 18080 ue1 post 944
+UL 1 tcp 18080 ue1 post 1467
+UL 15 udp 18080 ue1 post 2
+UL 1 udp 18080 ue1 pre 637
+UL 1 tcp 18080 ue1 pre 1103
+DL 1 udp 18081 ue1 on 366
+DL 1 udp 18081 ue1 post 382
+DL 1 udp 18081 ue1 pre 252
+UL 1 udp 18081 ue1 on 366
+UL 1 udp 18081 ue1 post 382
+UL 1 udp 18081 ue1 pre 252
+DL 1 icmp 0 ue2 on 18
+DL 1 icmp 0 ue2 post 21
+DL 1 icmp 0 ue2 pre 15
+UL 1 icmp 0 ue2 on 18
+UL 1 icmp 0 ue2 post 21
+UL 1 icmp 0 ue2 pre 15
+DL 1 udp 18080 ue2 on 367
+DL 1 udp 18080 ue2 post 383
+DL 1 udp 18080 ue2 pre 250
+UL 1 udp 18080 ue2 on 367
+UL 1 udp 18080 ue2 post 383
+UL 1 udp 18080 ue2 pre 250
+{
+ "apply_DL_udp_ms": 67.7,
+ "apply_DL_tcp_ms": 68.2,
+ "apply_UL_udp_ms": 74.1,
+ "apply_UL_tcp_ms": 68.1,
+ "remove_DL_udp_ms(last_newQFI,first_QFI1)": [
+  22.4,
+  72.1
+ ],
+ "remove_DL_tcp_ms(last_newQFI,first_QFI1)": [
+  -338.8,
+  618.0
+ ],
+ "remove_UL_udp_ms(last_newQFI,first_QFI1)": [
+  22.1,
+  71.9
+ ],
+ "remove_UL_tcp_ms(last_newQFI,first_QFI1)": [
+  -338.9,
+  617.7
+ ]
+}

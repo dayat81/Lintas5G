@@ -15,9 +15,9 @@ A="timeout 20 docker exec android-emu adb shell"
 echo "boot=$($A getprop sys.boot_completed 2>/dev/null | tr -d '\r') accounts=$($A dumpsys account 2>/dev/null | grep -c 'Account {.*type=com.google') restored=$([ -f /var/lib/lab5g/emu-userdata/.lab5g-restored ] && echo yes || echo no)"
 ss -ltn | awk 'NR>1{print $4}' | grep -E ':(5900|6080|6081)$' && echo "WARN: VNC listener present" || echo "vnc_listeners=none"
 pgrep -x cloudflared >/dev/null && echo "WARN: cloudflared running" || echo "cloudflared=none"
-# Optional Magnon examine v0.10.2 for the YouTube+QoD run (skip if the APK is not on this VM).
+# Optional Booster examine v0.10.2 for the YouTube+QoD run (skip if the APK is not on this VM).
 # The APK is not in the public repo; copy it to /opt/lab5g/sesi-d/ before this script.
-APK=${EXAMINE_APK:-/opt/lab5g/sesi-d/magnon-poc-examine-v0.10.2.apk}
+APK=${EXAMINE_APK:-/opt/lab5g/sesi-d/booster-poc-examine-v0.10.2.apk}
 if [ -f "$APK" ]; then
   APK=$APK bash /opt/lab5g/sesi-d/emu-youtube-qod.sh install || echo "WARN: examine APK install failed"
 else

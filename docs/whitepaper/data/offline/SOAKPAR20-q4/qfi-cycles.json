@@ -1,0 +1,422 @@
+[
+ {
+  "cycle": "ev-c1.jsonl",
+  "apply_DL_ms": 35.8,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   3.2
+  ],
+  "other_ue_DL_qfi": {
+   "1": 875,
+   "3": 795
+  },
+  "apply_UL_ms": 54.6,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   85.1
+  ],
+  "other_ue_UL_qfi": {
+   "1": 869,
+   "3": 796
+  }
+ },
+ {
+  "cycle": "ev-c2.jsonl",
+  "apply_DL_ms": 48.7,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   6.3
+  ],
+  "other_ue_DL_qfi": {
+   "1": 876,
+   "4": 796
+  },
+  "apply_UL_ms": 121.1,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   2.9,
+   69.8
+  ],
+  "other_ue_UL_qfi": {
+   "1": 871,
+   "4": 795
+  }
+ },
+ {
+  "cycle": "ev-c3.jsonl",
+  "apply_DL_ms": 55.2,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   3.1
+  ],
+  "other_ue_DL_qfi": {
+   "1": 870,
+   "5": 797
+  },
+  "apply_UL_ms": 65.4,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   40.2
+  ],
+  "other_ue_UL_qfi": {
+   "1": 868,
+   "5": 795
+  }
+ },
+ {
+  "cycle": "ev-c4.jsonl",
+  "apply_DL_ms": 51.9,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   10.0
+  ],
+  "other_ue_DL_qfi": {
+   "1": 877,
+   "6": 797
+  },
+  "apply_UL_ms": 67.3,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   1.6,
+   72.1
+  ],
+  "other_ue_UL_qfi": {
+   "1": 870,
+   "6": 794
+  }
+ },
+ {
+  "cycle": "ev-c5.jsonl",
+  "apply_DL_ms": 48.9,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   6.9
+  ],
+  "other_ue_DL_qfi": {
+   "1": 875,
+   "7": 795
+  },
+  "apply_UL_ms": 49.2,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   39.8
+  ],
+  "other_ue_UL_qfi": {
+   "1": 869,
+   "7": 796
+  }
+ },
+ {
+  "cycle": "ev-c6.jsonl",
+  "apply_DL_ms": 33.6,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   1.7,
+   11.7
+  ],
+  "other_ue_DL_qfi": {
+   "1": 873,
+   "8": 798
+  },
+  "apply_UL_ms": 48.4,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   40.8
+  ],
+  "other_ue_UL_qfi": {
+   "1": 872,
+   "8": 797
+  }
+ },
+ {
+  "cycle": "ev-c7.jsonl",
+  "apply_DL_ms": 40.5,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   7.5
+  ],
+  "other_ue_DL_qfi": {
+   "1": 873,
+   "9": 795
+  },
+  "apply_UL_ms": 46.0,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   39.3
+  ],
+  "other_ue_UL_qfi": {
+   "1": 870,
+   "9": 792
+  }
+ },
+ {
+  "cycle": "ev-c8.jsonl",
+  "apply_DL_ms": 43.6,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   1.6,
+   11.6
+  ],
+  "other_ue_DL_qfi": {
+   "1": 874,
+   "10": 793
+  },
+  "apply_UL_ms": 43.5,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   21.7
+  ],
+  "other_ue_UL_qfi": {
+   "1": 871,
+   "10": 795
+  }
+ },
+ {
+  "cycle": "ev-c9.jsonl",
+  "apply_DL_ms": 43.5,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   1.5,
+   11.5
+  ],
+  "other_ue_DL_qfi": {
+   "1": 876,
+   "11": 797
+  },
+  "apply_UL_ms": 55.5,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   72.3
+  ],
+  "other_ue_UL_qfi": {
+   "1": 869,
+   "11": 796
+  }
+ },
+ {
+  "cycle": "ev-c10.jsonl",
+  "apply_DL_ms": 56.9,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   4.5
+  ],
+  "other_ue_DL_qfi": {
+   "1": 872,
+   "12": 796
+  },
+  "apply_UL_ms": 82.2,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   44.9
+  ],
+  "other_ue_UL_qfi": {
+   "1": 871,
+   "12": 792
+  }
+ },
+ {
+  "cycle": "ev-c11.jsonl",
+  "apply_DL_ms": 28.6,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   5.4
+  ],
+  "other_ue_DL_qfi": {
+   "1": 873,
+   "13": 797
+  },
+  "apply_UL_ms": 38.7,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   43.6,
+   83.2
+  ],
+  "other_ue_UL_qfi": {
+   "1": 868,
+   "13": 797
+  }
+ },
+ {
+  "cycle": "ev-c12.jsonl",
+  "apply_DL_ms": 43.3,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   0.3,
+   10.3
+  ],
+  "other_ue_DL_qfi": {
+   "1": 878,
+   "14": 794
+  },
+  "apply_UL_ms": 36.9,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   0.5,
+   134.4
+  ],
+  "other_ue_UL_qfi": {
+   "1": 870,
+   "14": 796
+  }
+ },
+ {
+  "cycle": "ev-c13.jsonl",
+  "apply_DL_ms": 49.0,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   6.6
+  ],
+  "other_ue_DL_qfi": {
+   "1": 873,
+   "15": 797
+  },
+  "apply_UL_ms": 42.9,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   26.3
+  ],
+  "other_ue_UL_qfi": {
+   "1": 871,
+   "15": 799
+  }
+ },
+ {
+  "cycle": "ev-c14.jsonl",
+  "apply_DL_ms": 56.6,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   3.9
+  ],
+  "other_ue_DL_qfi": {
+   "1": 871,
+   "16": 797
+  },
+  "apply_UL_ms": 48.8,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   4.6,
+   83.6
+  ],
+  "other_ue_UL_qfi": {
+   "1": 866,
+   "16": 796
+  }
+ },
+ {
+  "cycle": "ev-c15.jsonl",
+  "apply_DL_ms": 51.1,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   7.8
+  ],
+  "other_ue_DL_qfi": {
+   "1": 873,
+   "17": 797
+  },
+  "apply_UL_ms": 56.4,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   86.8
+  ],
+  "other_ue_UL_qfi": {
+   "1": 870,
+   "17": 791
+  }
+ },
+ {
+  "cycle": "ev-c16.jsonl",
+  "apply_DL_ms": 55.0,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   2.3,
+   12.3
+  ],
+  "other_ue_DL_qfi": {
+   "1": 874,
+   "18": 797
+  },
+  "apply_UL_ms": 69.0,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   83.7,
+   88.1
+  ],
+  "other_ue_UL_qfi": {
+   "1": 874,
+   "18": 795
+  }
+ },
+ {
+  "cycle": "ev-c17.jsonl",
+  "apply_DL_ms": 55.6,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   3.1
+  ],
+  "other_ue_DL_qfi": {
+   "1": 874,
+   "19": 797
+  },
+  "apply_UL_ms": 44.4,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   38.2
+  ],
+  "other_ue_UL_qfi": {
+   "1": 868,
+   "19": 795
+  }
+ },
+ {
+  "cycle": "ev-c18.jsonl",
+  "apply_DL_ms": 27.9,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   5.6
+  ],
+  "other_ue_DL_qfi": {
+   "1": 873,
+   "20": 798
+  },
+  "apply_UL_ms": 31.8,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   82.6
+  ],
+  "other_ue_UL_qfi": {
+   "1": 869,
+   "20": 796
+  }
+ },
+ {
+  "cycle": "ev-c19.jsonl",
+  "apply_DL_ms": 37.0,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   4.8
+  ],
+  "other_ue_DL_qfi": {
+   "1": 872,
+   "21": 798
+  },
+  "apply_UL_ms": 42.7,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   46.7
+  ],
+  "other_ue_UL_qfi": {
+   "1": 866,
+   "21": 794
+  }
+ },
+ {
+  "cycle": "ev-c20.jsonl",
+  "apply_DL_ms": 76.8,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   1.1,
+   11.1
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1733,
+   "22": 791
+  },
+  "apply_UL_ms": 137.0,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   66.0
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1729,
+   "22": 792
+  }
+ }
+]

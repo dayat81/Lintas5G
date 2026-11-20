@@ -2,31 +2,31 @@
 
 Skrip tes **lokal**. Lab Sesi D sudah di-destroy; **jangan apply atau push** sampai ada persetujuan eksplisit.
 
-Tes ini memutar YouTube headless di emulator (sesi Google tersimpan) lewat dummy VPN **Magnon examine v0.10.2**, dengan stempel waktu per paket QUIC (MGLT v2.1) + tap Zeek, pada 3 kondisi `idle | load | load+qod` × `REPS` (default 3 × 180 s).
+Tes ini memutar YouTube headless di emulator (sesi Google tersimpan) lewat dummy VPN **Booster examine v0.10.2**, dengan stempel waktu per paket QUIC (MGLT v2.1) + tap Zeek, pada 3 kondisi `idle | load | load+qod` × `REPS` (default 3 × 180 s).
 
 ## Cara menjalankan (setelah lab di-apply dan user menyetujui)
 
 Di **vm-emu** (setelah restore sesi + `emu-prep.sh`):
 
 ```bash
-# Salin APK v0.10.2 ke VM (bukan bagian repo publik). Sumber di box: phase2/magnon-poc-examine-v0.10.2.apk
+# Salin APK v0.10.2 ke VM (bukan bagian repo publik). Sumber di box: phase2/booster-poc-examine-v0.10.2.apk
 # sha256 fcc5e8a7bd36d424d0982ffd340b3a35077e4c20bd64eff609e86312d0cc622c
-install -m 0644 magnon-poc-examine-v0.10.2.apk /opt/lab5g/sesi-d/
+install -m 0644 booster-poc-examine-v0.10.2.apk /opt/lab5g/sesi-d/
 bash /opt/lab5g/sesi-d/emu-prep.sh          # merakit server iperf + install APK jika ada
 ```
 
 Urutan consent headless (API 36, sudah di `emu-youtube-qod.sh install` + `vpn-start`):
 
 ```bash
-adb install -r -g /opt/lab5g/sesi-d/magnon-poc-examine-v0.10.2.apk
-adb shell appops set id.magnon.poc.examine ACTIVATE_VPN allow
-adb shell pm grant id.magnon.poc.examine android.permission.POST_NOTIFICATIONS
+adb install -r -g /opt/lab5g/sesi-d/booster-poc-examine-v0.10.2.apk
+adb shell appops set id.booster.poc.examine ACTIVATE_VPN allow
+adb shell pm grant id.booster.poc.examine android.permission.POST_NOTIFICATIONS
 # MainActivity only — am start-foreground-service is rejected with BIND_VPN_SERVICE.
-adb shell am start -n id.magnon.poc.examine/.MainActivity \
+adb shell am start -n id.booster.poc.examine/.MainActivity \
   --es apps com.google.android.youtube \
   --es pktlog on --es logpkt off --es probe on --es dns 8.8.8.8 --es deproxy off --es quic fwd \
   --es probehost 10.99.9.20 --es probeport 9001 --es markport 9000
-# logcat -s MAGNON_EXAMINE:I | grep VPN_CONSENT   -> ok | needed
+# logcat -s BOOSTER_EXAMINE:I | grep VPN_CONSENT   -> ok | needed
 # ip -4 -br a show tun0
 ```
 

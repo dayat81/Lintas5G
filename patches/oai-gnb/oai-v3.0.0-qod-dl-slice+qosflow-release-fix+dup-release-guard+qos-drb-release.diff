@@ -1,0 +1,456 @@
+diff --git a/common/utils/ds/seq_arr.c b/common/utils/ds/seq_arr.c
+index 7df1ee8..81caab0 100644
+--- a/common/utils/ds/seq_arr.c
++++ b/common/utils/ds/seq_arr.c
+@@ -49,7 +49,11 @@ void seq_arr_init(seq_arr_t* arr, size_t elt_size) //__attribute__(malloc)
+ void seq_arr_free(seq_arr_t* arr, void (*free_func)(void*))
+ {
+   assert(arr != NULL);
+-  assert(arr->data != NULL);
++  /* Lintas5G: idempotent free (double release paths, e.g. duplicate PDU session release) */
++  if (arr->data == NULL) {
++    arr->size = 0;
++    return;
++  }
+ 
+   if (free_func != NULL) {
+     void* start_it = seq_arr_front(arr);
+@@ -61,6 +65,8 @@ void seq_arr_free(seq_arr_t* arr, void (*free_func)(void*))
+   }
+ 
+   free(arr->data);
++  arr->data = NULL;
++  arr->size = 0;
+ }
+ 
+ void seq_arr_push_back(seq_arr_t* arr, void* data, size_t len)
+diff --git a/openair2/E2AP/RAN_FUNCTION/CUSTOMIZED/ran_func_slice.c b/openair2/E2AP/RAN_FUNCTION/CUSTOMIZED/ran_func_slice.c
+index 58a39a4..d0ed4ef 100644
+--- a/openair2/E2AP/RAN_FUNCTION/CUSTOMIZED/ran_func_slice.c
++++ b/openair2/E2AP/RAN_FUNCTION/CUSTOMIZED/ran_func_slice.c
+@@ -6,6 +6,9 @@
+ #include "../../flexric/test/rnd/fill_rnd_data_slice.h"
+ #include <assert.h>
+ #include <stdio.h>
++#include <string.h>
++/* Lintas5G: SLICE SM control -> QoD DL slice policy in NR MAC (slice id 1 / label "qod" = QoD slice, NVS capacity pct) */
++extern void nr_dl_slice_e2_set(int enabled, int qod_max_pct);
+ 
+ bool read_slice_sm(void* data)
+ {
+@@ -36,8 +39,25 @@ sm_ag_if_ans_t write_ctrl_slice_sm(void const* data)
+ 
+   if(msg->type == SLICE_CTRL_SM_V0_ADD){
+     printf("[E2 Agent]: SLICE CONTROL ADD rx\n");
++    const ul_dl_slice_conf_t* dl = &msg->u.add_mod_slice.dl;
++    for (uint32_t i = 0; i < dl->len_slices; i++) {
++      const fr_slice_t* s = &dl->slices[i];
++      bool is_qod = s->id == 1 || (s->len_label >= 3 && strncmp(s->label, "qod", 3) == 0);
++      if (!is_qod) continue;
++      int pct = 0;
++      if (s->params.type == SLICE_ALG_SM_V0_NVS && s->params.u.nvs.conf == SLICE_SM_NVS_V0_CAPACITY) {
++        float p = s->params.u.nvs.u.capacity.u.pct_reserved;
++        pct = (int)(p <= 1.0f ? p * 100.0f + 0.5f : p);
++      } else if (s->params.type == SLICE_ALG_SM_V0_STATIC) {
++        pct = (int)((s->params.u.sta.pos_high - s->params.u.sta.pos_low + 1) * 100 / 18); /* 106 PRB = 18 RBG */
++      }
++      printf("[E2 Agent]: QoD slice id %u -> DL share %d%%\n", s->id, pct);
++      nr_dl_slice_e2_set(1, pct);
++    }
+   } else if (msg->type == SLICE_CTRL_SM_V0_DEL){
+     printf("[E2 Agent]: SLICE CONTROL DEL rx\n");
++    for (uint32_t i = 0; i < msg->u.del_slice.len_dl; i++)
++      if (msg->u.del_slice.dl[i] == 1) nr_dl_slice_e2_set(0, 0);
+   } else if (msg->type == SLICE_CTRL_SM_V0_UE_SLICE_ASSOC){
+     printf("[E2 Agent]: SLICE CONTROL ASSOC rx\n");
+   } else {
+diff --git a/openair2/LAYER2/NR_MAC_gNB/gNB_scheduler_dlsch.c b/openair2/LAYER2/NR_MAC_gNB/gNB_scheduler_dlsch.c
+index 7589603..f727c3e 100644
+--- a/openair2/LAYER2/NR_MAC_gNB/gNB_scheduler_dlsch.c
++++ b/openair2/LAYER2/NR_MAC_gNB/gNB_scheduler_dlsch.c
+@@ -583,6 +583,10 @@ float dl_pf_weight(int mcs, int mcs_table, int nrOfLayers, float avg_throughput)
+ {
+   uint8_t Qm = nr_get_Qm_dl(mcs, mcs_table);
+   uint16_t R = nr_get_code_rate_dl(mcs, mcs_table);
++  /* Lintas5G: a UE with no valid PDSCH config (nrOfLayers 0, e.g. while its bearers are released)
++   * gets weight 0 instead of a zero-input TBS computation */
++  if (nrOfLayers <= 0 || Qm == 0 || R == 0)
++    return 0.0f;
+   uint32_t tbs = nr_compute_tbs(Qm, R, 1, 10, 0, 0, 0, nrOfLayers) >> 3;
+   return (float)tbs / fmaxf(avg_throughput, 1e-9f);
+ }
+@@ -1090,7 +1094,9 @@ static void generate_dl_mac_pdu(gNB_MAC_INST *mac,
+           continue;
+ 
+         tb_size_t pdu_siz[MAX_NUM_DATA_REQ];
+-        int num = nr_mac_rlc_multi_data_req(module_id, rnti, true, lcid, bufEnd - buf, (char *)buf, pdu_siz, sizeofArray(pdu_siz));
++        /* Lintas5G: honour the LCID policy budget (+subheader slack) instead of the whole TB */
++        const int lc_cap = min((int)(bufEnd - buf), lcid_alloc[lcid] + 64);
++        int num = nr_mac_rlc_multi_data_req(module_id, rnti, true, lcid, lc_cap, (char *)buf, pdu_siz, sizeofArray(pdu_siz));
+         DevAssert(num <= sizeofArray(pdu_siz));
+ 
+         sdus += num;
+diff --git a/openair2/LAYER2/NR_MAC_gNB/gNB_scheduler_dlsch_default_policies.c b/openair2/LAYER2/NR_MAC_gNB/gNB_scheduler_dlsch_default_policies.c
+index 9d765c8..c514bd1 100644
+--- a/openair2/LAYER2/NR_MAC_gNB/gNB_scheduler_dlsch_default_policies.c
++++ b/openair2/LAYER2/NR_MAC_gNB/gNB_scheduler_dlsch_default_policies.c
+@@ -328,3 +328,171 @@ void nr_dl_lcid_alloc_default(const gNB_MAC_INST *mac,
+   for (int lcid = 0; lcid < NR_MAX_NUM_LCID; lcid++)
+     lcid_alloc[lcid] = candidate->pending_bytes_per_lcid[lcid];
+ }
++
++/* ===================== Lintas5G: QoD-aware DL slice policy (eval) =====================
++ * Two-tier DL scheduler on top of the v3.0.0 pluggable pipeline:
++ *  tier 1: slice share. A UE belongs to the QoD slice if any of its DRBs carries a QoS flow
++ *          whose 5QI is in qod_5qi (or whose S-NSSAI SD == qod_sd). The QoD slice is served first
++ *          each slot with up to qod_max_pct of the PRBs (= guaranteed share when it has data);
++ *          the BE slice gets the remainder (work-conserving), optionally capped by be_max_pct.
++ *  tier 2: PF inside each slice (nr_dl_proportional_fair, unchanged).
++ *  intra-UE: nr_dl_lcid_alloc_pbr reserves pbr_pct of the TBS for SRBs/non-QoD DRBs so a
++ *          saturated QoD DRB cannot starve the default bearer.
++ * Config: file in env OAI_DL_SLICE_CONF, key=value lines, re-read when mtime changes (~every 1 s). */
++#include <sys/stat.h>
++#include <stdio.h>
++static struct {
++  int enabled, qod_max_pct, be_max_pct, pbr_pct, n5qi, qod_sd;
++  int q5qi[16];
++  time_t mtime;
++  uint64_t calls, rb_qod, rb_be, n_qod_slots;
++} slc = {.enabled = 0, .qod_max_pct = 70, .be_max_pct = 100, .pbr_pct = 20, .qod_sd = -1};
++
++static void slice_reload(void)
++{
++  const char *f = getenv("OAI_DL_SLICE_CONF");
++  struct stat st;
++  if (!f || stat(f, &st) != 0 || st.st_mtime == slc.mtime)
++    return;
++  FILE *fp = fopen(f, "r");
++  if (!fp)
++    return;
++  slc.mtime = st.st_mtime;
++  char line[256];
++  while (fgets(line, sizeof(line), fp)) {
++    char k[64], v[160];
++    if (line[0] == '#' || sscanf(line, " %63[^= ] = %159s", k, v) != 2)
++      continue;
++    if (!strcmp(k, "enabled")) slc.enabled = atoi(v);
++    else if (!strcmp(k, "qod_max_pct")) slc.qod_max_pct = atoi(v);
++    else if (!strcmp(k, "be_max_pct")) slc.be_max_pct = atoi(v);
++    else if (!strcmp(k, "pbr_pct")) slc.pbr_pct = atoi(v);
++    else if (!strcmp(k, "qod_sd")) slc.qod_sd = (int)strtol(v, NULL, 0);
++    else if (!strcmp(k, "qod_5qi")) {
++      slc.n5qi = 0;
++      for (char *t = strtok(v, ","); t && slc.n5qi < 16; t = strtok(NULL, ","))
++        slc.q5qi[slc.n5qi++] = atoi(t);
++    }
++  }
++  fclose(fp);
++  LOG_I(NR_MAC, "[SLICE] conf reloaded: enabled=%d qod_5qi_n=%d qod_sd=%d qod_max_pct=%d be_max_pct=%d pbr_pct=%d\n",
++        slc.enabled, slc.n5qi, slc.qod_sd, slc.qod_max_pct, slc.be_max_pct, slc.pbr_pct);
++}
++
++static bool lc_is_qod(const nr_lc_config_t *c)
++{
++  if (c->lcid < 4)
++    return false;
++  if (slc.qod_sd >= 0 && (int)c->nssai.sd == slc.qod_sd)
++    return true;
++  for (int q = 0; q < NR_MAX_NUM_QFI; q++)
++    for (int i = 0; i < slc.n5qi; i++)
++      if (c->qos_config[q].fiveQI > 0 && c->qos_config[q].fiveQI == slc.q5qi[i])
++        return true;
++  return false;
++}
++
++static bool ue_is_qod(const NR_UE_info_t *UE)
++{
++  const NR_UE_sched_ctrl_t *sc = &UE->UE_sched_ctrl;
++  for (int j = 0; j < seq_arr_size(&sc->lc_config); j++)
++    if (lc_is_qod(seq_arr_at(&sc->lc_config, j)))
++      return true;
++  return false;
++}
++
++static int slice_pass(const nr_dl_sched_params_t *params, nr_dl_candidate_t *c, int n, const bool *member, int rb_budget, int max_ue, int *rb_used)
++{
++  bool saved[MAX_MOBILES_PER_GNB];
++  int any = 0;
++  for (int i = 0; i < n; i++) {
++    saved[i] = c[i].skipped;
++    if (!member[i] || c[i].scheduled)
++      c[i].skipped = true;
++    any += !c[i].skipped;
++  }
++  int ns = 0;
++  *rb_used = 0;
++  if (any && rb_budget >= 5 && max_ue > 0) {
++    nr_dl_sched_params_t p = *params;
++    p.n_rb_avail[0] = rb_budget;
++    p.max_num_ue = max_ue;
++    ns = nr_dl_proportional_fair(&p, c, n);
++    for (int i = 0; i < n; i++)
++      if (member[i] && !c[i].skipped && c[i].scheduled)
++        *rb_used += c[i].sched_pdsch.rbSize;
++  }
++  for (int i = 0; i < n; i++)
++    c[i].skipped = saved[i];
++  return ns;
++}
++
++int nr_dl_slice_rb_alloc(const nr_dl_sched_params_t *params, nr_dl_candidate_t *c, int n)
++{
++  if ((slc.calls++ & 1023) == 0)
++    slice_reload();
++  if ((slc.calls & 0x3FFF) == 0 && slc.enabled) {
++    LOG_I(NR_MAC, "[SLICE] stats: qod_rbs=%lu be_rbs=%lu qod_slots=%lu qod_share=%.1f%%\n", slc.rb_qod, slc.rb_be, slc.n_qod_slots,
++          slc.rb_qod + slc.rb_be ? 100.0 * slc.rb_qod / (slc.rb_qod + slc.rb_be) : 0.0);
++    slc.rb_qod = slc.rb_be = slc.n_qod_slots = 0;
++  }
++  if (!slc.enabled || params->num_beams > 1)
++    return nr_dl_proportional_fair(params, c, n);
++  bool qod[MAX_MOBILES_PER_GNB], be[MAX_MOBILES_PER_GNB];
++  int nq = 0;
++  for (int i = 0; i < n; i++) {
++    qod[i] = ue_is_qod(c[i].UE) && !c[i].skipped;
++    be[i] = !qod[i];
++    nq += qod[i];
++  }
++  const int total = params->n_rb_avail[0];
++  int used_q = 0, used_b = 0, ns = 0;
++  if (nq) {
++    ns += slice_pass(params, c, n, qod, total * slc.qod_max_pct / 100, params->max_num_ue, &used_q);
++    slc.n_qod_slots++;
++  }
++  int be_budget = min(total - used_q, total * slc.be_max_pct / 100);
++  ns += slice_pass(params, c, n, be, be_budget, params->max_num_ue - ns, &used_b);
++  slc.rb_qod += used_q;
++  slc.rb_be += used_b;
++  return ns;
++}
++
++void nr_dl_lcid_alloc_pbr(const gNB_MAC_INST *mac, const nr_dl_candidate_t *cand, int tbs_available, int lcid_alloc[NR_MAX_NUM_LCID])
++{
++  nr_dl_lcid_alloc_default(mac, cand, tbs_available, lcid_alloc);
++  if (!slc.enabled || slc.pbr_pct <= 0)
++    return;
++  const NR_UE_sched_ctrl_t *sc = &cand->UE->UE_sched_ctrl;
++  int other = 0, qodb = 0;
++  for (int j = 0; j < seq_arr_size(&sc->lc_config); j++) {
++    const nr_lc_config_t *lc = seq_arr_at(&sc->lc_config, j);
++    if (lc_is_qod(lc))
++      qodb += lcid_alloc[lc->lcid];
++    else
++      other += lcid_alloc[lc->lcid];
++  }
++  if (qodb == 0 || other == 0)
++    return;
++  /* reserve min(other pending, pbr% of TBS) for SRBs/non-QoD DRBs; QoD DRBs get the rest */
++  int reserve = min(other, tbs_available * slc.pbr_pct / 100);
++  int qod_cap = max(tbs_available - reserve, 0);
++  for (int j = 0; j < seq_arr_size(&sc->lc_config); j++) {
++    const nr_lc_config_t *lc = seq_arr_at(&sc->lc_config, j);
++    if (lc_is_qod(lc)) {
++      int a = min(lcid_alloc[lc->lcid], qod_cap);
++      qod_cap -= a;
++      lcid_alloc[lc->lcid] = a > 0 ? a : 0;
++    }
++  }
++}
++
++/* E2 glue: called from the FlexRIC SLICE SM control handler (ran_func_slice.c). Overrides the file conf until the file changes. */
++void nr_dl_slice_e2_set(int enabled, int qod_max_pct)
++{
++  if (qod_max_pct > 0 && qod_max_pct <= 100)
++    slc.qod_max_pct = qod_max_pct;
++  slc.enabled = enabled;
++  if (slc.n5qi == 0) { slc.q5qi[0] = 7; slc.q5qi[1] = 1; slc.n5qi = 2; }
++  LOG_I(NR_MAC, "[SLICE] E2 control: enabled=%d qod_max_pct=%d\n", slc.enabled, slc.qod_max_pct);
++}
+diff --git a/openair2/LAYER2/NR_MAC_gNB/gNB_scheduler_dlsch_default_policies.h b/openair2/LAYER2/NR_MAC_gNB/gNB_scheduler_dlsch_default_policies.h
+index 2a1793e..a35056e 100644
+--- a/openair2/LAYER2/NR_MAC_gNB/gNB_scheduler_dlsch_default_policies.h
++++ b/openair2/LAYER2/NR_MAC_gNB/gNB_scheduler_dlsch_default_policies.h
+@@ -27,4 +27,7 @@ void nr_dl_lcid_alloc_default(const gNB_MAC_INST *mac,
+                               int tbs_available,
+                               int lcid_alloc[NR_MAX_NUM_LCID]);
+ 
++int nr_dl_slice_rb_alloc(const nr_dl_sched_params_t *params, nr_dl_candidate_t *candidates, int n_candidates);
++void nr_dl_lcid_alloc_pbr(const gNB_MAC_INST *mac, const nr_dl_candidate_t *candidate, int tbs_available, int lcid_alloc[NR_MAX_NUM_LCID]);
++
+ #endif /* GNB_SCHEDULER_DLSCH_DEFAULT_POLICIES_H */
+diff --git a/openair2/LAYER2/NR_MAC_gNB/main.c b/openair2/LAYER2/NR_MAC_gNB/main.c
+index 0366875..cc4efa0 100644
+--- a/openair2/LAYER2/NR_MAC_gNB/main.c
++++ b/openair2/LAYER2/NR_MAC_gNB/main.c
+@@ -326,6 +326,11 @@ void mac_top_init_gNB(ngran_node_t node_type,
+         RC.nrmac[i]->dl_beam_select = nr_dl_beam_select_default;
+         RC.nrmac[i]->dl_tda_select = nr_dl_tda_select_default;
+         RC.nrmac[i]->dl_rb_alloc = nr_dl_proportional_fair;
++        if (getenv("OAI_DL_SLICE_CONF")) {
++          RC.nrmac[i]->dl_rb_alloc = nr_dl_slice_rb_alloc;
++          RC.nrmac[i]->dl_lcid_alloc = nr_dl_lcid_alloc_pbr;
++          LOG_I(NR_MAC, "[SLICE] QoD-aware DL slice policy installed (conf %s)\n", getenv("OAI_DL_SLICE_CONF"));
++        }
+       }
+       if (!IS_SOFTMODEM_NOSTATS)
+         threadCreate(&RC.nrmac[i]->stats_thread,
+diff --git a/openair2/RRC/NR/nr_rrc_defs.h b/openair2/RRC/NR/nr_rrc_defs.h
+index 08db799..24bece1 100644
+--- a/openair2/RRC/NR/nr_rrc_defs.h
++++ b/openair2/RRC/NR/nr_rrc_defs.h
+@@ -188,6 +188,10 @@ typedef struct gNB_RRC_UE_s {
+ 
+   bool as_security_active;
+   bool f1_ue_context_active;
++  /* Lintas5G (N3): DRBs removed by a QoS-flow release inside PDU Session Modify; released at the DU
++   * (F1 UE Context Modification drbs-ToBeReleased: RLC entity + LCID) and at the UE (drb-ToReleaseList). */
++  int qos_drb_rel[MAX_DRBS_PER_UE];
++  int n_qos_drb_rel;
+ 
+   byte_array_t ue_cap_buffer;
+   NR_UE_NR_Capability_t*             UE_Capability_nr;
+diff --git a/openair2/RRC/NR/rrc_gNB.c b/openair2/RRC/NR/rrc_gNB.c
+index bdd5e29..44d5736 100644
+--- a/openair2/RRC/NR/rrc_gNB.c
++++ b/openair2/RRC/NR/rrc_gNB.c
+@@ -975,6 +975,15 @@ nr_rrc_reconfig_param_t get_RRCReconfiguration_params(gNB_RRC_INST *rrc, gNB_RRC
+     }
+   }
+ 
++  /* Lintas5G (N3): DRBs released by QoS-flow release -> drb-ToReleaseList for the UE */
++  if (UE->n_qos_drb_rel > 0) {
++    if (!params.drb_rel)
++      params.drb_rel = calloc_or_fail(MAX_DRBS_PER_UE, sizeof(int));
++    for (int k = 0; k < UE->n_qos_drb_rel && params.n_drb_rel < MAX_DRBS_PER_UE; k++)
++      params.drb_rel[params.n_drb_rel++] = UE->qos_drb_rel[k];
++    UE->n_qos_drb_rel = 0;
++  }
++
+   if (UE->nas_pdu.len > 0) {
+     params.dedicated_NAS_msg_list[params.num_nas_msg++] = UE->nas_pdu;
+     UE->nas_pdu.buf = NULL;
+@@ -3584,6 +3593,12 @@ void rrc_gNB_process_e1_bearer_context_modif_resp(const e1ap_bearer_modif_resp_t
+         if (drb_mod->numQosFlowSetup > 0 || drb_mod->numUpParam > 0)
+           do_reconfig = true;
+       }
++      /* Lintas5G (N3): DRBs dropped by a QoS-flow release must also be released at the DU
++       * (otherwise RLC entity / LCID stay behind and a later DRB with the same ID is broken) */
++      for (int k = 0; k < ue->n_qos_drb_rel && n_f1_drbs_rel < MAX_DRBS_PER_UE; k++) {
++        LOG_I(NR_RRC, "UE %d: release DRB %d at DU after QoS flow release\n", ue->rrc_ue_id, ue->qos_drb_rel[k]);
++        f1_drbs_rel[n_f1_drbs_rel++].id = ue->qos_drb_rel[k];
++      }
+       // Collect DRBs to release for PDU sessions marked for release
+     } else if (pdu_session->status == PDU_SESSION_STATUS_TORELEASE) {
+       FOR_EACH_SEQ_ARR(drb_t *, drb, &ue->drbs) {
+diff --git a/openair2/RRC/NR/rrc_gNB_NGAP.c b/openair2/RRC/NR/rrc_gNB_NGAP.c
+index 2acbb34..1bd8db1 100644
+--- a/openair2/RRC/NR/rrc_gNB_NGAP.c
++++ b/openair2/RRC/NR/rrc_gNB_NGAP.c
+@@ -1012,7 +1012,11 @@ static void nr_rrc_send_e1_after_qos_update(gNB_RRC_UE_t *UE,
+   // Find or create PDU session entry in e1_req
+   pdu_session_to_mod_t *pdu_mod = find_or_add_pdu_session_mod(e1_req, dst->pdusession_id);
+ 
+-  // Check if any remaining QoS for this PDU session still references the same DRB
++  // Check if any remaining QoS for this PDU session still references the same DRB.
++  // Lintas5G fix: do NOT erase from UE->drbs while iterating it (use-after-free -> assert in get_drb()).
++  // Collect unused DRB IDs first, remove them after the loop.
++  int drbs_to_remove[MAX_DRBS_PER_UE];
++  int n_drbs_to_remove = 0;
+   FOR_EACH_SEQ_ARR (drb_t *, drb, &UE->drbs) {
+     if (drb->pdusession_id != dst->pdusession_id)
+       continue;
+@@ -1024,17 +1028,8 @@ static void nr_rrc_send_e1_after_qos_update(gNB_RRC_UE_t *UE,
+       }
+     }
+     if (!drb_still_used) {
+-      if (nr_rrc_remove_drb_by_id(&UE->drbs, drb->drb_id)) {
+-        LOG_I(NR_RRC,
+-              "UE %d: removed DRB ID %d for PDU session %d (no remaining QoS flows mapped)\n",
+-              UE->rrc_ue_id,
+-              drb->drb_id,
+-              dst->pdusession_id);
+-      }
+-      // Add DRB to remove directly to e1_req
+-      DevAssert(pdu_mod->n_drb_to_remove < E1AP_MAX_NUM_DRBS);
+-      drb_to_remove_t *rem = &pdu_mod->drbs_to_remove[pdu_mod->n_drb_to_remove++];
+-      rem->id = drb->drb_id;
++      DevAssert(n_drbs_to_remove < MAX_DRBS_PER_UE);
++      drbs_to_remove[n_drbs_to_remove++] = drb->drb_id;
+       continue;
+     }
+ 
+@@ -1053,6 +1048,24 @@ static void nr_rrc_send_e1_after_qos_update(gNB_RRC_UE_t *UE,
+         find_or_add_e1_drb_mod(pdu_mod, drb->drb_id, dst);
+     }
+   }
++
++  for (int i = 0; i < n_drbs_to_remove; i++) {
++    const int drb_id = drbs_to_remove[i];
++    if (nr_rrc_remove_drb_by_id(&UE->drbs, drb_id)) {
++      LOG_I(NR_RRC,
++            "UE %d: removed DRB ID %d for PDU session %d (no remaining QoS flows mapped)\n",
++            UE->rrc_ue_id,
++            drb_id,
++            dst->pdusession_id);
++    }
++    // Lintas5G (N3): remember the DRB so the DU (RLC/MAC LCID) and the UE release it too
++    if (UE->n_qos_drb_rel < MAX_DRBS_PER_UE)
++      UE->qos_drb_rel[UE->n_qos_drb_rel++] = drb_id;
++    // Add DRB to remove directly to e1_req
++    DevAssert(pdu_mod->n_drb_to_remove < E1AP_MAX_NUM_DRBS);
++    drb_to_remove_t *rem = &pdu_mod->drbs_to_remove[pdu_mod->n_drb_to_remove++];
++    rem->id = drb_id;
++  }
+ }
+ 
+ static void nr_rrc_apply_qos_add_modify(gNB_RRC_INST *rrc,
+@@ -1966,16 +1979,28 @@ int rrc_gNB_process_NGAP_PDUSESSION_RELEASE_COMMAND(ngap_pdusession_release_comm
+   if (cmd->nb_pdusessions_torelease > 0) {
+     req.pduSessionRem = calloc_or_fail(cmd->nb_pdusessions_torelease, sizeof(*req.pduSessionRem));
+   }
++  /* Lintas5G: PDU sessions that are gone or already released locally (NOTIFYONRELEASE) are answered
++   * directly with a Release Response instead of re-running E1/F1 release on freed state (double release). */
++  int already_released[NR_MAX_NB_PDU_SESSIONS];
++  int n_already = 0;
+   for (int pdusession = 0; pdusession < cmd->nb_pdusessions_torelease; pdusession++) {
+     rrc_pdu_session_param_t *pduSession = find_pduSession(&UE->pduSessions, cmd->pdusession_ids[pdusession]);
+     if (!pduSession) {
+-      LOG_E(NR_RRC, "Failed to release non-existing PDU Session %d\n", cmd->pdusession_ids[pdusession]);
++      LOG_W(NR_RRC, "PDU Session %d release: session not present (already released), answering as released\n", cmd->pdusession_ids[pdusession]);
++      if (n_already < NR_MAX_NB_PDU_SESSIONS)
++        already_released[n_already++] = cmd->pdusession_ids[pdusession];
+       continue;
+     }
+     if (pduSession->status == PDU_SESSION_STATUS_TORELEASE) {
+       LOG_W(NR_RRC, "PDU Session %d already set to be released\n", pduSession->param.pdusession_id);
+       continue;
+     }
++    if (pduSession->status == PDU_SESSION_STATUS_NOTIFYONRELEASE) {
++      LOG_W(NR_RRC, "PDU Session %d already released locally (NOTIFYONRELEASE): ignore duplicate release\n", pduSession->param.pdusession_id);
++      if (n_already < NR_MAX_NB_PDU_SESSIONS)
++        already_released[n_already++] = pduSession->param.pdusession_id;
++      continue;
++    }
+     // Set PDU session to release, regardless of the status
+     LOG_I(NR_RRC, "Set PDU Session %d to release\n", pduSession->param.pdusession_id);
+     pdu_session_to_remove_t *release = &req.pduSessionRem[req.numPDUSessionsRem++];
+@@ -1986,8 +2011,18 @@ int rrc_gNB_process_NGAP_PDUSESSION_RELEASE_COMMAND(ngap_pdusession_release_comm
+   }
+ 
+   if (req.numPDUSessionsRem == 0) {
+-    LOG_E(NR_RRC, "Received NG PDU Session Release Command but no PDU Sessions to release\n");
+     free_e1ap_context_mod_request(&req);
++    if (n_already > 0) {
++      MessageDef *msg_p = itti_alloc_new_message(TASK_RRC_GNB, rrc->module_id, NGAP_PDUSESSION_RELEASE_RESPONSE);
++      ngap_pdusession_release_resp_t *resp = &NGAP_PDUSESSION_RELEASE_RESPONSE(msg_p);
++      resp->gNB_ue_ngap_id = UE->rrc_ue_id;
++      for (int i = 0; i < n_already && i < NR_MAX_NB_PDU_SESSIONS; i++)
++        resp->pdusession_release[resp->nb_of_pdusessions_released++].pdusession_id = already_released[i];
++      LOG_I(NR_RRC, "UE %u: duplicate PDU Session Release answered (%d already released)\n", UE->rrc_ue_id, n_already);
++      itti_send_msg_to_task(TASK_NGAP, rrc->module_id, msg_p);
++      return 0;
++    }
++    LOG_E(NR_RRC, "Received NG PDU Session Release Command but no PDU Sessions to release\n");
+     return -1;
+   } else if (!ue_associated_to_cuup(UE)) {
+     LOG_E(NR_RRC, "UE %d is not associated to CU-UP\n", UE->rrc_ue_id);

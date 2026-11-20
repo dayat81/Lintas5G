@@ -1,0 +1,7 @@
+/var/log/lab5g/booster/runs/r1-boost/adapter.win.log:0
+/var/log/lab5g/booster/runs/r1-boost/amf.win.log:0
+/var/log/lab5g/booster/runs/r1-boost/backend.win.log:0
+/var/log/lab5g/booster/runs/r1-boost/gnb.win.log:0
+/var/log/lab5g/booster/runs/r1-boost/pcf.win.log:0
+/var/log/lab5g/booster/runs/r1-boost/smf.win.log:0
+/var/log/lab5g/booster/runs/r1-boost/upf.win.log:0

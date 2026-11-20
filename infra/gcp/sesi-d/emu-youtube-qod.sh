@@ -1,19 +1,19 @@
 #!/bin/bash
-# vm-emu (root): install Magnon examine v0.10.2, pre-grant VPN consent headless, start examine
+# vm-emu (root): install Booster examine v0.10.2, pre-grant VPN consent headless, start examine
 # targeting YouTube, and collect 1 s playback samples. No VNC, no public tunnel, no account data
 # in the TSV (screenshots go to a root-only dir, same rule as emu-youtube-headless.sh).
 #
 # Headless consent sequence (API 36, v0.10.2):
 #   1. adb install -r -g <apk>
-#   2. adb shell appops set id.magnon.poc.examine ACTIVATE_VPN allow
+#   2. adb shell appops set id.booster.poc.examine ACTIVATE_VPN allow
 #      (also: cmd appops set --user 0 ... allow)
-#   3. adb shell pm grant id.magnon.poc.examine android.permission.POST_NOTIFICATIONS
-#   4. adb shell am start -n id.magnon.poc.examine/.MainActivity with extras
+#   3. adb shell pm grant id.booster.poc.examine android.permission.POST_NOTIFICATIONS
+#   4. adb shell am start -n id.booster.poc.examine/.MainActivity with extras
 #        (apps, pktlog, probe, dns, deproxy, quic, probehost/probeport/markport).
 #        MainActivity starts the VpnService after prepare() is null.
 #        Do NOT use am start-foreground-service on ExamineVpnService: BIND_VPN_SERVICE
 #        blocks it (Sesi D 18 Nov). Do not click a VNC dialog from this script.
-#   5. Confirm: logcat -s MAGNON_EXAMINE:I | grep VPN_CONSENT   (ok|needed)
+#   5. Confirm: logcat -s BOOSTER_EXAMINE:I | grep VPN_CONSENT   (ok|needed)
 #              and `ip -4 -br a show tun0`
 # Play start uses watch?v=ID&t=0 so a resumed session does not start mid-video.
 # Official playback advance is still last PLAYING pos - first PLAYING pos (yt-playback.py).
@@ -26,12 +26,12 @@
 #   emu-youtube-qod.sh date                      # Android date +%s.%N (skew)
 #   emu-youtube-qod.sh proto-hint                # udp/tcp 443 sockets (best effort)
 # env: C=android-emu  APK=...  VIDEO_ID=aqz-KE-bpKQ  VIDEO_QUALITY=  (e.g. hd720, optional vq=)
-#      PKG=id.magnon.poc.examine  YT=com.google.android.youtube
+#      PKG=id.booster.poc.examine  YT=com.google.android.youtube
 set -u
 C=${C:-android-emu}
-PKG=${PKG:-id.magnon.poc.examine}
+PKG=${PKG:-id.booster.poc.examine}
 YT=${YT:-com.google.android.youtube}
-APK=${APK:-/opt/lab5g/sesi-d/magnon-poc-examine-v0.10.2.apk}
+APK=${APK:-/opt/lab5g/sesi-d/booster-poc-examine-v0.10.2.apk}
 PROBE_HOST=${PROBE_HOST:-10.99.9.20}
 PROBE_PORT=${PROBE_PORT:-9001}
 MARK_PORT=${MARK_PORT:-9000}
@@ -48,10 +48,10 @@ cmd=${1:-}
 
 install_apk() {
   [ -f "$APK" ] || { echo "APK missing: $APK (copy v0.10.2 to the emu host first)"; return 1; }
-  docker cp "$APK" "$C:/tmp/magnon-poc-examine.apk"
+  docker cp "$APK" "$C:/tmp/booster-poc-examine.apk"
   $A am broadcast -n $PKG/.StopReceiver >/dev/null 2>&1 || true
   $A am force-stop $PKG >/dev/null 2>&1 || true
-  $ADB_HOST install -r -g /tmp/magnon-poc-examine.apk
+  $ADB_HOST install -r -g /tmp/booster-poc-examine.apk
   # Headless VPN consent (worked on API 33 yesterday). API 36 may still show a dialog
   # if prepare() is non-null; vpn-start will report VPN_CONSENT=needed in that case.
   $A appops set $PKG ACTIVATE_VPN allow
@@ -88,7 +88,7 @@ vpn_start() {
   cat /tmp/ytqod-vpn-start.txt 2>/dev/null || true
   wait_tun 12 || true
   local log
-  log=$($ADB_HOST logcat -d -s MAGNON_EXAMINE:I 2>/dev/null | grep -E 'VPN_CONSENT|VPN up|consent |POST_NOTIFICATIONS' | tail -15)
+  log=$($ADB_HOST logcat -d -s BOOSTER_EXAMINE:I 2>/dev/null | grep -E 'VPN_CONSENT|VPN up|consent |POST_NOTIFICATIONS' | tail -15)
   if [ -n "$tun" ]; then
     echo "VPN_CONSENT=ok tun0=$tun"
     echo "$log"
@@ -109,7 +109,7 @@ vpn_stop() {
 vpn_status() {
   echo "tun0=$($A 'ip -4 -br a show tun0 2>/dev/null' | tr -d '\r')"
   echo "appops=$($A appops get $PKG ACTIVATE_VPN 2>/dev/null | tr '\n' ' ')"
-  $ADB_HOST logcat -d -s MAGNON_EXAMINE:I 2>/dev/null | grep -E 'VPN_CONSENT|VPN up|mglt2 ready|quic|POST_NOTIFICATIONS=' | tail -8
+  $ADB_HOST logcat -d -s BOOSTER_EXAMINE:I 2>/dev/null | grep -E 'VPN_CONSENT|VPN up|mglt2 ready|quic|POST_NOTIFICATIONS=' | tail -8
 }
 
 play_url() {

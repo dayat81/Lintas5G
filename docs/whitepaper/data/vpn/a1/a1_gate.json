@@ -1,0 +1,15 @@
+{
+ "api_to_first_QFI2_DL_ms": 48.1,
+ "api_to_first_QFI2_UL_ms": 47.6,
+ "target_flow_last_QFI1_pkt_after_create_ms": 50.1,
+ "QFI2_flows_steady": {
+  "UL/udp/198.51.100.1:18080": 1468,
+  "DL/udp/198.51.100.1:18080": 1467,
+  "UL/tcp/198.51.100.1:18080": 2400,
+  "DL/tcp/198.51.100.1:18080": 3074
+ },
+ "non_target_pkts_on_QFI2": 0,
+ "target_pkts_steady": 8409,
+ "target_pkts_steady_on_QFI1": 0,
+ "GATE_DL_UL": "PASS"
+}

@@ -1,0 +1,85 @@
+dir QFI proto as_port ue phase pkts
+DL 1 icmp 0 ue1 on 19
+DL 1 icmp 0 ue1 post 21
+DL 1 icmp 0 ue1 pre 15
+UL 1 icmp 0 ue1 on 19
+UL 1 icmp 0 ue1 post 21
+UL 1 icmp 0 ue1 pre 15
+DL 1 udp 5202 ue1 on 262832
+DL 1 udp 5202 ue1 post 249942
+DL 1 tcp 5202 ue1 post 9
+DL 1 tcp 5202 ue1 pre 9
+DL 1 udp 5202 ue1 pre 179988
+UL 1 tcp 5202 ue1 post 6
+UL 1 tcp 5202 ue1 pre 11
+UL 1 udp 5202 ue1 pre 1
+DL 2 tcp 8080 ue1 on 125
+DL 2 tcp 8080 ue1 post 2
+DL 2 tcp 8080 ue1 pre 6
+UL 2 tcp 8080 ue1 on 126
+UL 2 tcp 8080 ue1 post 3
+UL 2 tcp 8080 ue1 pre 5
+DL 1 udp 18080 ue1 on 3
+DL 12 udp 18080 ue1 on 907
+DL 12 tcp 18080 ue1 on 1227
+DL 1 udp 18080 ue1 post 932
+DL 1 tcp 18080 ue1 post 153
+DL 12 udp 18080 ue1 post 3
+DL 1 udp 18080 ue1 pre 653
+DL 1 tcp 18080 ue1 pre 152
+UL 1 udp 18080 ue1 on 4
+UL 12 udp 18080 ue1 on 906
+UL 12 tcp 18080 ue1 on 2561
+UL 1 udp 18080 ue1 post 932
+UL 1 tcp 18080 ue1 post 193
+UL 12 udp 18080 ue1 post 3
+UL 1 udp 18080 ue1 pre 653
+UL 1 tcp 18080 ue1 pre 180
+DL 1 udp 18081 ue1 on 364
+DL 1 udp 18081 ue1 post 377
+DL 1 udp 18081 ue1 pre 259
+UL 1 udp 18081 ue1 on 364
+UL 1 udp 18081 ue1 post 377
+UL 1 udp 18081 ue1 pre 259
+DL 1 icmp 0 ue2 on 18
+DL 1 icmp 0 ue2 post 21
+DL 1 icmp 0 ue2 pre 15
+UL 1 icmp 0 ue2 on 18
+UL 1 icmp 0 ue2 post 21
+UL 1 icmp 0 ue2 pre 15
+DL 1 udp 5201 ue2 on 262832
+DL 1 udp 5201 ue2 post 263815
+DL 1 tcp 5201 ue2 post 7
+DL 1 tcp 5201 ue2 pre 9
+DL 1 udp 5201 ue2 pre 181705
+UL 1 tcp 5201 ue2 post 5
+UL 1 tcp 5201 ue2 pre 11
+UL 1 udp 5201 ue2 pre 1
+DL 1 udp 18080 ue2 on 364
+DL 1 udp 18080 ue2 post 380
+DL 1 udp 18080 ue2 pre 256
+UL 1 udp 18080 ue2 on 364
+UL 1 udp 18080 ue2 post 380
+UL 1 udp 18080 ue2 pre 256
+{
+ "apply_DL_udp_ms": 73.1,
+ "apply_DL_tcp_ms": 2009.9,
+ "apply_UL_udp_ms": 78.1,
+ "apply_UL_tcp_ms": 2009.9,
+ "remove_DL_udp_ms(last_newQFI,first_QFI1)": [
+  30.9,
+  102.7
+ ],
+ "remove_DL_tcp_ms(last_newQFI,first_QFI1)": [
+  -459.0,
+  429.4
+ ],
+ "remove_UL_udp_ms(last_newQFI,first_QFI1)": [
+  30.6,
+  102.6
+ ],
+ "remove_UL_tcp_ms(last_newQFI,first_QFI1)": [
+  -459.4,
+  429.4
+ ]
+}

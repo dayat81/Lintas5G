@@ -57,5 +57,5 @@ Offset jam guest–core dikalibrasi dari fase idle di tap UE dengan asumsi jalur
 Segmen ue→n3 UL membengkak di bawah beban (radio/ZMQ UL 8 Mbit/s), sedangkan N3→N6 (core) hampir nol; antrean HTB DL dengan QoD p99 ≈ 64 ms. Sampel kecil (1 rep × 90 s); P5 (p99 DL n6 vs load) tidak dinilai karena fase `load` tanpa QoD tidak dijalankan.
 
 ## 5. Biaya, destroy
-Apply 06:22:53 WIB, destroy selesai ≈07:10 WIB (151 resource, state 0): ≈0,78 jam × ~USD 0,82/jam ≈ **USD 0,65** (estimasi; Billing API nonaktif). Kumulatif hari ini ≈ USD 7,2 (< 12). Audit: tidak ada instance/disk/IP/firewall/router/NAT/bucket `lab5g-runs` tersisa; build-vm-01 TERMINATED; netprobe/magnon tidak disentuh.
+Apply 06:22:53 WIB, destroy selesai ≈07:10 WIB (151 resource, state 0): ≈0,78 jam × ~USD 0,82/jam ≈ **USD 0,65** (estimasi; Billing API nonaktif). Kumulatif hari ini ≈ USD 7,2 (< 12). Audit: tidak ada instance/disk/IP/firewall/router/NAT/bucket `lab5g-runs` tersisa; build-vm-01 TERMINATED; netprobe/booster tidak disentuh.
 Log: box `/workspace/sesi-d-yt3/`, bucket privat state `logs/sesi-d-yt3/20261119/`.

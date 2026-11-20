@@ -1,0 +1,26 @@
+--- a/openair2/LAYER2/NR_MAC_gNB/gNB_scheduler_ulsch_default_policies.c
++++ b/openair2/LAYER2/NR_MAC_gNB/gNB_scheduler_ulsch_default_policies.c
+@@ -249,6 +249,23 @@
+                                    bo->upper,
+                                    cand->last_num_sched);
+     }
++    /* Lintas5G (N4): the UL MCS table of a UE changes with the search space (common SS / DCI 0_0 -> table 0
++     * qam64, max 28; dedicated DCI 0_1 -> configured table, e.g. qam256 max 27), e.g. around RA with C-RNTI
++     * after an UL failure. A stale MCS (ul_bler_stats.mcs when the BLER window is not updated, or the MCS of a
++     * HARQ process scheduled under the other table) can then be a *reserved* index of the current table
++     * (Qm 2, R 0 -> "compute TBS with a NULL input" at the gNB, "Invalid TBS = 0" -> DTX at the UE -> UL failure
++     * -> RA with C-RNTI -> table switch again). Never signal a reserved/out-of-range MCS. */
++    {
++      const int max_tbl = (cand->mcs_table == 0 || cand->mcs_table == 2) ? 28 : 27;
++      const int hi = cand->is_retx ? max_tbl : min(cand->max_mcs, max_tbl);
++      if (mcs > hi || mcs < 0) {
++        static uint64_t n4_cnt = 0;
++        if ((n4_cnt++ % 100) == 0)
++          LOG_W(NR_MAC, "[N4] UE %04x UL MCS %d invalid for table %d (retx %d, bler_updated %d), clamped to %d (count %lu)\n",
++                cand->UE->rnti, mcs, cand->mcs_table, cand->is_retx, cand->bler_updated, mcs < 0 ? bo->min_mcs : hi, n4_cnt);
++        mcs = mcs < 0 ? bo->min_mcs : hi;
++      }
++    }
+     cand->sched_pusch.mcs = mcs;
+     if (!cand->is_retx)
+       cand->UE->UE_sched_ctrl.ul_bler_stats.mcs = mcs;

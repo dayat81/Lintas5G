@@ -1,0 +1,10 @@
+| arm | rep | pre_yt_dl_loss_pct | pre_worst_flow_loss_pct | boostwin_yt_dl_loss_pct | boostwin_worst_flow_loss_pct | pre_yt_dl_mbps | boostwin_yt_dl_mbps |
+|---|---|---|---|---|---|---|---|
+| A (QoD, play under load) | A1 | 28.4 | 44.68 | 7.34 | 28.33 | 0.09 | 1.09 |
+| A (QoD, play under load) | A2 | 30.23 | 62.04 | 13.55 | 24.24 | 0.09 | 0.23 |
+| PA (QoD, play before load) | PA1 | 20.76 | 20.34 | 15.4 | 52.65 | 0.47 | 0.44 |
+| PA (QoD, play before load) | PA2 | 11.35 | 37.5 | 9.29 | 22.93 | 0.46 | 0.53 |
+| N (no QoD, play under load) | N1 | 25.29 | 31.34 | 26.93 | 28.57 | 0.08 | 0.03 |
+| N (no QoD, play under load) | N2 | 26.88 | 38.26 | 31.65 | 32.04 | 0.08 | 0.05 |
+| PN (no QoD, play before load) | PN1 | 29.14 | 29.52 | 34.29 | 37.5 | 0.33 | 0.09 |
+| PN (no QoD, play before load) | PN2 | 32.07 | 45.57 | 36.33 | 40.51 | 0.19 | 0.11 |

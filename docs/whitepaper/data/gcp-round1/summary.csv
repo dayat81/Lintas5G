@@ -1,0 +1,6 @@
+run,description,mglt_p50_ms,mglt_p99_ms,n,notes
+r0b-base,no booster; bulk 400M UDP from +35s (idle),34.9,200.8,53,idle (before load)
+r0b-base,no booster; under load,4908.7,5011.9,29,YouTube never PLAYING
+r1-boost,booster onesession; under load + boost,969.6,1547.5,14,YouTube PLAYING from ~+29s; stall_count 0
+r1-boost,same cell; under load without boost (reference),4802,5476,68,reference taken from the baseline window
+delta,p99 under load: 5476 -> 1547.5 ms,,-72%,,MGLT reflector flow only; YouTube not proven

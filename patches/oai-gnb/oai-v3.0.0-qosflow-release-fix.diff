@@ -1,0 +1,59 @@
+diff --git a/openair2/RRC/NR/rrc_gNB_NGAP.c b/openair2/RRC/NR/rrc_gNB_NGAP.c
+index 2acbb34..6971f84 100644
+--- a/openair2/RRC/NR/rrc_gNB_NGAP.c
++++ b/openair2/RRC/NR/rrc_gNB_NGAP.c
+@@ -1012,7 +1012,11 @@ static void nr_rrc_send_e1_after_qos_update(gNB_RRC_UE_t *UE,
+   // Find or create PDU session entry in e1_req
+   pdu_session_to_mod_t *pdu_mod = find_or_add_pdu_session_mod(e1_req, dst->pdusession_id);
+ 
+-  // Check if any remaining QoS for this PDU session still references the same DRB
++  // Check if any remaining QoS for this PDU session still references the same DRB.
++  // Lintas5G fix: do NOT erase from UE->drbs while iterating it (use-after-free -> assert in get_drb()).
++  // Collect unused DRB IDs first, remove them after the loop.
++  int drbs_to_remove[MAX_DRBS_PER_UE];
++  int n_drbs_to_remove = 0;
+   FOR_EACH_SEQ_ARR (drb_t *, drb, &UE->drbs) {
+     if (drb->pdusession_id != dst->pdusession_id)
+       continue;
+@@ -1024,17 +1028,8 @@ static void nr_rrc_send_e1_after_qos_update(gNB_RRC_UE_t *UE,
+       }
+     }
+     if (!drb_still_used) {
+-      if (nr_rrc_remove_drb_by_id(&UE->drbs, drb->drb_id)) {
+-        LOG_I(NR_RRC,
+-              "UE %d: removed DRB ID %d for PDU session %d (no remaining QoS flows mapped)\n",
+-              UE->rrc_ue_id,
+-              drb->drb_id,
+-              dst->pdusession_id);
+-      }
+-      // Add DRB to remove directly to e1_req
+-      DevAssert(pdu_mod->n_drb_to_remove < E1AP_MAX_NUM_DRBS);
+-      drb_to_remove_t *rem = &pdu_mod->drbs_to_remove[pdu_mod->n_drb_to_remove++];
+-      rem->id = drb->drb_id;
++      DevAssert(n_drbs_to_remove < MAX_DRBS_PER_UE);
++      drbs_to_remove[n_drbs_to_remove++] = drb->drb_id;
+       continue;
+     }
+ 
+@@ -1053,6 +1048,21 @@ static void nr_rrc_send_e1_after_qos_update(gNB_RRC_UE_t *UE,
+         find_or_add_e1_drb_mod(pdu_mod, drb->drb_id, dst);
+     }
+   }
++
++  for (int i = 0; i < n_drbs_to_remove; i++) {
++    const int drb_id = drbs_to_remove[i];
++    if (nr_rrc_remove_drb_by_id(&UE->drbs, drb_id)) {
++      LOG_I(NR_RRC,
++            "UE %d: removed DRB ID %d for PDU session %d (no remaining QoS flows mapped)\n",
++            UE->rrc_ue_id,
++            drb_id,
++            dst->pdusession_id);
++    }
++    // Add DRB to remove directly to e1_req
++    DevAssert(pdu_mod->n_drb_to_remove < E1AP_MAX_NUM_DRBS);
++    drb_to_remove_t *rem = &pdu_mod->drbs_to_remove[pdu_mod->n_drb_to_remove++];
++    rem->id = drb_id;
++  }
+ }
+ 
+ static void nr_rrc_apply_qos_add_modify(gNB_RRC_INST *rrc,

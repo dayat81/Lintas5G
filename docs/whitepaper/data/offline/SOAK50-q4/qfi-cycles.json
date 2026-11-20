@@ -1,0 +1,952 @@
+[
+ {
+  "cycle": "ev-c1.jsonl",
+  "apply_DL_ms": 46.3,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   0.8,
+   10.6
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1669
+  },
+  "apply_UL_ms": 51.3,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   49.8
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1668
+  }
+ },
+ {
+  "cycle": "ev-c2.jsonl",
+  "apply_DL_ms": 48.0,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   5.2
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1668
+  },
+  "apply_UL_ms": 52.3,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   49.4
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1669
+  }
+ },
+ {
+  "cycle": "ev-c3.jsonl",
+  "apply_DL_ms": 22.5,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   0.3,
+   10.2
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1666
+  },
+  "apply_UL_ms": 36.9,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   44.7
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1666
+  }
+ },
+ {
+  "cycle": "ev-c4.jsonl",
+  "apply_DL_ms": 22.7,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   0.7,
+   10.6
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1668
+  },
+  "apply_UL_ms": 19.9,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   35.0
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1667
+  }
+ },
+ {
+  "cycle": "ev-c5.jsonl",
+  "apply_DL_ms": 38.0,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   5.9
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1669
+  },
+  "apply_UL_ms": 35.0,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   18.7
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1668
+  }
+ },
+ {
+  "cycle": "ev-c6.jsonl",
+  "apply_DL_ms": 39.1,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   6.4
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1672
+  },
+  "apply_UL_ms": 39.1,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   28.5
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1673
+  }
+ },
+ {
+  "cycle": "ev-c7.jsonl",
+  "apply_DL_ms": 36.8,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   4.5
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1669
+  },
+  "apply_UL_ms": 44.3,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   53.7
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1669
+  }
+ },
+ {
+  "cycle": "ev-c8.jsonl",
+  "apply_DL_ms": 48.7,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   6.6
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1668
+  },
+  "apply_UL_ms": 54.0,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   36.7
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1668
+  }
+ },
+ {
+  "cycle": "ev-c9.jsonl",
+  "apply_DL_ms": 17.8,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   5.1
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1671
+  },
+  "apply_UL_ms": 72.2,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   58.8
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1671
+  }
+ },
+ {
+  "cycle": "ev-c10.jsonl",
+  "apply_DL_ms": 33.4,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   8.3
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1668
+  },
+  "apply_UL_ms": 35.9,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   3.0,
+   48.8
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1668
+  }
+ },
+ {
+  "cycle": "ev-c11.jsonl",
+  "apply_DL_ms": 20.0,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   7.3
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1667
+  },
+  "apply_UL_ms": 32.0,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   37.6
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1666
+  }
+ },
+ {
+  "cycle": "ev-c12.jsonl",
+  "apply_DL_ms": 39.3,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   7.4
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1670
+  },
+  "apply_UL_ms": 41.7,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   20.5
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1671
+  }
+ },
+ {
+  "cycle": "ev-c13.jsonl",
+  "apply_DL_ms": 42.7,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   0.5,
+   10.3
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1668
+  },
+  "apply_UL_ms": 42.9,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   31.4
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1667
+  }
+ },
+ {
+  "cycle": "ev-c14.jsonl",
+  "apply_DL_ms": 20.6,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   8.2
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1670
+  },
+  "apply_UL_ms": 28.3,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   53.2
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1671
+  }
+ },
+ {
+  "cycle": "ev-c15.jsonl",
+  "apply_DL_ms": 20.0,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   7.8
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1672
+  },
+  "apply_UL_ms": 55.7,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   21.3
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1671
+  }
+ },
+ {
+  "cycle": "ev-c16.jsonl",
+  "apply_DL_ms": 28.5,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   5.6
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1667
+  },
+  "apply_UL_ms": 50.9,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   3.4,
+   40.7
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1666
+  }
+ },
+ {
+  "cycle": "ev-c17.jsonl",
+  "apply_DL_ms": 32.1,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   9.2
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1669
+  },
+  "apply_UL_ms": 43.2,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   48.2
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1671
+  }
+ },
+ {
+  "cycle": "ev-c18.jsonl",
+  "apply_DL_ms": 31.0,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   8.7
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1668
+  },
+  "apply_UL_ms": 41.5,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   29.9
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1668
+  }
+ },
+ {
+  "cycle": "ev-c19.jsonl",
+  "apply_DL_ms": 42.6,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   0.3,
+   10.2
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1667
+  },
+  "apply_UL_ms": 49.8,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   39.5
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1667
+  }
+ },
+ {
+  "cycle": "ev-c20.jsonl",
+  "apply_DL_ms": 33.3,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   1.5,
+   11.3
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1670
+  },
+  "apply_UL_ms": 26.3,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   53.7
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1669
+  }
+ },
+ {
+  "cycle": "ev-c21.jsonl",
+  "apply_DL_ms": 35.5,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   3.0
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1669
+  },
+  "apply_UL_ms": 80.7,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   62.0
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1671
+  }
+ },
+ {
+  "cycle": "ev-c22.jsonl",
+  "apply_DL_ms": 33.2,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   0.7,
+   10.7
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1671
+  },
+  "apply_UL_ms": 28.6,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   26.6
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1670
+  }
+ },
+ {
+  "cycle": "ev-c23.jsonl",
+  "apply_DL_ms": 35.9,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   3.7
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1675
+  },
+  "apply_UL_ms": 41.0,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   42.3
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1676
+  }
+ },
+ {
+  "cycle": "ev-c24.jsonl",
+  "apply_DL_ms": 40.6,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   7.8
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1679
+  },
+  "apply_UL_ms": 27.7,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   2.9,
+   35.3
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1678
+  }
+ },
+ {
+  "cycle": "ev-c25.jsonl",
+  "apply_DL_ms": 37.9,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   5.3
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1670
+  },
+  "apply_UL_ms": 38.4,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   3.0,
+   44.1
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1671
+  }
+ },
+ {
+  "cycle": "ev-c26.jsonl",
+  "apply_DL_ms": 26.8,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   4.7
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1668
+  },
+  "apply_UL_ms": 18.4,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   46.3
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1668
+  }
+ },
+ {
+  "cycle": "ev-c27.jsonl",
+  "apply_DL_ms": 25.4,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   3.2
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1674
+  },
+  "apply_UL_ms": 38.5,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   34.4
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1673
+  }
+ },
+ {
+  "cycle": "ev-c28.jsonl",
+  "apply_DL_ms": 38.3,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   5.8
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1669
+  },
+  "apply_UL_ms": 26.3,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   1.9,
+   62.2
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1670
+  }
+ },
+ {
+  "cycle": "ev-c29.jsonl",
+  "apply_DL_ms": 26.5,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   4.5
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1667
+  },
+  "apply_UL_ms": 17.9,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   3.2,
+   18.6
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1666
+  }
+ },
+ {
+  "cycle": "ev-c30.jsonl",
+  "apply_DL_ms": 25.2,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   2.7
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1669
+  },
+  "apply_UL_ms": 36.8,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   27.2,
+   32.9
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1669
+  }
+ },
+ {
+  "cycle": "ev-c31.jsonl",
+  "apply_DL_ms": 36.4,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   3.8
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1668
+  },
+  "apply_UL_ms": 26.2,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   3.7,
+   43.3
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1669
+  }
+ },
+ {
+  "cycle": "ev-c32.jsonl",
+  "apply_DL_ms": 26.7,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   4.3
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1677
+  },
+  "apply_UL_ms": 19.3,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   37.7
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1675
+  }
+ },
+ {
+  "cycle": "ev-c33.jsonl",
+  "apply_DL_ms": 35.4,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   3.2
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1667
+  },
+  "apply_UL_ms": 45.2,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   40.1
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1669
+  }
+ },
+ {
+  "cycle": "ev-c34.jsonl",
+  "apply_DL_ms": 23.2,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   0.2,
+   10.2
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1669
+  },
+  "apply_UL_ms": 27.1,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   22.6
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1668
+  }
+ },
+ {
+  "cycle": "ev-c35.jsonl",
+  "apply_DL_ms": 37.9,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   5.2
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1671
+  },
+  "apply_UL_ms": 71.0,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   22.1
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1671
+  }
+ },
+ {
+  "cycle": "ev-c36.jsonl",
+  "apply_DL_ms": 32.3,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   0.3,
+   9.9
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1665
+  },
+  "apply_UL_ms": 37.0,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   26.0
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1666
+  }
+ },
+ {
+  "cycle": "ev-c37.jsonl",
+  "apply_DL_ms": 25.9,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   3.9
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1670
+  },
+  "apply_UL_ms": 34.0,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   0.9,
+   40.5
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1669
+  }
+ },
+ {
+  "cycle": "ev-c38.jsonl",
+  "apply_DL_ms": 38.9,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   6.0
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1669
+  },
+  "apply_UL_ms": 30.2,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   60.8
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1669
+  }
+ },
+ {
+  "cycle": "ev-c39.jsonl",
+  "apply_DL_ms": 20.1,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   7.9
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1668
+  },
+  "apply_UL_ms": 39.2,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   20.4
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1669
+  }
+ },
+ {
+  "cycle": "ev-c40.jsonl",
+  "apply_DL_ms": 26.4,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   4.2
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1669
+  },
+  "apply_UL_ms": 23.4,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   0.6,
+   36.9
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1667
+  }
+ },
+ {
+  "cycle": "ev-c41.jsonl",
+  "apply_DL_ms": 29.3,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   7.1
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1669
+  },
+  "apply_UL_ms": 63.8,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   22.8
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1669
+  }
+ },
+ {
+  "cycle": "ev-c42.jsonl",
+  "apply_DL_ms": 19.4,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   4.1
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1669
+  },
+  "apply_UL_ms": 77.5,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   28.0
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1670
+  }
+ },
+ {
+  "cycle": "ev-c43.jsonl",
+  "apply_DL_ms": 37.3,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   5.0
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1668
+  },
+  "apply_UL_ms": 27.7,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   0.1,
+   42.9
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1667
+  }
+ },
+ {
+  "cycle": "ev-c44.jsonl",
+  "apply_DL_ms": 22.4,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   0.3,
+   10.2
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1669
+  },
+  "apply_UL_ms": 38.9,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   23.2
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1669
+  }
+ },
+ {
+  "cycle": "ev-c45.jsonl",
+  "apply_DL_ms": 29.1,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   6.8
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1668
+  },
+  "apply_UL_ms": 60.8,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   34.5
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1669
+  }
+ },
+ {
+  "cycle": "ev-c46.jsonl",
+  "apply_DL_ms": 21.0,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   8.8
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1669
+  },
+  "apply_UL_ms": 24.9,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   37.4
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1669
+  }
+ },
+ {
+  "cycle": "ev-c47.jsonl",
+  "apply_DL_ms": 39.7,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   7.4
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1669
+  },
+  "apply_UL_ms": 43.2,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   40.2
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1669
+  }
+ },
+ {
+  "cycle": "ev-c48.jsonl",
+  "apply_DL_ms": 31.3,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   8.5
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1669
+  },
+  "apply_UL_ms": 29.4,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   52.1
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1669
+  }
+ },
+ {
+  "cycle": "ev-c49.jsonl",
+  "apply_DL_ms": 41.2,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   9.1
+  ],
+  "other_ue_DL_qfi": {
+   "1": 1669
+  },
+  "apply_UL_ms": 44.4,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   51.6
+  ],
+  "other_ue_UL_qfi": {
+   "1": 1670
+  }
+ },
+ {
+  "cycle": "ev-c50.jsonl",
+  "apply_DL_ms": 26.3,
+  "remove_DL_ms_lastQoD_firstQFI1": [
+   null,
+   4.2
+  ],
+  "other_ue_DL_qfi": {
+   "1": 3453
+  },
+  "apply_UL_ms": 22.1,
+  "remove_UL_ms_lastQoD_firstQFI1": [
+   null,
+   27.8
+  ],
+  "other_ue_UL_qfi": {
+   "1": 3452
+  }
+ }
+]

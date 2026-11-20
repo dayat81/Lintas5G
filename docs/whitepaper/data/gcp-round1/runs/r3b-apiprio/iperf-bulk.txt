@@ -1,0 +1,27 @@
+Connecting to host 10.45.x.x, port 5201
+Reverse mode, remote host 10.45.x.x is sending
+[  5] local 10.45.x.x port 34230 connected to 10.45.x.x port 5201
+[ ID] Interval           Transfer     Bitrate         Jitter    Lost/Total Datagrams
+[  5]   0.00-5.00   sec  81.5 MBytes   137 Mbits/sec  0.127 ms  16285/82046 (20%)  
+[  5]   5.00-10.00  sec  48.4 MBytes  81.2 Mbits/sec  0.015 ms  92619/131640 (70%)  
+[  5]  10.00-15.00  sec  54.7 MBytes  91.8 Mbits/sec  0.024 ms  150811/194922 (77%)  
+[  5]  15.00-20.00  sec  56.7 MBytes  95.1 Mbits/sec  0.012 ms  143163/188864 (76%)  
+[  5]  20.00-25.00  sec  57.7 MBytes  96.8 Mbits/sec  0.058 ms  147994/194539 (76%)  
+[  5]  25.00-30.00  sec  49.8 MBytes  83.6 Mbits/sec  0.055 ms  148309/188506 (79%)  
+[  5]  30.00-35.00  sec  52.2 MBytes  87.6 Mbits/sec  0.035 ms  158708/200814 (79%)  
+[  5]  35.00-40.00  sec  48.3 MBytes  81.0 Mbits/sec  0.152 ms  161740/200672 (81%)  
+[  5]  40.00-45.00  sec  53.8 MBytes  90.2 Mbits/sec  0.013 ms  134089/177467 (76%)  
+[  5]  45.00-50.00  sec  55.6 MBytes  93.3 Mbits/sec  0.042 ms  149371/194240 (77%)  
+[  5]  50.00-55.00  sec  52.5 MBytes  88.1 Mbits/sec  0.034 ms  149895/192234 (78%)  
+[  5]  55.00-60.00  sec  52.1 MBytes  87.4 Mbits/sec  0.015 ms  145368/187397 (78%)  
+[  5]  60.00-65.00  sec  51.1 MBytes  85.8 Mbits/sec  0.095 ms  156409/197650 (79%)  
+[  5]  65.00-70.00  sec  54.5 MBytes  91.5 Mbits/sec  0.014 ms  145340/189314 (77%)  
+[  5]  70.00-75.00  sec  53.1 MBytes  89.0 Mbits/sec  0.033 ms  151459/194260 (78%)  
+[  5]  75.00-80.00  sec  54.5 MBytes  91.4 Mbits/sec  0.058 ms  148002/191946 (77%)  
+[  5]  80.00-83.00  sec  34.1 MBytes  95.3 Mbits/sec  0.017 ms  86773/114251 (76%)  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate         Jitter    Lost/Total Datagrams
+[  5]   0.00-83.14  sec  3.87 GBytes   400 Mbits/sec  0.000 ms  0/3197740 (0%)  sender
+[  5]   0.00-83.00  sec   911 MBytes  92.0 Mbits/sec  0.017 ms  2286335/3020762 (76%)  receiver
+
+iperf Done.

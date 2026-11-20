@@ -111,7 +111,7 @@ Tujuan: aplikasi mobile (mis. ABR video: pilih bitrate, ukuran buffer, kapan min
 
 | Jalur | Latensi/frekuensi | Granularitas | Consent/privasi | Catatan |
 |---|---|---|---|---|
-| A. On-device (USULAN; belum diuji): app/VPN magnon-app membaca `TelephonyManager` / `SignalStrength` / `NetworkCapabilities` dan throughput player | sub-detik s/d detik, tanpa jaringan | RSRP/RSRQ/SINR, tipe jaringan, estimasi bandwidth, buffer player | data tetap di device, izin OS (`READ_PHONE_STATE`/lokasi tergantung versi) | tidak melihat sisi gNB (PRB, antrian RLC, slice). Sinyal tanpa tahu beban sel tidak cukup |
+| A. On-device (USULAN; belum diuji): app/VPN booster-app membaca `TelephonyManager` / `SignalStrength` / `NetworkCapabilities` dan throughput player | sub-detik s/d detik, tanpa jaringan | RSRP/RSRQ/SINR, tipe jaringan, estimasi bandwidth, buffer player | data tetap di device, izin OS (`READ_PHONE_STATE`/lokasi tergantung versi) | tidak melihat sisi gNB (PRB, antrian RLC, slice). Sinyal tanpa tahu beban sel tidak cukup |
 | B. CAMARA standar (FAKTA: spec; pemakaian operasional belum diuji) | polling/event dengan interval ditentukan implementasi; kasar | enum, skor 0-100, bitrate maks | 3-legged + consent untuk data device | portabel antar-operator, app sudah paham API |
 | C. Push Lintas5G (USULAN) dari xApp | detik (xApp KPM bisa lebih cepat; sampling dan batas laju kita yang atur) | level kualitas kasar + bitrate rekomendasi | sama dengan B, plus batas laju dan agregasi | ekstensi, harus terpisah dari schema CAMARA |
 
@@ -158,7 +158,7 @@ Aturan: jangan menambah properti ke schema CAMARA (request ditolak bila ada prop
 2. **Menyusul:** `session-insights` 0.2.0 untuk skor 0-100 dan `proposedResolution` (app mengirim metrik buffer/bitrate). Ini paling sesuai dengan ABR.
 3. **Opsional/alpha:** `media-streaming-rate` untuk bitrate maksimum (alpha; antisipasi perubahan).
 4. **Ekstensi Lintas5G:** `lintas5g-radio-quality/v0` setelah (1), bila event standar tidak cukup untuk ABR.
-5. **Paralel, tanpa tunggu jaringan:** jalur on-device di magnon-app (A). Perlu keputusan kapan dimulai.
+5. **Paralel, tanpa tunggu jaringan:** jalur on-device di booster-app (A). Perlu keputusan kapan dimulai.
 6. **Syarat:** ambang xApp ke enum harus dikalibrasi di lab (A/B DL dengan slicing), karena saat ini belum ada data. Itu belum dikerjakan.
 
 ## 7. Sumber

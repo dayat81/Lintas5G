@@ -1,0 +1,19 @@
+{
+ "api_to_first_QFI2_DL_ms": 18.9,
+ "api_to_first_QFI2_UL_ms": 18.8,
+ "target_flow_last_QFI1_pkt_after_create_ms": 40482.4,
+ "delete_to_first_QFI1_DL_ms": 49.1,
+ "delete_to_last_QFI2_DL_ms": -5.7,
+ "delete_to_first_QFI1_UL_ms": 48.9,
+ "delete_to_last_QFI2_UL_ms": -5.8,
+ "QFI2_flows_steady": {
+  "UL/udp/198.51.100.1:18080": 1351,
+  "DL/udp/198.51.100.1:18080": 1351,
+  "UL/tcp/198.51.100.1:18080": 2300,
+  "DL/tcp/198.51.100.1:18080": 2863
+ },
+ "non_target_pkts_on_QFI2": 0,
+ "target_pkts_steady": 7865,
+ "target_pkts_steady_on_QFI1": 0,
+ "GATE_DL_UL": "PASS"
+}

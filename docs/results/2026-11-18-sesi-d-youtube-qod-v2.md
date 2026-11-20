@@ -1,7 +1,7 @@
 # Sesi D v2 — YouTube + QoD, matriks transport (auto / quic-only / tcp-only)
 
 Tanggal: 18–19 Nov 2026 (WIB, Asia/Jakarta UTC+7). Lab: Lintas5G (EPC srsRAN 4G, UE `ue-l3` GRE egress, emulator Android 16 API 36 headless, CPU only, tanpa VNC/tunnel publik).
-APK `magnon-poc-examine` v0.10.1-poc (sha256 `f0f85e6f…50c758c3`). Status: **hasil lab lengkap untuk playback + sgi-queue + transport; MGLT v2.1 coverage GAGAL (lihat §4).**
+APK `booster-poc-examine` v0.10.1-poc (sha256 `f0f85e6f…50c758c3`). Status: **hasil lab lengkap untuk playback + sgi-queue + transport; MGLT v2.1 coverage GAGAL (lihat §4).**
 
 ## 1. Linimasa (WIB)
 | Waktu | Kejadian |
@@ -75,7 +75,7 @@ Pada P1 untuk auto disarankan mengubah definisi menjadi share byte.
 
 ## 7. Biaya, destroy, deviasi
 - Durasi lab 22:07 → 00:30 ≈ 2.4 jam × ~USD 0.82/jam ≈ **USD 2.0** (estimasi; Billing API nonaktif). Kumulatif hari ini ≈ USD 6.5 (< batas USD 12).
-- Destroy: terraform destroy sempat error transien saat menunggu operasi hapus network (HTTP), diulang sekali (rc=0, state 0). Audit: tidak ada instance/disk/IP/firewall/router/NAT/bucket `lab5g-runs` tersisa; build-vm-01 TERMINATED; aset netprobe/magnon tidak tersentuh.
+- Destroy: terraform destroy sempat error transien saat menunggu operasi hapus network (HTTP), diulang sekali (rc=0, state 0). Audit: tidak ada instance/disk/IP/firewall/router/NAT/bucket `lab5g-runs` tersisa; build-vm-01 TERMINATED; aset netprobe/booster tidak tersentuh.
 - Log tersunting disimpan di bucket privat state `logs/sesi-d-yt2/20261118/` dan di box `/workspace/sesi-d-yt2/`. Re-save sesi emulator dilewati.
 - Deviasi: tc mirror + feeder sgiq (bukan nft dup), route_fix untuk MGLT, runner menarik berkas playback ke core, `run-transport-matrix.sh`; logcat `mglt2 closed` hanya tersedia untuk run terakhir; analisis memakai `yt-qod-analyze.py` offline (ClickHouse tidak dimuat) karena coverage 0.
 

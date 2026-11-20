@@ -1,5 +1,5 @@
 #!/bin/bash
-# vm-core-ran (root), Sesi D: YouTube + QoD + Magnon examine MGLT v2.1 (per-packet QUIC timestamps).
+# vm-core-ran (root), Sesi D: YouTube + QoD + Booster examine MGLT v2.1 (per-packet QUIC timestamps).
 # shellcheck disable=SC1091
 # Phases idle | load | load+qod x REPS (default DUR=180 s). YouTube is restarted at the start of
 # each phase so startup/stalls are comparable. VPN examine stays up for the whole run.

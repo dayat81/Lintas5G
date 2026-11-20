@@ -152,7 +152,7 @@ Persetujuan: pt242u. Bukti teredaksi: `docs/results/oai-gcp-20261119/` (summary/
 
 ### FAKTA — biaya dan audit
 - vm-core-ran hidup ~40.5 menit (apply 13:59:56, destroy selesai 14:40:23 WIB) ≈ USD 0.55 (estimasi tarif list). Kumulatif ≈ **USD 12.05** (< 13).
-- Destroy 165/165. State 0. Sisa: build-vm-01 (TERMINATED, tidak disentuh), resource netprobe/magnon, bucket state + cloudbuild (pra-ada). Bucket runs terhapus. Tidak ada perubahan IAM/VNC/tunnel.
+- Destroy 165/165. State 0. Sisa: build-vm-01 (TERMINATED, tidak disentuh), resource netprobe/booster, bucket state + cloudbuild (pra-ada). Bucket runs terhapus. Tidak ada perubahan IAM/VNC/tunnel.
 
 ### USULAN
 1. Default PoC: `ran_mode = "sa-oai"`, `oai_rf = "vrtsim"` (real-time, ratio 1.00 terverifikasi untuk 1 dan 3 UE), `oai_mimo = 2`. rfsim hanya untuk debugging, selalu dilaporkan dengan ratio.
