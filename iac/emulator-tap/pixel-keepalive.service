@@ -1,0 +1,8 @@
+[Unit]
+Description=pixel keepalive
+After=docker.service
+[Service]
+ExecStart=/bin/bash -c 'while true; do docker exec android-emu adb shell input keyevent KEYCODE_WAKEUP >/dev/null 2>&1; sleep 60; done'
+Restart=always
+[Install]
+WantedBy=multi-user.target
