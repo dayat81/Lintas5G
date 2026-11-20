@@ -1,0 +1,900 @@
+{
+ "pcap": "raw (box-only, tidak disalin)",
+ "t0_utc": "2026-11-20T03:22:48.436+00:00",
+ "key_points_ms_from_N5": {
+  "N5_create": 0.0,
+  "N7_update_notify": 1.9,
+  "N1N2_transfer": 4.35,
+  "PFCP_mod_req": 2.97,
+  "NGAP_AMF_to_gNB": 5.18,
+  "N3_first_nondefault_QFI": 33.07,
+  "N5_201": 1.83,
+  "CAMARA_201": 3.32,
+  "sink_AVAILABLE": 38.83
+ },
+ "key_points_msg": {
+  "N5_create": "POST /npcf-policyauthorization/v1/app-sessions",
+  "N7_update_notify": "POST /nsmf-callback/v1/sm-policy-notify/1/update",
+  "N1N2_transfer": "POST /namf-comm/v1/ue-contexts/imsi-<redacted>/n1-n2-messages",
+  "PFCP_mod_req": "SessionModificationReq",
+  "NGAP_AMF_to_gNB": "segment 4 B",
+  "N3_first_nondefault_QFI": "first DL GTP-U QFI=4",
+  "N5_201": "HTTP 201",
+  "CAMARA_201": "HTTP/1.1 201",
+  "sink_AVAILABLE": "AVAILABLE"
+ },
+ "timeline": [
+  {
+   "t": "2026-11-20T03:22:45.347+00:00",
+   "if": "N3",
+   "src": "gNB",
+   "dst": "UPF",
+   "msg": "first UL GTP-U QFI=1",
+   "t_ms": -3089.13
+  },
+  {
+   "t": "2026-11-20T03:22:45.347+00:00",
+   "if": "N3",
+   "src": "UPF",
+   "dst": "gNB",
+   "msg": "first DL GTP-U QFI=1",
+   "t_ms": -3088.9
+  },
+  {
+   "t": "2026-11-20T03:22:45.804+00:00",
+   "if": "SBI",
+   "src": "NRF",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": -2631.28
+  },
+  {
+   "t": "2026-11-20T03:22:46.351+00:00",
+   "if": "SBI",
+   "src": "NRF",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": -2084.45
+  },
+  {
+   "t": "2026-11-20T03:22:46.352+00:00",
+   "if": "SBI",
+   "src": "SCP",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": -2084.11
+  },
+  {
+   "t": "2026-11-20T03:22:46.836+00:00",
+   "if": "SBI",
+   "src": "NRF",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": -1599.71
+  },
+  {
+   "t": "2026-11-20T03:22:46.836+00:00",
+   "if": "SBI",
+   "src": "SCP",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": -1599.42
+  },
+  {
+   "t": "2026-11-20T03:22:47.355+00:00",
+   "if": "SBI",
+   "src": "NRF",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": -1080.55
+  },
+  {
+   "t": "2026-11-20T03:22:47.356+00:00",
+   "if": "SBI",
+   "src": "SCP",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": -1080.1
+  },
+  {
+   "t": "2026-11-20T03:22:47.860+00:00",
+   "if": "SBI",
+   "src": "NRF",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": -575.6
+  },
+  {
+   "t": "2026-11-20T03:22:47.860+00:00",
+   "if": "SBI",
+   "src": "SCP",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": -575.33
+  },
+  {
+   "t": "2026-11-20T03:22:48.355+00:00",
+   "if": "SBI",
+   "src": "NRF",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": -80.8
+  },
+  {
+   "t": "2026-11-20T03:22:48.355+00:00",
+   "if": "SBI",
+   "src": "SCP",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": -80.72
+  },
+  {
+   "t": "2026-11-20T03:22:48.426+00:00",
+   "if": "CAMARA-API",
+   "src": "adapter",
+   "dst": "API-consumer",
+   "msg": "HTTP/1.1 200",
+   "t_ms": -9.47
+  },
+  {
+   "t": "2026-11-20T03:22:48.427+00:00",
+   "if": "CAMARA-API",
+   "src": "API-consumer",
+   "dst": "adapter",
+   "msg": "POST /quality-on-demand/v1/sessions",
+   "t_ms": -8.56
+  },
+  {
+   "t": "2026-11-20T03:22:48.434+00:00",
+   "if": "SBI",
+   "src": "adapter(AF)",
+   "dst": "BSF",
+   "msg": "GET /nbsf-management/v1/pcfBindings?ipv4Addr=<ue-ip>",
+   "t_ms": -1.45
+  },
+  {
+   "t": "2026-11-20T03:22:48.434+00:00",
+   "if": "SBI",
+   "src": "BSF",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 200",
+   "t_ms": -1.31
+  },
+  {
+   "t": "2026-11-20T03:22:48.436+00:00",
+   "if": "SBI",
+   "src": "adapter(AF)",
+   "dst": "PCF",
+   "msg": "POST /npcf-policyauthorization/v1/app-sessions",
+   "t_ms": 0.0
+  },
+  {
+   "t": "2026-11-20T03:22:48.438+00:00",
+   "if": "SBI",
+   "src": "PCF",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 201",
+   "t_ms": 1.83
+  },
+  {
+   "t": "2026-11-20T03:22:48.438+00:00",
+   "if": "SBI",
+   "src": "PCF",
+   "dst": "SCP",
+   "msg": "POST /nsmf-callback/v1/sm-policy-notify/1/update",
+   "t_ms": 1.9
+  },
+  {
+   "t": "2026-11-20T03:22:48.438+00:00",
+   "if": "SBI",
+   "src": "PCF",
+   "dst": "SMF",
+   "msg": "POST /nsmf-callback/v1/sm-policy-notify/1/update",
+   "t_ms": 2.2
+  },
+  {
+   "t": "2026-11-20T03:22:48.439+00:00",
+   "if": "PFCP",
+   "src": "SMF",
+   "dst": "UPF",
+   "msg": "SessionModificationReq",
+   "t_ms": 2.97
+  },
+  {
+   "t": "2026-11-20T03:22:48.439+00:00",
+   "if": "SBI",
+   "src": "SMF",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": 3.0
+  },
+  {
+   "t": "2026-11-20T03:22:48.439+00:00",
+   "if": "CAMARA-API",
+   "src": "adapter",
+   "dst": "API-consumer",
+   "msg": "HTTP/1.1 201",
+   "t_ms": 3.32
+  },
+  {
+   "t": "2026-11-20T03:22:48.439+00:00",
+   "if": "PFCP",
+   "src": "UPF",
+   "dst": "SMF",
+   "msg": "SessionModificationResp",
+   "t_ms": 3.33
+  },
+  {
+   "t": "2026-11-20T03:22:48.440+00:00",
+   "if": "CAMARA-API",
+   "src": "API-consumer",
+   "dst": "adapter",
+   "msg": "GET /quality-on-demand/v1/sessions/<id>-758b-4616-acf4-9e4f8891100e",
+   "t_ms": 3.95
+  },
+  {
+   "t": "2026-11-20T03:22:48.440+00:00",
+   "if": "SBI",
+   "src": "SMF",
+   "dst": "SCP",
+   "msg": "POST /namf-comm/v1/ue-contexts/imsi-<redacted>/n1-n2-messages",
+   "t_ms": 4.35
+  },
+  {
+   "t": "2026-11-20T03:22:48.440+00:00",
+   "if": "SBI",
+   "src": "SMF",
+   "dst": "AMF",
+   "msg": "POST /namf-comm/v1/ue-contexts/imsi-<redacted>/n1-n2-messages",
+   "t_ms": 4.64
+  },
+  {
+   "t": "2026-11-20T03:22:48.440+00:00",
+   "if": "SBI",
+   "src": "SCP",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": 4.68
+  },
+  {
+   "t": "2026-11-20T03:22:48.441+00:00",
+   "if": "SBI",
+   "src": "AMF",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 200",
+   "t_ms": 5.16
+  },
+  {
+   "t": "2026-11-20T03:22:48.441+00:00",
+   "if": "NGAP(tcp-shim)",
+   "src": "AMF",
+   "dst": "gNB",
+   "msg": "segment 4 B",
+   "t_ms": 5.18
+  },
+  {
+   "t": "2026-11-20T03:22:48.441+00:00",
+   "if": "NGAP(tcp-shim)",
+   "src": "AMF",
+   "dst": "gNB",
+   "msg": "segment 224 B",
+   "t_ms": 5.19
+  },
+  {
+   "t": "2026-11-20T03:22:48.441+00:00",
+   "if": "SBI",
+   "src": "SCP",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 200",
+   "t_ms": 5.29
+  },
+  {
+   "t": "2026-11-20T03:22:48.441+00:00",
+   "if": "gNB-log",
+   "src": "gNB",
+   "dst": "-",
+   "msg": "[NGAP]   I PDUSESSIONModify initiating message",
+   "t_ms": 5.61
+  },
+  {
+   "t": "2026-11-20T03:22:48.442+00:00",
+   "if": "CAMARA-API",
+   "src": "adapter",
+   "dst": "API-consumer",
+   "msg": "HTTP/1.1 200",
+   "t_ms": 6.01
+  },
+  {
+   "t": "2026-11-20T03:22:48.442+00:00",
+   "if": "gNB-log",
+   "src": "gNB",
+   "dst": "-",
+   "msg": "[NR_RRC] I UE 1: added QoS flow with QFI=4, total number of QoS flows = 3",
+   "t_ms": 6.4
+  },
+  {
+   "t": "2026-11-20T03:22:48.442+00:00",
+   "if": "gNB-log",
+   "src": "gNB",
+   "dst": "-",
+   "msg": "[NR_RRC] I UE 1: created new DRB 3 for QFI 4 (5QI 80)",
+   "t_ms": 6.4
+  },
+  {
+   "t": "2026-11-20T03:22:48.442+00:00",
+   "if": "gNB-log",
+   "src": "gNB",
+   "dst": "-",
+   "msg": "[NR_RRC] I UE 1: assigned DRB 3 to QFI 4 (5QI 80) in PDU session 10",
+   "t_ms": 6.4
+  },
+  {
+   "t": "2026-11-20T03:22:48.443+00:00",
+   "if": "gNB-log",
+   "src": "gNB",
+   "dst": "-",
+   "msg": "[E1AP]   I DRB 3 setup completed: numUpParam=0",
+   "t_ms": 6.78
+  },
+  {
+   "t": "2026-11-20T03:22:48.443+00:00",
+   "if": "gNB-log",
+   "src": "gNB",
+   "dst": "-",
+   "msg": "[PDCP]   I Added DRB 3 to UE ID 1",
+   "t_ms": 6.79
+  },
+  {
+   "t": "2026-11-20T03:22:48.444+00:00",
+   "if": "gNB-log",
+   "src": "gNB",
+   "dst": "-",
+   "msg": "[RLC]    I Added drb 3 to UE 34549",
+   "t_ms": 8.25
+  },
+  {
+   "t": "2026-11-20T03:22:48.444+00:00",
+   "if": "gNB-log",
+   "src": "gNB",
+   "dst": "-",
+   "msg": "[RLC]    I Added DRB to UE 34549",
+   "t_ms": 8.27
+  },
+  {
+   "t": "2026-11-20T03:22:48.444+00:00",
+   "if": "gNB-log",
+   "src": "gNB",
+   "dst": "-",
+   "msg": "[NR_RRC] I UE 1 trigger UE Context Modification Request (DRBs to setup: 1, DRBs to release: 0)",
+   "t_ms": 8.41
+  },
+  {
+   "t": "2026-11-20T03:22:48.459+00:00",
+   "if": "NGAP(tcp-shim)",
+   "src": "gNB",
+   "dst": "AMF",
+   "msg": "segment 4 B",
+   "t_ms": 22.97
+  },
+  {
+   "t": "2026-11-20T03:22:48.459+00:00",
+   "if": "NGAP(tcp-shim)",
+   "src": "gNB",
+   "dst": "AMF",
+   "msg": "segment 30 B",
+   "t_ms": 22.98
+  },
+  {
+   "t": "2026-11-20T03:22:48.459+00:00",
+   "if": "NGAP(tcp-shim)",
+   "src": "gNB",
+   "dst": "AMF",
+   "msg": "segment 4 B",
+   "t_ms": 23.13
+  },
+  {
+   "t": "2026-11-20T03:22:48.459+00:00",
+   "if": "NGAP(tcp-shim)",
+   "src": "gNB",
+   "dst": "AMF",
+   "msg": "segment 62 B",
+   "t_ms": 23.14
+  },
+  {
+   "t": "2026-11-20T03:22:48.459+00:00",
+   "if": "SBI",
+   "src": "AMF",
+   "dst": "SCP",
+   "msg": "POST /nsmf-pdusession/v1/sm-contexts/1/modify",
+   "t_ms": 23.33
+  },
+  {
+   "t": "2026-11-20T03:22:48.459+00:00",
+   "if": "SBI",
+   "src": "AMF",
+   "dst": "SMF",
+   "msg": "POST /nsmf-pdusession/v1/sm-contexts/1/modify",
+   "t_ms": 23.57
+  },
+  {
+   "t": "2026-11-20T03:22:48.459+00:00",
+   "if": "SBI",
+   "src": "AMF",
+   "dst": "SCP",
+   "msg": "POST /nsmf-pdusession/v1/sm-contexts/1/modify",
+   "t_ms": 23.58
+  },
+  {
+   "t": "2026-11-20T03:22:48.459+00:00",
+   "if": "SBI",
+   "src": "AMF",
+   "dst": "SMF",
+   "msg": "POST /nsmf-pdusession/v1/sm-contexts/1/modify",
+   "t_ms": 23.69
+  },
+  {
+   "t": "2026-11-20T03:22:48.460+00:00",
+   "if": "PFCP",
+   "src": "SMF",
+   "dst": "UPF",
+   "msg": "SessionModificationReq",
+   "t_ms": 24.17
+  },
+  {
+   "t": "2026-11-20T03:22:48.460+00:00",
+   "if": "SBI",
+   "src": "SMF",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": 24.22
+  },
+  {
+   "t": "2026-11-20T03:22:48.460+00:00",
+   "if": "PFCP",
+   "src": "UPF",
+   "dst": "SMF",
+   "msg": "SessionModificationResp",
+   "t_ms": 24.29
+  },
+  {
+   "t": "2026-11-20T03:22:48.460+00:00",
+   "if": "SBI",
+   "src": "SCP",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": 24.31
+  },
+  {
+   "t": "2026-11-20T03:22:48.460+00:00",
+   "if": "SBI",
+   "src": "client@127.0.0.1",
+   "dst": "SCP",
+   "msg": "PUT /nudm-uecm/v1/imsi-<redacted>/registrations/smf-registrations/10",
+   "t_ms": 24.52
+  },
+  {
+   "t": "2026-11-20T03:22:48.461+00:00",
+   "if": "SBI",
+   "src": "lo-other",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": 25.67
+  },
+  {
+   "t": "2026-11-20T03:22:48.461+00:00",
+   "if": "SBI",
+   "src": "SCP",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": 25.72
+  },
+  {
+   "t": "2026-11-20T03:22:48.462+00:00",
+   "if": "SBI",
+   "src": "lo-other",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 200",
+   "t_ms": 25.84
+  },
+  {
+   "t": "2026-11-20T03:22:48.462+00:00",
+   "if": "SBI",
+   "src": "SCP",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 200",
+   "t_ms": 25.9
+  },
+  {
+   "t": "2026-11-20T03:22:48.462+00:00",
+   "if": "SBI",
+   "src": "SMF",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": 26.06
+  },
+  {
+   "t": "2026-11-20T03:22:48.462+00:00",
+   "if": "SBI",
+   "src": "SCP",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": 26.11
+  },
+  {
+   "t": "2026-11-20T03:22:48.469+00:00",
+   "if": "N3",
+   "src": "UPF",
+   "dst": "gNB",
+   "msg": "first DL GTP-U QFI=4",
+   "t_ms": 33.07
+  },
+  {
+   "t": "2026-11-20T03:22:48.471+00:00",
+   "if": "N3",
+   "src": "gNB",
+   "dst": "UPF",
+   "msg": "first UL GTP-U QFI=4",
+   "t_ms": 35.23
+  },
+  {
+   "t": "2026-11-20T03:22:48.475+00:00",
+   "if": "callback",
+   "src": "adapter",
+   "dst": "sink",
+   "msg": "AVAILABLE",
+   "t_ms": 38.83
+  },
+  {
+   "t": "2026-11-20T03:22:48.492+00:00",
+   "if": "CAMARA-API",
+   "src": "API-consumer",
+   "dst": "adapter",
+   "msg": "GET /quality-on-demand/v1/sessions/<id>-758b-4616-acf4-9e4f8891100e",
+   "t_ms": 56.71
+  },
+  {
+   "t": "2026-11-20T03:22:48.494+00:00",
+   "if": "CAMARA-API",
+   "src": "adapter",
+   "dst": "API-consumer",
+   "msg": "HTTP/1.1 200",
+   "t_ms": 58.49
+  },
+  {
+   "t": "2026-11-20T03:22:48.868+00:00",
+   "if": "SBI",
+   "src": "NRF",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": 432.05
+  },
+  {
+   "t": "2026-11-20T03:22:48.868+00:00",
+   "if": "SBI",
+   "src": "SCP",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": 432.13
+  },
+  {
+   "t": "2026-11-20T03:22:49.356+00:00",
+   "if": "SBI",
+   "src": "NRF",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": 920.74
+  },
+  {
+   "t": "2026-11-20T03:22:49.357+00:00",
+   "if": "SBI",
+   "src": "SCP",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": 920.98
+  },
+  {
+   "t": "2026-11-20T03:22:50.348+00:00",
+   "if": "SBI",
+   "src": "NRF",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": 1912.49
+  },
+  {
+   "t": "2026-11-20T03:22:50.348+00:00",
+   "if": "SBI",
+   "src": "SCP",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": 1912.77
+  },
+  {
+   "t": "2026-11-20T03:22:50.495+00:00",
+   "if": "CAMARA-API",
+   "src": "API-consumer",
+   "dst": "adapter",
+   "msg": "DELETE /quality-on-demand/v1/sessions/<id>-758b-4616-acf4-9e4f8891100e",
+   "t_ms": 2059.71
+  },
+  {
+   "t": "2026-11-20T03:22:50.498+00:00",
+   "if": "SBI",
+   "src": "adapter(AF)",
+   "dst": "PCF",
+   "msg": "POST /npcf-policyauthorization/v1/app-sessions/2/delete",
+   "t_ms": 2061.79
+  },
+  {
+   "t": "2026-11-20T03:22:50.498+00:00",
+   "if": "SBI",
+   "src": "PCF",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": 2062.28
+  },
+  {
+   "t": "2026-11-20T03:22:50.498+00:00",
+   "if": "SBI",
+   "src": "PCF",
+   "dst": "SCP",
+   "msg": "POST /nsmf-callback/v1/sm-policy-notify/1/update",
+   "t_ms": 2062.35
+  },
+  {
+   "t": "2026-11-20T03:22:50.498+00:00",
+   "if": "SBI",
+   "src": "PCF",
+   "dst": "SMF",
+   "msg": "POST /nsmf-callback/v1/sm-policy-notify/1/update",
+   "t_ms": 2062.64
+  },
+  {
+   "t": "2026-11-20T03:22:50.499+00:00",
+   "if": "PFCP",
+   "src": "SMF",
+   "dst": "UPF",
+   "msg": "SessionModificationReq",
+   "t_ms": 2063.11
+  },
+  {
+   "t": "2026-11-20T03:22:50.499+00:00",
+   "if": "SBI",
+   "src": "SMF",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": 2063.13
+  },
+  {
+   "t": "2026-11-20T03:22:50.499+00:00",
+   "if": "SBI",
+   "src": "SCP",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": 2063.2
+  },
+  {
+   "t": "2026-11-20T03:22:50.499+00:00",
+   "if": "PFCP",
+   "src": "UPF",
+   "dst": "SMF",
+   "msg": "SessionModificationResp",
+   "t_ms": 2063.28
+  },
+  {
+   "t": "2026-11-20T03:22:50.499+00:00",
+   "if": "SBI",
+   "src": "SMF",
+   "dst": "SCP",
+   "msg": "POST /namf-comm/v1/ue-contexts/imsi-<redacted>/n1-n2-messages",
+   "t_ms": 2063.66
+  },
+  {
+   "t": "2026-11-20T03:22:50.499+00:00",
+   "if": "SBI",
+   "src": "SMF",
+   "dst": "AMF",
+   "msg": "POST /namf-comm/v1/ue-contexts/imsi-<redacted>/n1-n2-messages",
+   "t_ms": 2063.77
+  },
+  {
+   "t": "2026-11-20T03:22:50.500+00:00",
+   "if": "SBI",
+   "src": "AMF",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 200",
+   "t_ms": 2064.02
+  },
+  {
+   "t": "2026-11-20T03:22:50.500+00:00",
+   "if": "NGAP(tcp-shim)",
+   "src": "AMF",
+   "dst": "gNB",
+   "msg": "segment 4 B",
+   "t_ms": 2064.05
+  },
+  {
+   "t": "2026-11-20T03:22:50.500+00:00",
+   "if": "NGAP(tcp-shim)",
+   "src": "AMF",
+   "dst": "gNB",
+   "msg": "segment 70 B",
+   "t_ms": 2064.06
+  },
+  {
+   "t": "2026-11-20T03:22:50.500+00:00",
+   "if": "CAMARA-API",
+   "src": "adapter",
+   "dst": "API-consumer",
+   "msg": "HTTP/1.1 204",
+   "t_ms": 2064.15
+  },
+  {
+   "t": "2026-11-20T03:22:50.500+00:00",
+   "if": "SBI",
+   "src": "SCP",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 200",
+   "t_ms": 2064.2
+  },
+  {
+   "t": "2026-11-20T03:22:50.500+00:00",
+   "if": "gNB-log",
+   "src": "gNB",
+   "dst": "-",
+   "msg": "[NGAP]   I PDUSESSIONModify initiating message",
+   "t_ms": 2064.41
+  },
+  {
+   "t": "2026-11-20T03:22:50.501+00:00",
+   "if": "gNB-log",
+   "src": "gNB",
+   "dst": "-",
+   "msg": "[NR_RRC] I UE 1: removed QoS flow with QFI=4",
+   "t_ms": 2064.85
+  },
+  {
+   "t": "2026-11-20T03:22:50.501+00:00",
+   "if": "gNB-log",
+   "src": "gNB",
+   "dst": "-",
+   "msg": "[NR_RRC] I Removing DRB ID 3 (PDU Session ID=10)",
+   "t_ms": 2064.86
+  },
+  {
+   "t": "2026-11-20T03:22:50.501+00:00",
+   "if": "gNB-log",
+   "src": "gNB",
+   "dst": "-",
+   "msg": "[NR_RRC] I UE 1: removed DRB ID 3 for PDU session 10 (no remaining QoS flows mapped)",
+   "t_ms": 2064.86
+  },
+  {
+   "t": "2026-11-20T03:22:50.501+00:00",
+   "if": "gNB-log",
+   "src": "gNB",
+   "dst": "-",
+   "msg": "[PDCP]   I release DRB 3 of UE 1",
+   "t_ms": 2064.87
+  },
+  {
+   "t": "2026-11-20T03:22:50.501+00:00",
+   "if": "gNB-log",
+   "src": "gNB",
+   "dst": "-",
+   "msg": "[NR_RRC] I UE 1: release DRB 3 at DU after QoS flow release",
+   "t_ms": 2064.87
+  },
+  {
+   "t": "2026-11-20T03:22:50.501+00:00",
+   "if": "gNB-log",
+   "src": "gNB",
+   "dst": "-",
+   "msg": "[NR_RRC] I UE 1 trigger UE Context Modification Request (DRBs to setup: 0, DRBs to release: 1)",
+   "t_ms": 2065.14
+  },
+  {
+   "t": "2026-11-20T03:22:50.503+00:00",
+   "if": "callback",
+   "src": "adapter",
+   "dst": "sink",
+   "msg": "UNAVAILABLE DELETE_REQUESTED",
+   "t_ms": 2067.23
+  },
+  {
+   "t": "2026-11-20T03:22:50.516+00:00",
+   "if": "NGAP(tcp-shim)",
+   "src": "gNB",
+   "dst": "AMF",
+   "msg": "segment 4 B",
+   "t_ms": 2080.52
+  },
+  {
+   "t": "2026-11-20T03:22:50.516+00:00",
+   "if": "NGAP(tcp-shim)",
+   "src": "gNB",
+   "dst": "AMF",
+   "msg": "segment 28 B",
+   "t_ms": 2080.53
+  },
+  {
+   "t": "2026-11-20T03:22:50.516+00:00",
+   "if": "NGAP(tcp-shim)",
+   "src": "gNB",
+   "dst": "AMF",
+   "msg": "segment 4 B",
+   "t_ms": 2080.54
+  },
+  {
+   "t": "2026-11-20T03:22:50.516+00:00",
+   "if": "NGAP(tcp-shim)",
+   "src": "gNB",
+   "dst": "AMF",
+   "msg": "segment 62 B",
+   "t_ms": 2080.54
+  },
+  {
+   "t": "2026-11-20T03:22:50.517+00:00",
+   "if": "SBI",
+   "src": "AMF",
+   "dst": "SCP",
+   "msg": "POST /nsmf-pdusession/v1/sm-contexts/1/modify",
+   "t_ms": 2081.03
+  },
+  {
+   "t": "2026-11-20T03:22:50.517+00:00",
+   "if": "SBI",
+   "src": "AMF",
+   "dst": "SMF",
+   "msg": "POST /nsmf-pdusession/v1/sm-contexts/1/modify",
+   "t_ms": 2081.39
+  },
+  {
+   "t": "2026-11-20T03:22:50.517+00:00",
+   "if": "SBI",
+   "src": "SMF",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": 2081.55
+  },
+  {
+   "t": "2026-11-20T03:22:50.517+00:00",
+   "if": "SBI",
+   "src": "SCP",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": 2081.61
+  },
+  {
+   "t": "2026-11-20T03:22:50.517+00:00",
+   "if": "SBI",
+   "src": "AMF",
+   "dst": "SCP",
+   "msg": "POST /nsmf-pdusession/v1/sm-contexts/1/modify",
+   "t_ms": 2081.66
+  },
+  {
+   "t": "2026-11-20T03:22:50.518+00:00",
+   "if": "SBI",
+   "src": "AMF",
+   "dst": "SMF",
+   "msg": "POST /nsmf-pdusession/v1/sm-contexts/1/modify",
+   "t_ms": 2081.8
+  },
+  {
+   "t": "2026-11-20T03:22:50.518+00:00",
+   "if": "SBI",
+   "src": "SMF",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": 2081.89
+  },
+  {
+   "t": "2026-11-20T03:22:50.518+00:00",
+   "if": "SBI",
+   "src": "SCP",
+   "dst": "client@127.0.0.1",
+   "msg": "HTTP 204",
+   "t_ms": 2081.92
+  }
+ ]
+}

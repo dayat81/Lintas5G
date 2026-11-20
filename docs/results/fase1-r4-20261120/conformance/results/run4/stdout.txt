@@ -1,0 +1,5 @@
+USING RUNNER: behave.runner:Runner
+7 features passed, 0 failed, 0 skipped
+162 scenarios passed, 0 failed, 0 skipped
+2297 steps passed, 0 failed, 0 skipped
+Took 0min 4.750s

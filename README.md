@@ -2,13 +2,13 @@
 
 Open lab 5G/4G berbasis open source untuk partner: pengukuran **latency per paket end-to-end** (UE → RAN → transport MPLS → core → internet) dan uji **telco API CAMARA Quality-on-Demand** di atas Open5GS + srsRAN.
 
-> Status: **fase 1, tahap awal**. IaC GCP sudah diuji apply → smoke → destroy (17 Nov 2026). `vm-mpls` opsional diuji terpisah: modul dan GRE lolos, L3VPN end-to-end belum (LDP neighbor). Pipeline latency berasal dari PoC di lab on-prem. Adapter QoD masih **SKELETON**. Belum ada yang di-deploy dari repo ini.
+> Status: **Fase 1 CLOSED (20 Nov 2026)**. Hasil: [close-out Fase 1](docs/results/2026-11-20-fase1-closeout-r4.md), status: [docs/fase1-status.md](docs/fase1-status.md). Source adapter QoD tetap private. Fase 2 belum dimulai.
 
 ## Peta folder
 
 | Folder | Isi |
 |---|---|
-| [`docs/`](docs/) | [roadmap](docs/roadmap.md), [status Fase 0](docs/fase0-status.md), [arsitektur](docs/architecture.md), [lab GCP](docs/gcp-lab.md), [PoC latency](docs/latency-poc.md), [uji QoD](docs/qod-feasibility-test.md), [lisensi](docs/licensing.md) |
+| [`docs/`](docs/) | [roadmap](docs/roadmap.md), [status Fase 0](docs/fase0-status.md), [status Fase 1](docs/fase1-status.md), [arsitektur](docs/architecture.md), [lab GCP](docs/gcp-lab.md), [PoC latency](docs/latency-poc.md), [uji QoD](docs/qod-feasibility-test.md), [lisensi](docs/licensing.md) |
 | [`infra/gcp/`](infra/gcp/) | Terraform (VPC, 3 VM tanpa IP publik, IAP, Cloud NAT, GCS, snapshot; `vm-mpls` opsional), startup, checklist test run |
 | [`infra/mpls/`](infra/mpls/) | Rujukan backhaul MPLS S1. Skrip kanonis ada di `infra/gcp/startup/` |
 | [`observability/`](observability/) | Zeek `pktlat2.zeek` v2.1, Vector, skema ClickHouse, dashboard Grafana, docker-compose vm-obs |

@@ -1,0 +1,27 @@
+# nmap dari netns n5-ue1 (via oaitun_ue1, ke AS/UPF-N6 <AS-gw>) 2026-11-20T10:25:44+07:00
+Starting Nmap 7.95 ( https://nmap.org ) at 2026-11-20 10:25 +07
+Nmap scan report for <AS-gw>
+Host is up (0.020s latency).
+
+PORT     STATE  SERVICE
+7777/tcp closed cbt
+8080/tcp closed http-proxy
+8090/tcp closed opsmessaging
+8443/tcp closed https-alt
+9999/tcp closed abyss
+
+Nmap done: 1 IP address (1 host up) scanned in 13.05 seconds
+# nmap dari netns n5-ue2
+Starting Nmap 7.95 ( https://nmap.org ) at 2026-11-20 10:25 +07
+Nmap scan report for <AS-gw>
+Host is up (0.022s latency).
+
+PORT     STATE  SERVICE
+7777/tcp closed cbt
+8080/tcp closed http-proxy
+8090/tcp closed opsmessaging
+8443/tcp closed https-alt
+9999/tcp closed abyss
+
+Nmap done: 1 IP address (1 host up) scanned in 13.04 seconds
+# kontrol: port terbuka yang memang sengaja dilayani (udpecho 18080/udp tidak relevan TCP) — tidak ada listener TCP non-loopback di netns core (lihat ss-ltnp-n5-lab.txt)

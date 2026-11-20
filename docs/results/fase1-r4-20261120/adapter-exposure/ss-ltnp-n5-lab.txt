@@ -1,0 +1,12 @@
+# ss -ltnp di netns n5-lab (core+adapter 0.1.3+sink) 2026-11-20T10:28:16+07:00, setelah rebuild lab
+LISTEN 0      5          127.0.0.1:8443       0.0.0.0:*    users:(("python",pid=108113,fd=3))       
+LISTEN 0      2048       127.0.0.1:8080       0.0.0.0:*    users:(("python-n3",pid=110660,fd=14))   
+LISTEN 0      100       127.0.0.99:9999       0.0.0.0:*    users:(("python-n3",pid=110660,fd=13))   
+
+# listener TCP non-loopback di netns n5-lab (kosong = tidak ada):
+*:4043   <- nr-softmodem (gNB) rfsimulator server: radio simulasi untuk nrUE (n5-ue1/2 terhubung ke IP bridge n5-lab). Bukan adapter; bawaan lab rfsim.
+
+# image default bind (Dockerfile ENV):
+ENV QOD_CONFIG=/opt/qod-adapter/config/adapter.yaml QOD_SPEC_DIR=/opt/qod-adapter/spec PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1
+ENV QOD_BIND=127.0.0.1 QOD_PORT=8080
+CMD ["sh", "-c", "exec /usr/local/bin/python-n3 -m uvicorn qod_adapter.app:app --host \"$QOD_BIND\" --port \"$QOD_PORT\" --log-level warning --no-access-log"]

@@ -1,0 +1,19 @@
+run,mode,window_s,finish_source,flags,time_to_available_s,interval,n_intervals,seconds,coverage_pct,yt_dl_pkts,yt_dl_lost,yt_dl_loss_pct,yt_dl_bytes,yt_bytes_boostQFI,yt_boost_share_pct,yt_dl_mbps,scored
+A1,A,154.1,logcat,,5.4,window_total,1,154.1,100.0,17589,254,1.44,22082911,21011081,95.1,1.15,ya
+A1,A,154.1,logcat,,5.4,AVAILABLE,2,147.4,95.7,17428,200,1.15,21923944,21011081,95.8,1.19,ya
+A1,A,154.1,logcat,,5.4,non_AVAILABLE,2,6.6,4.3,161,54,33.54,158967,0,0.0,0.19,tidak dinilai (<1000 paket)
+A2,A,155.3,logcat,,5.2,window_total,1,155.3,100.0,9570,48,0.5,11957307,11851033,99.1,0.62,ya
+A2,A,155.3,logcat,,5.2,AVAILABLE,4,147.2,94.8,9528,45,0.47,11911887,11851033,99.5,0.65,ya
+A2,A,155.3,logcat,,5.2,non_AVAILABLE,4,8.1,5.2,42,3,7.14,45420,0,0.0,0.04,tidak dinilai (<1000 paket)
+A3,A,153.1,logcat,,5.3,window_total,1,153.1,100.0,9651,29,0.3,12145153,12058404,99.3,0.63,ya
+A3,A,153.1,logcat,,5.3,AVAILABLE,3,145.5,95.0,9588,7,0.07,12081100,12058404,99.8,0.66,ya
+A3,A,153.1,logcat,,5.3,non_AVAILABLE,3,7.7,5.0,63,22,34.92,64053,0,0.0,0.07,tidak dinilai (<1000 paket)
+N1,N,181.1,harness(N),,,window_total,1,181.1,100.0,1802,483,26.8,2121682,0,0.0,0.09,ya
+N1,N,181.1,harness(N),,,AVAILABLE,0,0,0.0,0,0,,0,0,,,tidak dinilai (<1000 paket)
+N1,N,181.1,harness(N),,,non_AVAILABLE,1,181.1,100.0,1802,483,26.8,2121682,0,0.0,0.09,ya
+N2,N,180.7,harness(N),,,window_total,1,180.7,100.0,1473,347,23.56,1655367,0,0.0,0.07,ya
+N2,N,180.7,harness(N),,,AVAILABLE,0,0,0.0,0,0,,0,0,,,tidak dinilai (<1000 paket)
+N2,N,180.7,harness(N),,,non_AVAILABLE,1,180.7,100.0,1473,347,23.56,1655367,0,0.0,0.07,ya
+N3,N,179.6,harness(N),,,window_total,1,179.6,100.0,681,163,23.94,602593,0,0.0,0.03,tidak dinilai (<1000 paket)
+N3,N,179.6,harness(N),,,AVAILABLE,0,0,0.0,0,0,,0,0,,,tidak dinilai (<1000 paket)
+N3,N,179.6,harness(N),,,non_AVAILABLE,1,179.6,100.0,681,163,23.94,602593,0,0.0,0.03,tidak dinilai (<1000 paket)

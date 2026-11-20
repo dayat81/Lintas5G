@@ -1,0 +1,633 @@
+<testsuite name="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" tests="26" errors="0" failures="0" skipped="0" time="0.58612" timestamp="2026-11-20T10:08:22.911363" hostname="grok-bot-vm-533625293"><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Common validations for any success scenario" status="passed" time="0.007687"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_01_generic_success_scenario
+  Scenario: Common validations for any success scenario
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    When the request "retrieveQosProfiles" is sent ... passed in 0.005s
+    Then the response status code is 200 ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And each item of the response array, if any, complies with the OAS schema at "#/components/schemas/QosProfile" ... passed in 0.002s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Retrieve QoS profiles only by name" status="passed" time="0.003571"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_02_filter_by_name_only
+  Scenario: Retrieve QoS profiles only by name
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given the request body property "$.name" is set to an existing QoS profile name ... passed in 0.000s
+    And the request body properties "$.device" and "$.status" are not included ... passed in 0.000s
+    When the request "retrieveQosProfiles" is sent ... passed in 0.002s
+    Then the response status code is 200 ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response array has only one item which complies with the OAS schema at "#/components/schemas/QosProfile" ... passed in 0.000s
+    And the response property "$[0].name" value is equal to the request body property "$.name" ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Retrieve QoS profiles by a name that matches no profile" status="passed" time="0.002945"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_02b_filter_by_name_not_found
+  Scenario: Retrieve QoS profiles by a name that matches no profile
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given the request body property "$.name" is set to a QoS profile name that does not match any existing profile ... passed in 0.000s
+    And the request body properties "$.device" and "$.status" are not included ... passed in 0.000s
+    When the request "retrieveQosProfiles" is sent ... passed in 0.002s
+    Then the response status code is 200 ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response body is [] ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Retrieve QoS profiles only by status -- @1.1 " status="passed" time="0.005166"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_03_filter_by_status_only
+  Scenario Outline: Retrieve QoS profiles only by status -- @1.1 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given the request body property "$.status" is set to the value ACTIVE ... passed in 0.000s
+    And the request body properties "$.device" and "$.name" are not included ... passed in 0.000s
+    When the request "retrieveQosProfiles" is sent ... passed in 0.002s
+    Then the response status code is 200 ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And each item of the response array, if any, complies with the OAS schema at "#/components/schemas/QosProfile" ... passed in 0.002s
+    And each item of the response array, if any, has property "$[*].status" equal to ACTIVE ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Retrieve QoS profiles only by status -- @1.2 " status="passed" time="0.003135"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_03_filter_by_status_only
+  Scenario Outline: Retrieve QoS profiles only by status -- @1.2 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given the request body property "$.status" is set to the value INACTIVE ... passed in 0.000s
+    And the request body properties "$.device" and "$.name" are not included ... passed in 0.000s
+    When the request "retrieveQosProfiles" is sent ... passed in 0.002s
+    Then the response status code is 200 ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And each item of the response array, if any, complies with the OAS schema at "#/components/schemas/QosProfile" ... passed in 0.000s
+    And each item of the response array, if any, has property "$[*].status" equal to INACTIVE ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Retrieve QoS profiles only by status -- @1.3 " status="passed" time="0.003046"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_03_filter_by_status_only
+  Scenario Outline: Retrieve QoS profiles only by status -- @1.3 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given the request body property "$.status" is set to the value DEPRECATED ... passed in 0.000s
+    And the request body properties "$.device" and "$.name" are not included ... passed in 0.000s
+    When the request "retrieveQosProfiles" is sent ... passed in 0.002s
+    Then the response status code is 200 ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And each item of the response array, if any, complies with the OAS schema at "#/components/schemas/QosProfile" ... passed in 0.000s
+    And each item of the response array, if any, has property "$[*].status" equal to DEPRECATED ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Return QoS Profiles restricted to certain devices" status="passed" time="0.007059"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_04_return_restricted_profiles
+  Scenario: Return QoS Profiles restricted to certain devices
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given that implementation has QoS Profiles restricted to certain devices ... passed in 0.000s
+    And a device suitable for the restricted QoS Profiles is provided in the request body or identified by the access token ... passed in 0.000s
+    And the request body properties "$.name" and "$.status" are not included ... passed in 0.000s
+    When the request "retrieveQosProfiles" is sent ... passed in 0.004s
+    Then the response status code is 200 ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And each item of the response array complies with the OAS schema at "#/components/schemas/QosProfile" ... passed in 0.003s
+    And the restricted QoS Profiles are returned in the response ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Do not return restricted QoS Profiles restricted to certain devices" status="passed" time="0.005347"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_05_not_return_restricted_profiles
+  Scenario: Do not return restricted QoS Profiles restricted to certain devices
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given that implementation has QoS Profiles restricted to certain devices ... passed in 0.000s
+    And no device is provided in the request body or identified by the access token ... passed in 0.000s
+    And the request body properties "$.name" and "$.status" are not included ... passed in 0.000s
+    When the request "retrieveQosProfiles" is sent ... passed in 0.002s
+    Then the response status code is 200 ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And each item of the response array complies with the OAS schema at "#/components/schemas/QosProfile" ... passed in 0.002s
+    And no restricted QoS Profile is included in the response ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Device has no QoS profiles associated" status="passed" time="0.003207"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_06_device_qos_profiles_not_found
+  Scenario: Device has no QoS profiles associated
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given a device for which the service is not applicable, provided in the request body or identified by the access token ... passed in 0.000s
+    When the request "retrieveQosProfiles" is sent ... passed in 0.002s
+    Then the response status code is 200 ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response body is [] ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="The device value is an empty object" status="passed" time="0.002803"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_C01.01_device_empty
+  Scenario: The device value is an empty object
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given the header "Authorization" is set to a valid access token which does not identify a single device ... passed in 0.000s
+    And the request body property "$.device" is set to: {} ... passed in 0.000s
+    When the HTTP "POST" request is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Some device identifier value does not comply with the schema -- @1.1 " status="passed" time="0.002748"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_C01.02_device_identifiers_not_schema_compliant
+  Scenario Outline: Some device identifier value does not comply with the schema -- @1.1 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given the header "Authorization" is set to a valid access token which does not identify a single device ... passed in 0.000s
+    And the request body property "$.device.phoneNumber" does not comply with the OAS schema at "../common/CAMARA_common.yaml#/components/schemas/PhoneNumber" ... passed in 0.000s
+    When the HTTP "POST" request is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Some device identifier value does not comply with the schema -- @1.2 " status="passed" time="0.002528"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_C01.02_device_identifiers_not_schema_compliant
+  Scenario Outline: Some device identifier value does not comply with the schema -- @1.2 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given the header "Authorization" is set to a valid access token which does not identify a single device ... passed in 0.000s
+    And the request body property "$.device.ipv4Address" does not comply with the OAS schema at "../common/CAMARA_common.yaml#/components/schemas/DeviceIpv4Address" ... passed in 0.000s
+    When the HTTP "POST" request is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Some device identifier value does not comply with the schema -- @1.3 " status="passed" time="0.002233"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_C01.02_device_identifiers_not_schema_compliant
+  Scenario Outline: Some device identifier value does not comply with the schema -- @1.3 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given the header "Authorization" is set to a valid access token which does not identify a single device ... passed in 0.000s
+    And the request body property "$.device.ipv6Address" does not comply with the OAS schema at "../common/CAMARA_common.yaml#/components/schemas/DeviceIpv6Address" ... passed in 0.000s
+    When the HTTP "POST" request is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Some device identifier value does not comply with the schema -- @1.4 " status="passed" time="0.002651"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_C01.02_device_identifiers_not_schema_compliant
+  Scenario Outline: Some device identifier value does not comply with the schema -- @1.4 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given the header "Authorization" is set to a valid access token which does not identify a single device ... passed in 0.000s
+    And the request body property "$.device.networkAccessIdentifier" does not comply with the OAS schema at "../common/CAMARA_common.yaml#/components/schemas/NetworkAccessIdentifier" ... passed in 0.000s
+    When the HTTP "POST" request is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Some identifier cannot be matched to a device" status="passed" time="0.003135"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_C01.03_device_not_found
+  Scenario: Some identifier cannot be matched to a device
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given the header "Authorization" is set to a valid access token which does not identify a single device ... passed in 0.000s
+    And the request body property "$.device" is compliant with the schema but does not identify a valid device ... passed in 0.000s
+    When the HTTP "POST" request is sent ... passed in 0.003s
+    Then the response status code is 404 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 404 ... passed in 0.000s
+    And the response property "$.code" is "IDENTIFIER_NOT_FOUND" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Device not to be included when it can be deduced from the access token" status="passed" time="0.00449"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_C01.04_unnecessary_device
+  Scenario: Device not to be included when it can be deduced from the access token
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given the header "Authorization" is set to a valid access token identifying a device ... passed in 0.000s
+    And the request body property "$.device" is set to a valid device ... passed in 0.000s
+    When the HTTP "POST" request is sent ... passed in 0.004s
+    Then the response status code is 422 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 422 ... passed in 0.000s
+    And the response property "$.code" is "UNNECESSARY_IDENTIFIER" ... passed in 0.000s
+    And the response property "$.message" contains a user-friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="None of the provided device identifiers is supported by the implementation" status="passed" time="0.002323"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_C01.06_unsupported_device
+  Scenario: None of the provided device identifiers is supported by the implementation
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given that some types of device identifiers are not supported by the implementation ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token which does not identify a single device ... passed in 0.000s
+    And the request body property "$.device" only includes device identifiers not supported by the implementation ... passed in 0.000s
+    When the HTTP "POST" request is sent ... passed in 0.002s
+    Then the response status code is 422 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 422 ... passed in 0.000s
+    And the response property "$.code" is "UNSUPPORTED_IDENTIFIER" ... passed in 0.000s
+    And the response property "$.message" contains a user-friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Service not available for the device" status="passed" time="0.002694"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_C01.07_device_not_supported
+  Scenario: Service not available for the device
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given that the service is not available for all devices commercialized by the operator ... passed in 0.000s
+    And a valid device, identified by the token or provided in the request body, for which the service is not applicable ... passed in 0.000s
+    When the HTTP "POST" request is sent ... passed in 0.002s
+    Then the response status code is 422 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 422 ... passed in 0.000s
+    And the response property "$.code" is "SERVICE_NOT_APPLICABLE" ... passed in 0.000s
+    And the response property "$.message" contains a user-friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Invalid Argument. Generic Syntax Exception" status="passed" time="0.002331"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_400.01_schema_not_compliant
+  Scenario: Invalid Argument. Generic Syntax Exception
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given the request body is set to any value which is not compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    When the request "retrieveQosProfiles" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Missing request body" status="passed" time="0.002245"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_400.02_no_request_body
+  Scenario: Missing request body
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given the request body is not included ... passed in 0.000s
+    When the request "retrieveQosProfiles" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Invalid x-correlator header" status="passed" time="0.001548"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_400.03_invalid_x-correlator
+  Scenario: Invalid x-correlator header
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given the header "x-correlator" does not comply with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    When the request "retrieveQosProfiles" is sent ... passed in 0.001s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Error response for no header &quot;Authorization&quot;" status="passed" time="0.002028"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_401.01_no_authorization_header
+  Scenario: Error response for no header "Authorization"
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given the header "Authorization" is not sent ... passed in 0.000s
+    And the request body is set to a valid request body ... passed in 0.000s
+    When the request "retrieveQosProfiles" is sent ... passed in 0.001s
+    Then the response status code is 401 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 401 ... passed in 0.000s
+    And the response property "$.code" is "UNAUTHENTICATED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Error response for expired access token" status="passed" time="0.004531"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_401.02_expired_access_token
+  Scenario: Error response for expired access token
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given the header "Authorization" is set to an expired access token ... passed in 0.000s
+    And the request body is set to a valid request body ... passed in 0.000s
+    When the request "retrieveQosProfiles" is sent ... passed in 0.004s
+    Then the response status code is 401 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 401 ... passed in 0.000s
+    And the response property "$.code" is "UNAUTHENTICATED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Error response for invalid access token" status="passed" time="0.001955"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_401.03_invalid_access_token
+  Scenario: Error response for invalid access token
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given the header "Authorization" is set to an invalid access token ... passed in 0.000s
+    And the request body is set to a valid request body ... passed in 0.000s
+    When the request "retrieveQosProfiles" is sent ... passed in 0.001s
+    Then the response status code is 401 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 401 ... passed in 0.000s
+    And the response property "$.code" is "UNAUTHENTICATED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Missing access token scope" status="passed" time="0.002335"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_403.01_missing_access_token_scope
+  Scenario: Missing access token scope
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given the header "Authorization" is set to an access token that does not include scope "qos-profiles:read" ... passed in 0.000s
+    When the request "retrieveQosProfiles" is sent ... passed in 0.002s
+    Then the response status code is 403 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 403 ... passed in 0.000s
+    And the response property "$.code" is "PERMISSION_DENIED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-retrieveQosProfiles.CAMARA QoS Profiles API, v1.2.0 - Operation retrieveQosProfiles" name="Request is rejected due to threshold policy" status="passed" time="0.502379"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_retrieveQosProfiles_429.01_too_many_requests
+  Scenario: Request is rejected due to threshold policy
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/retrieve-qos-profiles" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/QosProfileDeviceRequest" ... passed in 0.000s
+    Given a valid request for "retrieveQosProfiles" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the threshold of requests has been reached ... passed in 0.000s
+    When the request "retrieveQosProfiles" is sent ... passed in 0.502s
+    Then the response status code is 429 ... passed in 0.000s
+    And the response property "$.status" is 429 ... passed in 0.000s
+    And the response property "$.code" is "TOO_MANY_REQUESTS" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase></testsuite>

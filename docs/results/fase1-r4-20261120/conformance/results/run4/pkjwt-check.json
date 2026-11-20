@@ -1,0 +1,34 @@
+{
+ "create_preshared": {
+  "http": 201,
+  "sinkCredential": {
+   "credentialType": "PRIVATE_KEY_JWT",
+   "jwksUri": "https://127.0.0.1:18080/.well-known/sink-jwks.json"
+  }
+ },
+ "token_requests": [
+  {
+   "assertion_valid": true,
+   "kid": "sink-assertion-1"
+  }
+ ],
+ "events": [
+  {
+   "qosStatus": "AVAILABLE",
+   "auth_valid": true
+  }
+ ],
+ "create_not_preshared": {
+  "http": 422,
+  "code": "PRIVATE_KEY_JWT_NOT_CONFIGURED"
+ },
+ "jwks_keys": [
+  {
+   "kty": "RSA",
+   "kid": "sink-assertion-1",
+   "use": "sig",
+   "alg": "RS256"
+  }
+ ],
+ "verdict": "PASS"
+}

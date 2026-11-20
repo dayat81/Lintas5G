@@ -1,0 +1,126 @@
+{
+ "meta": {
+  "mode": "ab",
+  "dur_s": 25,
+  "be_rate": "150M",
+  "qf_rate": "15M",
+  "window": "[t0+4s (+1.5 s after create), t_end-2s]",
+  "slice_conf": [
+   "enabled=1",
+   "qod_5qi=2,3,4,7,69,80",
+   "qod_max_pct=70",
+   "be_max_pct=100",
+   "pbr_pct=20"
+  ]
+ },
+ "base": {
+  "phase": "base",
+  "ue1": {
+   "probe": {
+    "n": 950,
+    "loss_pct": 18.316,
+    "p50_ms": 5361.814,
+    "p99_ms": 5488.273,
+    "max_ms": 5511.652
+   },
+   "be": {
+    "goodput_mbps": 44.99,
+    "loss_pct_window": 65.098,
+    "loss_pct_total": 47.947,
+    "offered": null
+   },
+   "qf": {
+    "goodput_mbps": 6.91,
+    "loss_pct_window": 46.424,
+    "loss_pct_total": 34.359,
+    "offered": null
+   }
+  },
+  "ue2": {
+   "probe": {
+    "n": 950,
+    "loss_pct": 18.105,
+    "p50_ms": 5361.463,
+    "p99_ms": 5483.552,
+    "max_ms": 5503.548
+   },
+   "be": {
+    "goodput_mbps": 47.02,
+    "loss_pct_window": 63.309,
+    "loss_pct_total": 46.626,
+    "offered": null
+   },
+   "qf": {
+    "goodput_mbps": 6.65,
+    "loss_pct_window": 48.115,
+    "loss_pct_total": 35.378,
+    "offered": null
+   }
+  }
+ },
+ "qod": {
+  "phase": "qod",
+  "api": {
+   "who": "ue1",
+   "create": 201,
+   "sessionId": "51061271-8c7e-4982-bf9c-a178e854675a",
+   "profile": "QOS_L",
+   "ports": [
+    18080,
+    18081
+   ],
+   "status": "AVAILABLE",
+   "statusInfo": null,
+   "t_create": 1795145647.3045719,
+   "create_to_status_ms": 69.6,
+   "sink": "/mu-ue1"
+  },
+  "ue1": {
+   "probe": {
+    "n": 875,
+    "loss_pct": 0.114,
+    "p50_ms": 27.123,
+    "p99_ms": 33.7,
+    "max_ms": 36.006
+   },
+   "be": {
+    "goodput_mbps": 42.82,
+    "loss_pct_window": 64.665,
+    "loss_pct_total": 45.154,
+    "offered": null
+   },
+   "qf": {
+    "goodput_mbps": 14.99,
+    "loss_pct_window": 0.051,
+    "loss_pct_total": 0.038,
+    "offered": null
+   }
+  },
+  "ue2": {
+   "probe": {
+    "n": 875,
+    "loss_pct": 18.971,
+    "p50_ms": 5316.274,
+    "p99_ms": 5452.086,
+    "max_ms": 5470.281
+   },
+   "be": {
+    "goodput_mbps": 46.62,
+    "loss_pct_window": 63.62,
+    "loss_pct_total": 46.554,
+    "offered": null
+   },
+   "qf": {
+    "goodput_mbps": 7.0,
+    "loss_pct_window": 45.497,
+    "loss_pct_total": 33.177,
+    "offered": null
+   }
+  },
+  "api_end": {
+   "who": "ue1",
+   "sessionId": "51061271-8c7e-4982-bf9c-a178e854675a",
+   "delete": 204
+  }
+ }
+}

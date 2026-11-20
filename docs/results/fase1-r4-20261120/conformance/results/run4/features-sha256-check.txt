@@ -1,0 +1,7 @@
+features/qos-profiles-getQosProfile.feature: OK
+features/qos-profiles-retrieveQosProfiles.feature: OK
+features/quality-on-demand-createSession.feature: OK
+features/quality-on-demand-deleteSession.feature: OK
+features/quality-on-demand-extendQosSessionDuration.feature: OK
+features/quality-on-demand-getSession.feature: OK
+features/quality-on-demand-retrieveSessionsByDevice.feature: OK

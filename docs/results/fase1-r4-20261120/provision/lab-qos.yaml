@@ -1,0 +1,23 @@
+# Lintas5G lab: one-time STATIC QoS provisioning (source of truth). Applied by provision.sh (idempotent).
+# Nothing here is per session or per app: CAMARA sessions only add/remove N5 app-sessions at runtime.
+adapter_profiles: /workspace/qod-adapter-013/config/profiles.yaml   # ACTIVE profiles -> PCF qos_profiles + PCC templates
+extra_qos_profiles:            # PCF qosReference entries not exposed as CAMARA profiles (lab test profile)
+  - {reference: QOS_7, qos_index: 7, arp: 6, mbr_dl_kbps: 80000, mbr_ul_kbps: 80000}
+subscribers:                   # files with the IMSI of each lab UE (secrets dir, never copied into artifacts)
+  imsi_files: [/workspace/oai-n5-test/secrets/imsi1, /workspace/oai-n5-test/secrets/imsi2]
+  ue_confs: [/workspace/oai-n5-test/secrets/ue1.conf, /workspace/oai-n5-test/secrets/ue2.conf]   # IMSI/K/OPc source (secrets, 0600)
+  sst: 1
+  dnn: oai
+api_prio:                      # static PCC rule: booster control API (TCP UE <-> <AS_IP>:8080) on 5QI 69 ARP 1
+  ip: <AS_IP>
+  port: 8080
+  qi: 69
+  arp: 1
+  ue_net: <UE_POOL>/16
+slice:                         # gNB QoD DL slice policy (patched OAI, re-read on mtime change): RAN modification, disclosed
+  file: /workspace/oai-n5-test/slice/slice.conf
+  enabled: 1
+  qod_5qi: auto                # auto = all provisioned QoD 5QIs + api_prio.qi
+  qod_max_pct: 70
+  be_max_pct: 100
+  pbr_pct: 20
