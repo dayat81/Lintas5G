@@ -1,0 +1,32 @@
+# nmap dari container lain (f1-scanner, bridge docker) ke n5-lab (netns core+adapter) 2026-11-20T10:27:25+07:00 — setelah rebuild lab
+Starting Nmap 7.95 ( https://nmap.org ) at 2026-11-20 10:27 +07
+Nmap scan report for <n5-lab-ip>
+Host is up (0.00025s latency).
+
+PORT      STATE  SERVICE
+7777/tcp  closed cbt
+8080/tcp  closed http-proxy
+8090/tcp  closed opsmessaging
+8443/tcp  closed https-alt
+9999/tcp  closed abyss
+18099/tcp open   unknown
+27017/tcp closed mongod
+
+Nmap done: 1 IP address (1 host up) scanned in 13.02 seconds
+# ke gateway host bridge
+Starting Nmap 7.95 ( https://nmap.org ) at 2026-11-20 10:27 +07
+Nmap scan report for <host-bridge-gw>
+Host is up (0.00036s latency).
+
+PORT     STATE  SERVICE
+8080/tcp closed http-proxy
+8090/tcp closed opsmessaging
+8443/tcp closed https-alt
+
+Nmap done: 1 IP address (1 host up) scanned in 13.02 seconds
+# kontrol positif 18099 = listener sementara 0.0.0.0 (python http.server, dimatikan setelah scan)
+# dari netns n5-ue1:
+8080/tcp  closed http-proxy
+8090/tcp  closed opsmessaging
+8443/tcp  closed https-alt
+18099/tcp open   unknown

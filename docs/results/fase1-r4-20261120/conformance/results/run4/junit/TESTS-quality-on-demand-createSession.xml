@@ -1,0 +1,1612 @@
+<testsuite name="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" tests="66" errors="0" failures="0" skipped="0" time="0.857131" timestamp="2026-11-20T10:08:23.891089" hostname="grok-bot-vm-533625293"><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Common validations for any success scenario -- @1.1 " status="passed" time="0.006564"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_01_generic_success_scenario
+  Scenario Outline: Common validations for any success scenario -- @1.1 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given a valid testing device supported by the service, identified by the token or provided in the request body ... passed in 0.000s
+    And the request body property "$.applicationServer" is set to a valid application server ... passed in 0.000s
+    And the request property "$.qosProfile" is set to a valid QoS Profile as returned by QoS Profiles API ... passed in 0.000s
+    And the request body property "$.duration" is set to a valid duration for the selected QoS profile ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.005s
+    Then the response status code is 201 ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response header "x-correlator" has the same value as the request header "x-correlator" ... passed in 0.000s
+    And the response body complies with the OAS schema at "#/components/schemas/SessionInfo" ... passed in 0.001s
+    And the response property "$.device" matches the rule: exists only if provided in the request body and with the same value ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Common validations for any success scenario -- @1.2 " status="passed" time="0.004124"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_01_generic_success_scenario
+  Scenario Outline: Common validations for any success scenario -- @1.2 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given a valid testing device supported by the service, identified by the token or provided in the request body ... passed in 0.000s
+    And the request body property "$.applicationServer" is set to a valid application server ... passed in 0.000s
+    And the request property "$.qosProfile" is set to a valid QoS Profile as returned by QoS Profiles API ... passed in 0.000s
+    And the request body property "$.duration" is set to a valid duration for the selected QoS profile ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.003s
+    Then the response status code is 201 ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response header "x-correlator" has the same value as the request header "x-correlator" ... passed in 0.000s
+    And the response body complies with the OAS schema at "#/components/schemas/SessionInfo" ... passed in 0.001s
+    And the response property "$.applicationServer" matches the rule: same value as in the request body ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Common validations for any success scenario -- @1.3 " status="passed" time="0.003945"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_01_generic_success_scenario
+  Scenario Outline: Common validations for any success scenario -- @1.3 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given a valid testing device supported by the service, identified by the token or provided in the request body ... passed in 0.000s
+    And the request body property "$.applicationServer" is set to a valid application server ... passed in 0.000s
+    And the request property "$.qosProfile" is set to a valid QoS Profile as returned by QoS Profiles API ... passed in 0.000s
+    And the request body property "$.duration" is set to a valid duration for the selected QoS profile ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.003s
+    Then the response status code is 201 ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response header "x-correlator" has the same value as the request header "x-correlator" ... passed in 0.000s
+    And the response body complies with the OAS schema at "#/components/schemas/SessionInfo" ... passed in 0.001s
+    And the response property "$.qosProfile" matches the rule: same value as in the request body ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Common validations for any success scenario -- @1.4 " status="passed" time="0.003733"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_01_generic_success_scenario
+  Scenario Outline: Common validations for any success scenario -- @1.4 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given a valid testing device supported by the service, identified by the token or provided in the request body ... passed in 0.000s
+    And the request body property "$.applicationServer" is set to a valid application server ... passed in 0.000s
+    And the request property "$.qosProfile" is set to a valid QoS Profile as returned by QoS Profiles API ... passed in 0.000s
+    And the request body property "$.duration" is set to a valid duration for the selected QoS profile ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 201 ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response header "x-correlator" has the same value as the request header "x-correlator" ... passed in 0.000s
+    And the response body complies with the OAS schema at "#/components/schemas/SessionInfo" ... passed in 0.001s
+    And the response property "$.devicePorts" matches the rule: exists only if provided in the request body and with the same value ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Common validations for any success scenario -- @1.5 " status="passed" time="0.003841"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_01_generic_success_scenario
+  Scenario Outline: Common validations for any success scenario -- @1.5 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given a valid testing device supported by the service, identified by the token or provided in the request body ... passed in 0.000s
+    And the request body property "$.applicationServer" is set to a valid application server ... passed in 0.000s
+    And the request property "$.qosProfile" is set to a valid QoS Profile as returned by QoS Profiles API ... passed in 0.000s
+    And the request body property "$.duration" is set to a valid duration for the selected QoS profile ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.003s
+    Then the response status code is 201 ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response header "x-correlator" has the same value as the request header "x-correlator" ... passed in 0.000s
+    And the response body complies with the OAS schema at "#/components/schemas/SessionInfo" ... passed in 0.001s
+    And the response property "$.applicationServerPorts" matches the rule: exists only if provided in the request body and with the same value ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Common validations for any success scenario -- @1.6 " status="passed" time="0.005655"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_01_generic_success_scenario
+  Scenario Outline: Common validations for any success scenario -- @1.6 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given a valid testing device supported by the service, identified by the token or provided in the request body ... passed in 0.000s
+    And the request body property "$.applicationServer" is set to a valid application server ... passed in 0.000s
+    And the request property "$.qosProfile" is set to a valid QoS Profile as returned by QoS Profiles API ... passed in 0.000s
+    And the request body property "$.duration" is set to a valid duration for the selected QoS profile ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.004s
+    Then the response status code is 201 ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response header "x-correlator" has the same value as the request header "x-correlator" ... passed in 0.000s
+    And the response body complies with the OAS schema at "#/components/schemas/SessionInfo" ... passed in 0.001s
+    And the response property "$.sink" matches the rule: exists only if provided in the request body and with the same value ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Common validations for any success scenario -- @1.7 " status="passed" time="0.003685"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_01_generic_success_scenario
+  Scenario Outline: Common validations for any success scenario -- @1.7 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given a valid testing device supported by the service, identified by the token or provided in the request body ... passed in 0.000s
+    And the request body property "$.applicationServer" is set to a valid application server ... passed in 0.000s
+    And the request property "$.qosProfile" is set to a valid QoS Profile as returned by QoS Profiles API ... passed in 0.000s
+    And the request body property "$.duration" is set to a valid duration for the selected QoS profile ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 201 ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response header "x-correlator" has the same value as the request header "x-correlator" ... passed in 0.000s
+    And the response body complies with the OAS schema at "#/components/schemas/SessionInfo" ... passed in 0.001s
+    And the response property "$.startedAt" matches the rule: exists only if "$.qosStatus" is "AVAILABLE" and value is in the past ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Common validations for any success scenario -- @1.8 " status="passed" time="0.003782"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_01_generic_success_scenario
+  Scenario Outline: Common validations for any success scenario -- @1.8 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given a valid testing device supported by the service, identified by the token or provided in the request body ... passed in 0.000s
+    And the request body property "$.applicationServer" is set to a valid application server ... passed in 0.000s
+    And the request property "$.qosProfile" is set to a valid QoS Profile as returned by QoS Profiles API ... passed in 0.000s
+    And the request body property "$.duration" is set to a valid duration for the selected QoS profile ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 201 ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response header "x-correlator" has the same value as the request header "x-correlator" ... passed in 0.000s
+    And the response body complies with the OAS schema at "#/components/schemas/SessionInfo" ... passed in 0.001s
+    And the response property "$.expiresAt" matches the rule: exists only if "$.qosStatus" is not "REQUESTED" and later than "$.startedAt" ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Common validations for any success scenario -- @1.9 " status="passed" time="0.003342"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_01_generic_success_scenario
+  Scenario Outline: Common validations for any success scenario -- @1.9 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given a valid testing device supported by the service, identified by the token or provided in the request body ... passed in 0.000s
+    And the request body property "$.applicationServer" is set to a valid application server ... passed in 0.000s
+    And the request property "$.qosProfile" is set to a valid QoS Profile as returned by QoS Profiles API ... passed in 0.000s
+    And the request body property "$.duration" is set to a valid duration for the selected QoS profile ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 201 ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response header "x-correlator" has the same value as the request header "x-correlator" ... passed in 0.000s
+    And the response body complies with the OAS schema at "#/components/schemas/SessionInfo" ... passed in 0.000s
+    And the response property "$.statusInfo" matches the rule: exists only if "$.qosStatus" is "UNAVAILABLE" ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Create QoS session with sink and sinkCredential provided" status="passed" time="0.003309"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_02_1_sinkcredential_provided
+  Scenario: Create QoS session with sink and sinkCredential provided
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given a valid testing device supported by the service, identified by the token or provided in the request body ... passed in 0.000s
+    And the request body property "$.applicationServer" is set to a valid application server ... passed in 0.000s
+    And the request property "$.qosProfile" is set to a valid QoS Profile as returned by QoS Profiles API ... passed in 0.000s
+    And the request body property "$.duration" is set to a valid duration for the selected QoS profile ... passed in 0.000s
+    And the request property "$.sink" is set to a URL where events can be monitored ... passed in 0.000s
+    And the request property "$.sinkCredential.credentialType" is set to "ACCESSTOKEN" ... passed in 0.000s
+    And the request property "$.sinkCredential.accessTokenType" is set to "bearer" ... passed in 0.000s
+    And the request property "$.sinkCredential.accessToken" is set to a valid access token accepted by the events receiver ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.003s
+    Then the response status code is 201 ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Event is received when a session status changes after using sink" status="passed" time="0.164033"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_02_2_event_received
+  Scenario: Event is received when a session status changes after using sink
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given a QoS session has been created successfully and includes a valid sink and sinkCredentials ... passed in 0.003s
+    When the QoS status of the session becomes known ... passed in 0.160s
+    Then an event is received at the address of the request property "$.sink" ... passed in 0.000s
+    And the event header "Authorization" is set to "Bearer " + the value of the request property "$.sinkCredential.accessToken" ... passed in 0.000s
+    And the event header "Content-Type" is set to "application/cloudevents+json" ... passed in 0.000s
+    And the event body complies with the OAS schema at "#/components/schemas/EventQosStatusChanged" ... passed in 0.000s
+    And the event body property "$.id" is unique ... passed in 0.000s
+    And the event body property "$.type" is set to "org.camaraproject.quality-on-demand.v1.qos-status-changed" ... passed in 0.000s
+    And the event body property "$.data.sessionId" has the same value as createSession response property "$.sessionId" ... passed in 0.000s
+    And the event body property "$.data.qosStatus" is "AVAILABLE" or "UNAVAILABLE" ... passed in 0.000s
+    And the event body property "$.data.statusInfo" exists only if "$.data.qosStatus" is "UNAVAILABLE" ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Create QoS session with sink and PRIVATE_KEY_JWT sinkCredential, out-of-band provisioning" status="passed" time="0.00532"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_02_3_private_key_jwt_sink_credential
+  Scenario: Create QoS session with sink and PRIVATE_KEY_JWT sinkCredential, out-of-band provisioning
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given a valid testing device supported by the service, identified by the token or provided in the request body ... passed in 0.000s
+    And the request body property "$.applicationServer" is set to a valid application server ... passed in 0.000s
+    And the request property "$.qosProfile" is set to a valid QoS Profile as returned by QoS Profiles API ... passed in 0.000s
+    And the request body property "$.duration" is set to a valid duration for the selected QoS profile ... passed in 0.000s
+    And the request property "$.sink" is set to a URL where events can be monitored ... passed in 0.000s
+    And the request property "$.sinkCredential.credentialType" is set to "PRIVATE_KEY_JWT" ... passed in 0.000s
+    And a PRIVATE_KEY_JWT configuration has been pre-shared for the notification endpoint ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.005s
+    Then the response status code is 201 ... passed in 0.000s
+    And the response property "$.sinkCredential.credentialType" is "PRIVATE_KEY_JWT" ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Device is not returned if not included in the creation" status="passed" time="0.003438"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_03_3_legged_missing_device
+  Scenario: Device is not returned if not included in the creation
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the header "Authorization" is set to a valid 3-legged access token associated to a valid testing device supported by the service ... passed in 0.000s
+    And the request property "$.device" is not included ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.003s
+    Then the response status code is 201 ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response body complies with the OAS schema at "#/components/schemas/SessionInfo" ... passed in 0.000s
+    And the response property "$.device" does not exist ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Create QoS session for application server subnets" status="passed" time="0.003016"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_04_1_application_server_subnets_provided
+  Scenario: Create QoS session for application server subnets
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given a valid testing device supported by the service, identified by the token or provided in the request body ... passed in 0.000s
+    And the request body properties "$.applicationServer.ipv4Address" and/or "$.applicationServer.ipv6Address" exist and have valid values which include a subnet mask ... passed in 0.000s
+    And the request body property "$.applicationServer.ipAddresses" does not exist ... passed in 0.000s
+    And the request property "$.qosProfile" is set to a valid QoS Profile as returned by QoS Profiles API ... passed in 0.000s
+    And the request body property "$.duration" is set to a valid duration for the selected QoS profile ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.003s
+    Then the response status code is 201 ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Create QoS session for application server list" status="passed" time="0.003114"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_04_2_application_server_list_provided
+  Scenario: Create QoS session for application server list
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given a valid testing device supported by the service, identified by the token or provided in the request body ... passed in 0.000s
+    And the request body property "$.applicationServer.ipAddresses" exists ... passed in 0.000s
+    And the number of items in request body array "$.applicationServer.ipAddresses" is greater than 0 ... passed in 0.000s
+    And the number of items in request body array "$.applicationServer.ipAddresses" is less than 17 ... passed in 0.000s
+    And each item within request body array "$.applicationServer.ipAddresses" is either a valid IPv4 address or valid IPv6 address ... passed in 0.000s
+    And each item within request body array "$.applicationServer.ipAddresses" is unique with no duplicated values ... passed in 0.000s
+    And the request body property "$.applicationServer.ipv4Address" does not exist ... passed in 0.000s
+    And the request body property "$.applicationServer.ipv6Address" does not exist ... passed in 0.000s
+    And the request property "$.qosProfile" is set to a valid QoS Profile as returned by QoS Profiles API ... passed in 0.000s
+    And the request body property "$.duration" is set to a valid duration for the selected QoS profile ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.003s
+    Then the response status code is 201 ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="The device value is an empty object" status="passed" time="0.003124"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_C01.01_device_empty
+  Scenario: The device value is an empty object
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the header "Authorization" is set to a valid access token which does not identify a single device ... passed in 0.000s
+    And the request body property "$.device" is set to: {} ... passed in 0.000s
+    When the HTTP "POST" request is sent ... passed in 0.003s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Some device identifier value does not comply with the schema -- @1.1 " status="passed" time="0.003238"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_C01.02_device_identifiers_not_schema_compliant
+  Scenario Outline: Some device identifier value does not comply with the schema -- @1.1 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the header "Authorization" is set to a valid access token which does not identify a single device ... passed in 0.000s
+    And the request body property "$.device.phoneNumber" does not comply with the OAS schema at "#/components/schemas/PhoneNumber" ... passed in 0.000s
+    When the HTTP "POST" request is sent ... passed in 0.003s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Some device identifier value does not comply with the schema -- @1.2 " status="passed" time="0.002923"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_C01.02_device_identifiers_not_schema_compliant
+  Scenario Outline: Some device identifier value does not comply with the schema -- @1.2 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the header "Authorization" is set to a valid access token which does not identify a single device ... passed in 0.000s
+    And the request body property "$.device.ipv4Address" does not comply with the OAS schema at "#/components/schemas/DeviceIpv4Address" ... passed in 0.000s
+    When the HTTP "POST" request is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Some device identifier value does not comply with the schema -- @1.3 " status="passed" time="0.002671"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_C01.02_device_identifiers_not_schema_compliant
+  Scenario Outline: Some device identifier value does not comply with the schema -- @1.3 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the header "Authorization" is set to a valid access token which does not identify a single device ... passed in 0.000s
+    And the request body property "$.device.ipv6Address" does not comply with the OAS schema at "#/components/schemas/DeviceIpv6Address" ... passed in 0.000s
+    When the HTTP "POST" request is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Some device identifier value does not comply with the schema -- @1.4 " status="passed" time="0.002841"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_C01.02_device_identifiers_not_schema_compliant
+  Scenario Outline: Some device identifier value does not comply with the schema -- @1.4 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the header "Authorization" is set to a valid access token which does not identify a single device ... passed in 0.000s
+    And the request body property "$.device.networkAccessIdentifier" does not comply with the OAS schema at "#/components/schemas/NetworkAccessIdentifier" ... passed in 0.000s
+    When the HTTP "POST" request is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Some identifier cannot be matched to a device" status="passed" time="0.00265"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_C01.03_device_not_found
+  Scenario: Some identifier cannot be matched to a device
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the header "Authorization" is set to a valid access token which does not identify a single device ... passed in 0.000s
+    And the request body property "$.device" is compliant with the schema but does not identify a valid device ... passed in 0.000s
+    When the HTTP "POST" request is sent ... passed in 0.002s
+    Then the response status code is 404 ... passed in 0.000s
+    And the response property "$.status" is 404 ... passed in 0.000s
+    And the response property "$.code" is "IDENTIFIER_NOT_FOUND" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Device not to be included when it can be deduced from the access token" status="passed" time="0.002678"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_C01.04_unnecessary_device
+  Scenario: Device not to be included when it can be deduced from the access token
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the header "Authorization" is set to a valid access token identifying a device ... passed in 0.000s
+    And the request body property "$.device" is set to a valid device ... passed in 0.000s
+    When the HTTP "POST" request is sent ... passed in 0.002s
+    Then the response status code is 422 ... passed in 0.000s
+    And the response property "$.status" is 422 ... passed in 0.000s
+    And the response property "$.code" is "UNNECESSARY_IDENTIFIER" ... passed in 0.000s
+    And the response property "$.message" contains a user-friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Device not included and cannot be deduced from the access token" status="passed" time="0.002493"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_C01.05_missing_device
+  Scenario: Device not included and cannot be deduced from the access token
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the header "Authorization" is set to a valid access token which does not identify a single device ... passed in 0.000s
+    And the request body property "$.device" is not included ... passed in 0.000s
+    When the HTTP "POST" request is sent ... passed in 0.002s
+    Then the response status code is 422 ... passed in 0.000s
+    And the response property "$.status" is 422 ... passed in 0.000s
+    And the response property "$.code" is "MISSING_IDENTIFIER" ... passed in 0.000s
+    And the response property "$.message" contains a user-friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="None of the provided device identifiers is supported by the implementation" status="passed" time="0.002697"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_C01.06_unsupported_device
+  Scenario: None of the provided device identifiers is supported by the implementation
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given that some types of device identifiers are not supported by the implementation ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token which does not identify a single device ... passed in 0.000s
+    And the request body property "$.device" only includes device identifiers not supported by the implementation ... passed in 0.000s
+    When the HTTP "POST" request is sent ... passed in 0.002s
+    Then the response status code is 422 ... passed in 0.000s
+    And the response property "$.status" is 422 ... passed in 0.000s
+    And the response property "$.code" is "UNSUPPORTED_IDENTIFIER" ... passed in 0.000s
+    And the response property "$.message" contains a user-friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Service not available for the device" status="passed" time="0.002625"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_C01.07_device_not_supported
+  Scenario: Service not available for the device
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given that the service is not available for all devices commercialized by the operator ... passed in 0.000s
+    And a valid device, identified by the token or provided in the request body, for which the service is not applicable ... passed in 0.000s
+    When the HTTP "POST" request is sent ... passed in 0.002s
+    Then the response status code is 422 ... passed in 0.000s
+    And the response property "$.status" is 422 ... passed in 0.000s
+    And the response property "$.code" is "SERVICE_NOT_APPLICABLE" ... passed in 0.000s
+    And the response property "$.message" contains a user-friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Invalid Argument. Generic Syntax Exception" status="passed" time="0.001994"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.1_schema_not_compliant
+  Scenario: Invalid Argument. Generic Syntax Exception
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body is set to any value which is not compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Missing request body" status="passed" time="0.001976"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.2_no_request_body
+  Scenario: Missing request body
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body is not included ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Empty object as request body" status="passed" time="0.002216"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.3_empty_request_body
+  Scenario: Empty object as request body
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body is set to {} ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Error response for empty property in request body -- @1.1 " status="passed" time="0.002428"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.4_empty_property
+  Scenario Outline: Error response for empty property in request body -- @1.1 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body property "$.applicationServer" is set to {} ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Error response for empty property in request body -- @1.2 " status="passed" time="0.002606"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.4_empty_property
+  Scenario Outline: Error response for empty property in request body -- @1.2 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body property "$.devicePorts" is set to {} ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Error response for empty property in request body -- @1.3 " status="passed" time="0.002307"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.4_empty_property
+  Scenario Outline: Error response for empty property in request body -- @1.3 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body property "$.applicationServerPorts" is set to {} ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Error response for empty property in request body -- @1.4 " status="passed" time="0.002752"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.4_empty_property
+  Scenario Outline: Error response for empty property in request body -- @1.4 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body property "$.sinkCredential" is set to {} ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Out of range port -- @1.1 " status="passed" time="0.002394"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.5_out_of_range_port
+  Scenario Outline: Out of range port -- @1.1 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body property "$.device.ipv4Address.publicPort" is set to a value not between between 0 and 65535 ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "OUT_OF_RANGE" or "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Out of range port -- @1.2 " status="passed" time="0.002853"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.5_out_of_range_port
+  Scenario Outline: Out of range port -- @1.2 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body property "$.devicePorts.ranges.from" is set to a value not between between 0 and 65535 ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "OUT_OF_RANGE" or "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Out of range port -- @1.3 " status="passed" time="0.002627"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.5_out_of_range_port
+  Scenario Outline: Out of range port -- @1.3 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body property "$.devicePorts.ranges.to" is set to a value not between between 0 and 65535 ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "OUT_OF_RANGE" or "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Out of range port -- @1.4 " status="passed" time="0.002596"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.5_out_of_range_port
+  Scenario Outline: Out of range port -- @1.4 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body property "$.devicePorts.ports[*]" is set to a value not between between 0 and 65535 ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "OUT_OF_RANGE" or "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Out of range port -- @1.5 " status="passed" time="0.002545"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.5_out_of_range_port
+  Scenario Outline: Out of range port -- @1.5 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body property "$.applicationServerPorts.ranges.from" is set to a value not between between 0 and 65535 ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "OUT_OF_RANGE" or "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Out of range port -- @1.6 " status="passed" time="0.002314"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.5_out_of_range_port
+  Scenario Outline: Out of range port -- @1.6 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body property "$.applicationServerPorts.ranges.to" is set to a value not between between 0 and 65535 ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "OUT_OF_RANGE" or "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Out of range port -- @1.7 " status="passed" time="0.002591"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.5_out_of_range_port
+  Scenario Outline: Out of range port -- @1.7 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body property "$.applicationServerPorts.ports[*]" is set to a value not between between 0 and 65535 ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "OUT_OF_RANGE" or "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Unsupported sinkCredential.credentialType value -- @1.1 " status="passed" time="0.002419"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.6_unsupported_sink_credential_type
+  Scenario Outline: Unsupported sinkCredential.credentialType value -- @1.1 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body property  "$.sinkCredential.credentialType" is set to "PLAIN" ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Unsupported sinkCredential.credentialType value -- @1.2 " status="passed" time="0.003039"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.6_unsupported_sink_credential_type
+  Scenario Outline: Unsupported sinkCredential.credentialType value -- @1.2 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body property  "$.sinkCredential.credentialType" is set to "REFRESHTOKEN" ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.003s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Invalid token" status="passed" time="0.002756"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.7_sink_credential_invalid_token
+  Scenario: Invalid token
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body property  "$.sinkCredential.accessTokenType" is set to a value other than "bearer" ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_TOKEN" or "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Error response for invalid qos profile name in request body" status="passed" time="0.0023"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.8_non_compliant_qos_profile_name
+  Scenario: Error response for invalid qos profile name in request body
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body property "$.qosProfile" is not compliant with the schema at "#/components/schemas/QosProfileName" ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Error response when duration is not valid for selected qos profile" status="passed" time="0.002618"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.9_invalid_duration
+  Scenario: Error response when duration is not valid for selected qos profile
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body property "duration" is set to an invalid duration for the selected qosProfile ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Invalid x-correlator header" status="passed" time="0.001724"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.10_invalid_x-correlator
+  Scenario: Invalid x-correlator header
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the header "x-correlator" does not comply with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.001s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Invalid application server specification" status="passed" time="0.002719"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.11_invalid_application_server
+  Scenario: Invalid application server specification
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body properties "$.applicationServer.ipv4Address" and/or "$.applicationServer.ipv6Address" exist ... passed in 0.000s
+    And the request body property "$.applicationServer.ipAddresses" exists ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Empty application server list" status="passed" time="0.002382"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.12_empty_application_server_list
+  Scenario: Empty application server list
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body property "$.applicationServer.ipAddresses" exists ... passed in 0.000s
+    And the number of items in request body array "$.applicationServer.ipAddresses" is equal to 0 ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Application server list is too large" status="passed" time="0.003754"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.13_application_server_list_is_too_large
+  Scenario: Application server list is too large
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.001s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body property "$.applicationServer.ipAddresses" exists ... passed in 0.000s
+    And the number of items in request body array "$.applicationServer.ipAddresses" is greater than 16 ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Duplicate values in application server list" status="passed" time="0.002219"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.14_duplicate_values_in_application_server_list
+  Scenario: Duplicate values in application server list
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body property "$.applicationServer.ipAddresses" exists ... passed in 0.000s
+    And the number of items in request body array "$.applicationServer.ipAddresses" is greater than 1 ... passed in 0.000s
+    And at least two items within request body array "$.applicationServer.ipAddresses" have the same value ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Invalid values in application server list" status="passed" time="0.002649"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.15_invalid_values_in_application_server_list
+  Scenario: Invalid values in application server list
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body property "$.applicationServer.ipAddresses" exists ... passed in 0.000s
+    And the number of items in request body array "$.applicationServer.ipAddresses" is greater than 0 ... passed in 0.000s
+    And at least one item within request body array "$.applicationServer.ipAddresses" is not a valid single IPv4 address or single IPv6 address ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Subnet specified in application server list" status="passed" time="0.00268"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.16_subnet_in_application_server_list
+  Scenario: Subnet specified in application server list
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body property "$.applicationServer.ipAddresses" exists ... passed in 0.000s
+    And the number of items in request body array "$.applicationServer.ipAddresses" is greater than 0 ... passed in 0.000s
+    And at least one item within request body array "$.applicationServer.ipAddresses" contains the character '/' ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Undeclared property in request body -- @1.1 " status="passed" time="0.002331"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.17_request_body_strictness
+  Scenario Outline: Undeclared property in request body -- @1.1 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body is set to a valid request body ... passed in 0.000s
+    And the request body includes the property "$.undeclaredProperty" which is not declared in the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Undeclared property in request body -- @1.2 " status="passed" time="0.00265"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.17_request_body_strictness
+  Scenario Outline: Undeclared property in request body -- @1.2 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body is set to a valid request body ... passed in 0.000s
+    And the request body includes the property "$.device.undeclaredProperty" which is not declared in the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Undeclared property in request body -- @1.3 " status="passed" time="0.002679"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.17_request_body_strictness
+  Scenario Outline: Undeclared property in request body -- @1.3 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body is set to a valid request body ... passed in 0.000s
+    And the request body includes the property "$.applicationServer.undeclaredProperty" which is not declared in the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Undeclared property in request body -- @1.4 " status="passed" time="0.002744"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.17_request_body_strictness
+  Scenario Outline: Undeclared property in request body -- @1.4 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body is set to a valid request body ... passed in 0.000s
+    And the request body includes the property "$.devicePorts.undeclaredProperty" which is not declared in the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Undeclared property in request body -- @1.5 " status="passed" time="0.002604"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.17_request_body_strictness
+  Scenario Outline: Undeclared property in request body -- @1.5 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body is set to a valid request body ... passed in 0.000s
+    And the request body includes the property "$.applicationServerPorts.undeclaredProperty" which is not declared in the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Undeclared property in request body -- @1.6 " status="passed" time="0.002633"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_400.17_request_body_strictness
+  Scenario Outline: Undeclared property in request body -- @1.6 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body is set to a valid request body ... passed in 0.000s
+    And the request body includes the property "$.sinkCredential.undeclaredProperty" which is not declared in the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Error response for no header &quot;Authorization&quot;" status="passed" time="0.002055"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_401.1_no_authorization_header
+  Scenario: Error response for no header "Authorization"
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the header "Authorization" is not sent ... passed in 0.000s
+    And the request body is set to a valid request body ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 401 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 401 ... passed in 0.000s
+    And the response property "$.code" is "UNAUTHENTICATED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Error response for expired access token" status="passed" time="0.004084"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_401.2_expired_access_token
+  Scenario: Error response for expired access token
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the header "Authorization" is set to an expired access token ... passed in 0.000s
+    And the request body is set to a valid request body ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.004s
+    Then the response status code is 401 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 401 ... passed in 0.000s
+    And the response property "$.code" is "UNAUTHENTICATED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Error response for invalid access token" status="passed" time="0.001923"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_401.3_invalid_access_token
+  Scenario: Error response for invalid access token
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the header "Authorization" is set to an invalid access token ... passed in 0.000s
+    And the request body is set to a valid request body ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.001s
+    Then the response status code is 401 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 401 ... passed in 0.000s
+    And the response property "$.code" is "UNAUTHENTICATED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Missing access token scope" status="passed" time="0.004088"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_403.1_missing_access_token_scope
+  Scenario: Missing access token scope
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the header "Authorization" is set to an access token that does not include scope "quality-on-demand:sessions:create" ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.004s
+    Then the response status code is 403 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 403 ... passed in 0.000s
+    And the response property "$.code" is "PERMISSION_DENIED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Error response for non-existent qos profile in request body" status="passed" time="0.002648"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_404.1_non_existent_qos_profile
+  Scenario: Error response for non-existent qos profile in request body
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given the request body property "$.qosProfile" is set to a non-existent QoS profile that is compliant with the schema at "#/components/schemas/QosProfileName" ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 404 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 404 ... passed in 0.000s
+    And the response property "$.code" is "NOT_FOUND" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Session in conflict" status="passed" time="0.005137"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_409.1_session_conflict
+  Scenario: Session in conflict
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given a valid testing device supported by the service, identified by the token or provided in the request body ... passed in 0.000s
+    And a QoD session already exists for that device ... passed in 0.002s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 409 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 409 ... passed in 0.000s
+    And the response property "$.code" is "CONFLICT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="QoS Profile not applicable for session creation" status="passed" time="0.002213"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_422.1_session_qos_profile_not_applicable
+  Scenario: QoS Profile not applicable for session creation
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given a valid testing device supported by the service, identified by the token or provided in the request body ... passed in 0.000s
+    And the requested QoS Profile exists but is not applicable for the session ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 422 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 422 ... passed in 0.000s
+    And the response property "$.code" is "QUALITY_ON_DEMAND.QOS_PROFILE_NOT_APPLICABLE" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="PRIVATE_KEY_JWT sink credential used but not pre-configured" status="passed" time="0.002806"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_422.2_private_key_jwt_not_configured
+  Scenario: PRIVATE_KEY_JWT sink credential used but not pre-configured
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given a valid testing device supported by the service, identified by the token or provided in the request body ... passed in 0.000s
+    And the request body property "$.sinkCredential.credentialType" is set to "PRIVATE_KEY_JWT" ... passed in 0.000s
+    And no PRIVATE_KEY_JWT configuration has been pre-shared for the notification endpoint ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.002s
+    Then the response status code is 422 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 422 ... passed in 0.000s
+    And the response property "$.code" is "PRIVATE_KEY_JWT_NOT_CONFIGURED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-createSession.CAMARA Quality On Demand API, v1.2.0 - Operation createSession" name="Request is rejected due to threshold policy" status="passed" time="0.502237"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_createSession_429.1_too_many_requests
+  Scenario: Request is rejected due to threshold policy
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/CreateSession" ... passed in 0.000s
+    Given a valid request for "createSession" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the threshold of requests has been reached ... passed in 0.000s
+    When the request "createSession" is sent ... passed in 0.502s
+    Then the response status code is 429 ... passed in 0.000s
+    And the response property "$.status" is 429 ... passed in 0.000s
+    And the response property "$.code" is "TOO_MANY_REQUESTS" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase></testsuite>

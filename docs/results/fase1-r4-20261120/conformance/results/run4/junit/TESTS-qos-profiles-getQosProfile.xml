@@ -1,0 +1,236 @@
+<testsuite name="qos-profiles-getQosProfile.CAMARA QoS Profiles API, v1.2.0 - Operation getQosProfile" tests="10" errors="0" failures="0" skipped="0" time="0.543214" timestamp="2026-11-20T10:08:22.283656" hostname="grok-bot-vm-533625293"><testcase classname="qos-profiles-getQosProfile.CAMARA QoS Profiles API, v1.2.0 - Operation getQosProfile" name="Common validations for any success scenario" status="passed" time="0.01224"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_getQosProfile_01_generic_success_scenario
+  Scenario: Common validations for any success scenario
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/qos-profiles/{name}" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the path param "name" is set by default to an existing QoS profile name ... passed in 0.000s
+    Given an existing QoS profile ... passed in 0.000s
+    And the path parameter "name" is set to the value for that QoS profile ... passed in 0.000s
+    When the request "getQosProfile" is sent ... passed in 0.011s
+    Then the response status code is 200 ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response body complies with the OAS schema at "#/components/schemas/QosProfile" ... passed in 0.001s
+    And the response property "$.name" value is equal to path param "name" ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out><system-err>
+<![CDATA[
+Captured stderr:
+/workspace/fase1-closeout/conformance/behave/features/steps/camara.py:38: ContextMaskWarning: user code is masking context attribute 'tags' originally set by behave
+  ctx.op = op_of_feature(ctx); ctx.tags = set(scenario.effective_tags)
+
+]]>
+</system-err></testcase><testcase classname="qos-profiles-getQosProfile.CAMARA QoS Profiles API, v1.2.0 - Operation getQosProfile" name="Path parameter name doesn't match the defined regular expression" status="passed" time="0.002326"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_getQosProfile_400.01_name_does_not_match_regex
+  Scenario: Path parameter name doesn't match the defined regular expression
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/qos-profiles/{name}" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the path param "name" is set by default to an existing QoS profile name ... passed in 0.000s
+    Given path parameter "name" does not match the regular expression "^[a-zA-Z0-9_.-]+$" ... passed in 0.000s
+    When the request "getQosProfile" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-getQosProfile.CAMARA QoS Profiles API, v1.2.0 - Operation getQosProfile" name="Path parameter name has an invalid length" status="passed" time="0.002411"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_getQosProfile_400.02_invalid_name_length
+  Scenario: Path parameter name has an invalid length
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/qos-profiles/{name}" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the path param "name" is set by default to an existing QoS profile name ... passed in 0.000s
+    Given path parameter "name" has a length not between 3 and 256 ... passed in 0.000s
+    When the request "getQosProfile" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-getQosProfile.CAMARA QoS Profiles API, v1.2.0 - Operation getQosProfile" name="Invalid x-correlator header" status="passed" time="0.001568"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_getQosProfile_400.03_invalid_x-correlator
+  Scenario: Invalid x-correlator header
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/qos-profiles/{name}" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the path param "name" is set by default to an existing QoS profile name ... passed in 0.000s
+    Given the header "x-correlator" does not comply with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    When the request "getQosProfile" is sent ... passed in 0.001s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-getQosProfile.CAMARA QoS Profiles API, v1.2.0 - Operation getQosProfile" name="Error response for no header &quot;Authorization&quot;" status="passed" time="0.002636"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_getQosProfile_401.01_no_authorization_header
+  Scenario: Error response for no header "Authorization"
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/qos-profiles/{name}" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the path param "name" is set by default to an existing QoS profile name ... passed in 0.000s
+    Given the header "Authorization" is not sent ... passed in 0.000s
+    When the request "getQosProfile" is sent ... passed in 0.002s
+    Then the response status code is 401 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 401 ... passed in 0.000s
+    And the response property "$.code" is "UNAUTHENTICATED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-getQosProfile.CAMARA QoS Profiles API, v1.2.0 - Operation getQosProfile" name="Error response for expired access token" status="passed" time="0.005101"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_getQosProfile_401.02_expired_access_token
+  Scenario: Error response for expired access token
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/qos-profiles/{name}" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the path param "name" is set by default to an existing QoS profile name ... passed in 0.000s
+    Given the header "Authorization" is set to an expired access token ... passed in 0.000s
+    When the request "getQosProfile" is sent ... passed in 0.004s
+    Then the response status code is 401 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 401 ... passed in 0.000s
+    And the response property "$.code" is "UNAUTHENTICATED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-getQosProfile.CAMARA QoS Profiles API, v1.2.0 - Operation getQosProfile" name="Error response for invalid access token" status="passed" time="0.002303"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_getQosProfile_401.03_invalid_access_token
+  Scenario: Error response for invalid access token
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/qos-profiles/{name}" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the path param "name" is set by default to an existing QoS profile name ... passed in 0.000s
+    Given the header "Authorization" is set to an invalid access token ... passed in 0.000s
+    When the request "getQosProfile" is sent ... passed in 0.002s
+    Then the response status code is 401 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 401 ... passed in 0.000s
+    And the response property "$.code" is "UNAUTHENTICATED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-getQosProfile.CAMARA QoS Profiles API, v1.2.0 - Operation getQosProfile" name="Missing access token scope" status="passed" time="0.004167"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_getQosProfile_403.01_missing_access_token_scope
+  Scenario: Missing access token scope
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/qos-profiles/{name}" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the path param "name" is set by default to an existing QoS profile name ... passed in 0.000s
+    Given the header "Authorization" is set to an access token that does not include scope "qos-profiles:read" ... passed in 0.000s
+    When the request "getQosProfile" is sent ... passed in 0.004s
+    Then the response status code is 403 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 403 ... passed in 0.000s
+    And the response property "$.code" is "PERMISSION_DENIED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-getQosProfile.CAMARA QoS Profiles API, v1.2.0 - Operation getQosProfile" name="name of a non-existing QoS profile" status="passed" time="0.003288"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_getQosProfile_404.01_not_found
+  Scenario: name of a non-existing QoS profile
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/qos-profiles/{name}" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the path param "name" is set by default to an existing QoS profile name ... passed in 0.000s
+    Given the path parameter "name" is set to a random string compliant with the pattern ... passed in 0.000s
+    When the request "getQosProfile" is sent ... passed in 0.003s
+    Then the response status code is 404 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 404 ... passed in 0.000s
+    And the response property "$.code" is "NOT_FOUND" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="qos-profiles-getQosProfile.CAMARA QoS Profiles API, v1.2.0 - Operation getQosProfile" name="Request is rejected due to threshold policy" status="passed" time="0.507175"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @qos_profiles_getQosProfile_429.01_too_many_requests
+  Scenario: Request is rejected due to threshold policy
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/qos-profiles/v1/qos-profiles/{name}" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "../common/CAMARA_common.yaml#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the path param "name" is set by default to an existing QoS profile name ... passed in 0.000s
+    Given a valid request for "getQosProfile" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the threshold of requests has been reached ... passed in 0.000s
+    When the request "getQosProfile" is sent ... passed in 0.507s
+    Then the response status code is 429 ... passed in 0.000s
+    And the response property "$.status" is 429 ... passed in 0.000s
+    And the response property "$.code" is "TOO_MANY_REQUESTS" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase></testsuite>

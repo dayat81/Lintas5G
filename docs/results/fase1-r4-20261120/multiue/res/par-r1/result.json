@@ -1,0 +1,124 @@
+{
+ "meta": {
+  "mode": "par",
+  "dur_s": 25,
+  "be_rate": "150M",
+  "qf_rate": "15M",
+  "window": "[t0+4s (+1.5 s after create), t_end-2s]",
+  "slice_conf": [
+   "enabled=1",
+   "qod_5qi=2,3,4,7,69,80",
+   "qod_max_pct=70",
+   "be_max_pct=100",
+   "pbr_pct=20"
+  ]
+ },
+ "par": {
+  "api": [
+   {
+    "who": "ue1",
+    "create": 201,
+    "sessionId": "4509c63e-f2c4-41d4-a49b-2134cb3ac33a",
+    "profile": "QOS_L",
+    "ports": [
+     18080,
+     18081
+    ],
+    "status": "AVAILABLE",
+    "statusInfo": null,
+    "t_create": 1795145764.7244658,
+    "create_to_status_ms": 65.4,
+    "sink": "/par-ue1"
+   },
+   {
+    "who": "ue2",
+    "create": 201,
+    "sessionId": "8d0f131e-691b-4c6c-b3e9-6abfcbf5a492",
+    "profile": "QOS_E",
+    "ports": [
+     18080,
+     18082
+    ],
+    "status": "AVAILABLE",
+    "statusInfo": null,
+    "t_create": 1795145764.921861,
+    "create_to_status_ms": 78.0,
+    "sink": "/par-ue2"
+   }
+  ],
+  "api_end": [
+   {
+    "who": "ue1",
+    "sessionId": "4509c63e-f2c4-41d4-a49b-2134cb3ac33a",
+    "delete": 204
+   },
+   {
+    "who": "ue2",
+    "sessionId": "8d0f131e-691b-4c6c-b3e9-6abfcbf5a492",
+    "delete": 204
+   }
+  ],
+  "ue1": {
+   "probe": {
+    "n": 875,
+    "loss_pct": 0.0,
+    "p50_ms": 27.698,
+    "p99_ms": 35.34,
+    "max_ms": 37.525
+   },
+   "be": {
+    "goodput_mbps": 42.15,
+    "loss_pct_window": 64.427,
+    "loss_pct_total": 44.57,
+    "offered": null
+   },
+   "qf": {
+    "goodput_mbps": 15.0,
+    "loss_pct_window": 0.026,
+    "loss_pct_total": 0.019,
+    "offered": null
+   }
+  },
+  "ue2": {
+   "probe": {
+    "n": 875,
+    "loss_pct": 0.0,
+    "p50_ms": 27.798,
+    "p99_ms": 36.328,
+    "max_ms": 41.229
+   },
+   "be": {
+    "goodput_mbps": 39.07,
+    "loss_pct_window": 67.115,
+    "loss_pct_total": 46.163,
+    "offered": null
+   },
+   "qf": {
+    "goodput_mbps": 15.0,
+    "loss_pct_window": 0.0,
+    "loss_pct_total": 0.016,
+    "offered": null
+   }
+  },
+  "n3_ue_qfi_counts": {
+   "ue1|qfi=1|as_port=-": 132,
+   "ue1|qfi=1|as_port=18080": 58,
+   "ue1|qfi=1|as_port=18081": 1428,
+   "ue1|qfi=1|as_port=2152": 68,
+   "ue1|qfi=1|as_port=5211": 363334,
+   "ue1|qfi=8|as_port=-": 1200,
+   "ue1|qfi=8|as_port=18080": 1192,
+   "ue1|qfi=8|as_port=18081": 34747,
+   "ue1|qfi=8|as_port=2152": 7,
+   "ue2|qfi=1|as_port=-": 143,
+   "ue2|qfi=1|as_port=18080": 67,
+   "ue2|qfi=1|as_port=18082": 1806,
+   "ue2|qfi=1|as_port=2152": 69,
+   "ue2|qfi=1|as_port=5221": 363594,
+   "ue2|qfi=3|as_port=-": 1189,
+   "ue2|qfi=3|as_port=18080": 1183,
+   "ue2|qfi=3|as_port=18082": 34797,
+   "ue2|qfi=3|as_port=2152": 7
+  }
+ }
+}

@@ -1,0 +1,253 @@
+<testsuite name="quality-on-demand-deleteSession.CAMARA Quality On Demand API, v1.2.0 - Operation deleteSession" tests="11" errors="0" failures="0" skipped="0" time="0.813935" timestamp="2026-11-20T10:08:24.742930" hostname="grok-bot-vm-533625293"><testcase classname="quality-on-demand-deleteSession.CAMARA Quality On Demand API, v1.2.0 - Operation deleteSession" name="Delete an existing QoD session" status="passed" time="0.006111"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_deleteSession_01_delete_existing_qod_session
+  Scenario: Delete an existing QoD session
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given an existing QoS session created by operation createSession ... passed in 0.003s
+    And the path parameter "sessionId" is set to the value for that QoS session ... passed in 0.000s
+    When the request "deleteSession" is sent ... passed in 0.003s
+    Then the response status code is 204 ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-deleteSession.CAMARA Quality On Demand API, v1.2.0 - Operation deleteSession" name="Event is received if the session was AVAILABLE and sink was provided" status="passed" time="0.266768"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_deleteSession_02_event_notification
+  Scenario: Event is received if the session was AVAILABLE and sink was provided
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given an existing QoS session created by operation createSession with provided values for "sink" and "sinkCredential", and with status "AVAILABLE" ... passed in 0.162s
+    And the path parameter "sessionId" is set to the value for that QoS session ... passed in 0.000s
+    When the request "deleteSession" is sent ... passed in 0.003s
+    Then the response status code is 204 ... passed in 0.000s
+    And an event is received at the address of the "$.sink" provided for createSession ... passed in 0.101s
+    And the event header "Authorization" is set to "Bearer " + the value of the property "$.sinkCredential.accessToken" provided for createSession ... passed in 0.000s
+    And the event header "Content-Type" is set to "application/cloudevents+json" ... passed in 0.000s
+    And the event body complies with the OAS schema at "#/components/schemas/EventQosStatusChanged" ... passed in 0.000s
+    And the event body property "$.id" is unique ... passed in 0.000s
+    And the event body property "$.type" is set to "org.camaraproject.quality-on-demand.v1.qos-status-changed" ... passed in 0.000s
+    And the event body property "$.data.sessionId" as returned for createSession ... passed in 0.000s
+    And the event body property "$.data.qosStatus" is "UNAVAILABLE" ... passed in 0.000s
+    And the event body property "$.data.statusInfo" is "DELETE_REQUESTED" ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-deleteSession.CAMARA Quality On Demand API, v1.2.0 - Operation deleteSession" name="Invalid Argument. Generic Syntax Exception" status="passed" time="0.002375"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_deleteSession_400.1_invalid_session_id
+  Scenario: Invalid Argument. Generic Syntax Exception
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given the path parameter "sessionId" has not a UUID format ... passed in 0.000s
+    When the request "deleteSession" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-deleteSession.CAMARA Quality On Demand API, v1.2.0 - Operation deleteSession" name="Invalid x-correlator header" status="passed" time="0.003928"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_deleteSession_400.2_invalid_x-correlator
+  Scenario: Invalid x-correlator header
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given the header "x-correlator" does not comply with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    When the request "deleteSession" is sent ... passed in 0.004s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-deleteSession.CAMARA Quality On Demand API, v1.2.0 - Operation deleteSession" name="Error response for no header &quot;Authorization&quot;" status="passed" time="0.004921"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_deleteSession_401.1_no_authorization_header
+  Scenario: Error response for no header "Authorization"
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given the header "Authorization" is not sent ... passed in 0.000s
+    When the request "deleteSession" is sent ... passed in 0.004s
+    Then the response status code is 401 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 401 ... passed in 0.000s
+    And the response property "$.code" is "UNAUTHENTICATED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-deleteSession.CAMARA Quality On Demand API, v1.2.0 - Operation deleteSession" name="Error response for expired access token" status="passed" time="0.006547"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_deleteSession_401.2_expired_access_token
+  Scenario: Error response for expired access token
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given the header "Authorization" is set to an expired access token ... passed in 0.000s
+    When the request "deleteSession" is sent ... passed in 0.006s
+    Then the response status code is 401 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 401 ... passed in 0.000s
+    And the response property "$.code" is "UNAUTHENTICATED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-deleteSession.CAMARA Quality On Demand API, v1.2.0 - Operation deleteSession" name="Error response for invalid access token" status="passed" time="0.00461"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_deleteSession_401.3_invalid_access_token
+  Scenario: Error response for invalid access token
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given the header "Authorization" is set to an invalid access token ... passed in 0.000s
+    When the request "deleteSession" is sent ... passed in 0.004s
+    Then the response status code is 401 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 401 ... passed in 0.000s
+    And the response property "$.code" is "UNAUTHENTICATED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-deleteSession.CAMARA Quality On Demand API, v1.2.0 - Operation deleteSession" name="Missing access token scope" status="passed" time="0.006808"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_deleteSession_403.1_missing_access_token_scope
+  Scenario: Missing access token scope
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given the header "Authorization" is set to an access token that does not include scope "quality-on-demand:sessions:delete" ... passed in 0.000s
+    When the request "deleteSession" is sent ... passed in 0.006s
+    Then the response status code is 403 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 403 ... passed in 0.000s
+    And the response property "$.code" is "PERMISSION_DENIED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-deleteSession.CAMARA Quality On Demand API, v1.2.0 - Operation deleteSession" name="QoS session not created by the API client given in the access token" status="passed" time="0.004373"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_deleteSession_403.2_session_token_mismatch
+  Scenario: QoS session not created by the API client given in the access token
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given the header "Authorization" is set to a valid access token emitted to a client which did not created the QoS session ... passed in 0.000s
+    When the request "deleteSession" is sent ... passed in 0.004s
+    Then the response status code is 403 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 403 ... passed in 0.000s
+    And the response property "$.code" is "PERMISSION_DENIED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-deleteSession.CAMARA Quality On Demand API, v1.2.0 - Operation deleteSession" name="sessionId of a non-existing QoS session" status="passed" time="0.002031"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_deleteSession_404.1_not_found
+  Scenario: sessionId of a non-existing QoS session
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given the path parameter "sessionId" is set to a random UUID ... passed in 0.000s
+    When the request "deleteSession" is sent ... passed in 0.002s
+    Then the response status code is 404 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 404 ... passed in 0.000s
+    And the response property "$.code" is "NOT_FOUND" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-deleteSession.CAMARA Quality On Demand API, v1.2.0 - Operation deleteSession" name="Request is rejected due to threshold policy" status="passed" time="0.505463"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_deleteSession_429.1_too_many_requests
+  Scenario: Request is rejected due to threshold policy
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given a valid request for "deleteSession" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the threshold of requests has been reached ... passed in 0.000s
+    When the request "deleteSession" is sent ... passed in 0.505s
+    Then the response status code is 429 ... passed in 0.000s
+    And the response property "$.status" is 429 ... passed in 0.000s
+    And the response property "$.code" is "TOO_MANY_REQUESTS" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase></testsuite>

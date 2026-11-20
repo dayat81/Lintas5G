@@ -1,0 +1,412 @@
+<testsuite name="quality-on-demand-extendQosSessionDuration.CAMARA Quality On Demand API, v1.2.0 - Operation extendQosSessionDuration" tests="16" errors="0" failures="0" skipped="0" time="0.837893" timestamp="2026-11-20T10:08:25.628506" hostname="grok-bot-vm-533625293"><testcase classname="quality-on-demand-extendQosSessionDuration.CAMARA Quality On Demand API, v1.2.0 - Operation extendQosSessionDuration" name="Common validations for any success scenario" status="passed" time="0.166226"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_extendQosSessionDuration_01_generic_success_scenario
+  Scenario: Common validations for any success scenario
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}/extend" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/ExtendSessionDuration" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given an existing QoS session created by operation createSession with qosStatus "AVAILABLE" ... passed in 0.163s
+    And the path parameter "sessionId" is set to the value for that QoS session ... passed in 0.000s
+    And the request body property "$.requestedAdditionalDuration" is set to a valid additional session duration ... passed in 0.000s
+    When the request "extendQosSessionDuration" is sent ... passed in 0.002s
+    Then the response status code is 200 ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response body complies with the OAS schema at "#/components/schemas/SessionInfo" ... passed in 0.001s
+    And the response property "$.device" exists only if provided for createSession and with the same value ... passed in 0.000s
+    And the response property "$.applicationServer" has the same value as in the request body ... passed in 0.000s
+    And the response property "$.qosProfile" has the value provided for createSession ... passed in 0.000s
+    And the response property "$.devicePorts" exists only if provided for createSession and with the same value ... passed in 0.000s
+    And the response property "$.applicationServerPorts" exists only if provided for createSession and with the same value ... passed in 0.000s
+    And the response property "$.sink" exists only if provided for createSession and with the same value ... passed in 0.000s
+    And the response property "$.duration" is not lower than request property "$.requestedAdditionalDuration" ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-extendQosSessionDuration.CAMARA Quality On Demand API, v1.2.0 - Operation extendQosSessionDuration" name="Extended duration cannot exceed the maxDuration for the QoS profile" status="passed" time="0.113298"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_extendQosSessionDuration_02_exceed_max_duration
+  Scenario: Extended duration cannot exceed the maxDuration for the QoS profile
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}/extend" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/ExtendSessionDuration" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given an existing QoS session created by operation createSession with qosStatus "AVAILABLE" ... passed in 0.108s
+    And the path parameter "sessionId" is set to the value for that QoS session ... passed in 0.000s
+    And the "maxDuration" for the QoS profile of the session as returned by "qos-profiles" API ... passed in 0.000s
+    And the request body property "$.requestedAdditionalDuration" is set to a value that added to the existing QoS session "duration" exceeds the "maxDuration" for the QoS Profile ... passed in 0.000s
+    When the request "extendQosSessionDuration" is sent ... passed in 0.002s
+    Then the response status code is 200 ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response body complies with the OAS schema at "#/components/schemas/SessionInfo" ... passed in 0.001s
+    And the response property "$.duration" does not exceed the "maxDuration" for the QoS Profile ... passed in 0.002s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-extendQosSessionDuration.CAMARA Quality On Demand API, v1.2.0 - Operation extendQosSessionDuration" name="Invalid Argument. Generic Syntax Exception" status="passed" time="0.00405"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_extendQosSessionDuration_400.1_schema_not_compliant
+  Scenario: Invalid Argument. Generic Syntax Exception
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}/extend" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/ExtendSessionDuration" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given the request body is set to any value which is not compliant with the schema at "#/components/schemas/ExtendSessionDuration" ... passed in 0.000s
+    When the request "extendQosSessionDuration" is sent ... passed in 0.004s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-extendQosSessionDuration.CAMARA Quality On Demand API, v1.2.0 - Operation extendQosSessionDuration" name="Invalid sessionId" status="passed" time="0.002124"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_extendQosSessionDuration_400.2_invalid_session_id
+  Scenario: Invalid sessionId
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}/extend" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/ExtendSessionDuration" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given the path parameter "sessionId" has not a UUID format ... passed in 0.000s
+    When the request "extendQosSessionDuration" is sent ... passed in 0.002s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-extendQosSessionDuration.CAMARA Quality On Demand API, v1.2.0 - Operation extendQosSessionDuration" name="Missing request body" status="passed" time="0.004027"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_extendQosSessionDuration_400.3_no_request_body
+  Scenario: Missing request body
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}/extend" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/ExtendSessionDuration" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given the request body is not included ... passed in 0.000s
+    When the request "extendQosSessionDuration" is sent ... passed in 0.004s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-extendQosSessionDuration.CAMARA Quality On Demand API, v1.2.0 - Operation extendQosSessionDuration" name="Empty object as request body" status="passed" time="0.004309"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_extendQosSessionDuration_400.4_empty_request_body
+  Scenario: Empty object as request body
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}/extend" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/ExtendSessionDuration" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given the request body is set to {} ... passed in 0.000s
+    When the request "extendQosSessionDuration" is sent ... passed in 0.004s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-extendQosSessionDuration.CAMARA Quality On Demand API, v1.2.0 - Operation extendQosSessionDuration" name="Invalid x-correlator header" status="passed" time="0.003237"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_extendQosSessionDuration_400.5_invalid_x-correlator
+  Scenario: Invalid x-correlator header
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}/extend" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/ExtendSessionDuration" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given the header "x-correlator" does not comply with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    When the request "extendQosSessionDuration" is sent ... passed in 0.003s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-extendQosSessionDuration.CAMARA Quality On Demand API, v1.2.0 - Operation extendQosSessionDuration" name="Undeclared property in request body -- @1.1 " status="passed" time="0.004849"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_extendQosSessionDuration_400.6_request_body_strictness
+  Scenario Outline: Undeclared property in request body -- @1.1 
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}/extend" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/ExtendSessionDuration" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given the request body is set to a valid request body ... passed in 0.000s
+    And the request body includes the property "$.undeclaredProperty" which is not declared in the schema at "#/components/schemas/ExtendSessionDuration" ... passed in 0.000s
+    When the request "extendQosSessionDuration" is sent ... passed in 0.004s
+    Then the response status code is 400 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 400 ... passed in 0.000s
+    And the response property "$.code" is "INVALID_ARGUMENT" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-extendQosSessionDuration.CAMARA Quality On Demand API, v1.2.0 - Operation extendQosSessionDuration" name="Error response for no header &quot;Authorization&quot;" status="passed" time="0.004586"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_extendQosSessionDuration_401.1_no_authorization_header
+  Scenario: Error response for no header "Authorization"
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}/extend" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/ExtendSessionDuration" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given the header "Authorization" is not sent ... passed in 0.000s
+    And the request body is set to a valid request body ... passed in 0.000s
+    When the request "extendQosSessionDuration" is sent ... passed in 0.004s
+    Then the response status code is 401 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 401 ... passed in 0.000s
+    And the response property "$.code" is "UNAUTHENTICATED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-extendQosSessionDuration.CAMARA Quality On Demand API, v1.2.0 - Operation extendQosSessionDuration" name="Error response for expired access token" status="passed" time="0.005418"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_extendQosSessionDuration_401.2_expired_access_token
+  Scenario: Error response for expired access token
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}/extend" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/ExtendSessionDuration" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given the header "Authorization" is set to an expired access token ... passed in 0.000s
+    And the request body is set to a valid request body ... passed in 0.000s
+    When the request "extendQosSessionDuration" is sent ... passed in 0.005s
+    Then the response status code is 401 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 401 ... passed in 0.000s
+    And the response property "$.code" is "UNAUTHENTICATED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-extendQosSessionDuration.CAMARA Quality On Demand API, v1.2.0 - Operation extendQosSessionDuration" name="Error response for invalid access token" status="passed" time="0.003777"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_extendQosSessionDuration_401.3_invalid_access_token
+  Scenario: Error response for invalid access token
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}/extend" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/ExtendSessionDuration" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given the header "Authorization" is set to an invalid access token ... passed in 0.000s
+    And the request body is set to a valid request body ... passed in 0.000s
+    When the request "extendQosSessionDuration" is sent ... passed in 0.003s
+    Then the response status code is 401 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 401 ... passed in 0.000s
+    And the response property "$.code" is "UNAUTHENTICATED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-extendQosSessionDuration.CAMARA Quality On Demand API, v1.2.0 - Operation extendQosSessionDuration" name="Missing access token scope" status="passed" time="0.005247"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_extendQosSessionDuration_403.1_missing_access_token_scope
+  Scenario: Missing access token scope
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}/extend" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/ExtendSessionDuration" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given the header "Authorization" is set to an access token that does not include scope "quality-on-demand:sessions:update" ... passed in 0.000s
+    When the request "extendQosSessionDuration" is sent ... passed in 0.005s
+    Then the response status code is 403 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 403 ... passed in 0.000s
+    And the response property "$.code" is "PERMISSION_DENIED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-extendQosSessionDuration.CAMARA Quality On Demand API, v1.2.0 - Operation extendQosSessionDuration" name="QoS session not created by the API client given in the access token" status="passed" time="0.00385"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_extendQosSessionDuration_403.2_session_token_mismatch
+  Scenario: QoS session not created by the API client given in the access token
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}/extend" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/ExtendSessionDuration" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given the header "Authorization" is set to a valid access token emitted to a client which did not created the QoS session ... passed in 0.000s
+    When the request "extendQosSessionDuration" is sent ... passed in 0.003s
+    Then the response status code is 403 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 403 ... passed in 0.000s
+    And the response property "$.code" is "PERMISSION_DENIED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-extendQosSessionDuration.CAMARA Quality On Demand API, v1.2.0 - Operation extendQosSessionDuration" name="sessionId of a non-existing QoS session" status="passed" time="0.001939"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_extendQosSessionDuration_404.1_not_found
+  Scenario: sessionId of a non-existing QoS session
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}/extend" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/ExtendSessionDuration" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given the path parameter "sessionId" is set to a random UUID ... passed in 0.000s
+    And the request body is set to a valid request body ... passed in 0.000s
+    When the request "extendQosSessionDuration" is sent ... passed in 0.001s
+    Then the response status code is 404 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 404 ... passed in 0.000s
+    And the response property "$.code" is "NOT_FOUND" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-extendQosSessionDuration.CAMARA Quality On Demand API, v1.2.0 - Operation extendQosSessionDuration" name="Extending duration for session with qosStatus not available" status="passed" time="0.006202"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_extendQosSessionDuration_409.1_session_not_available
+  Scenario: Extending duration for session with qosStatus not available
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}/extend" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/ExtendSessionDuration" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given an existing QoS session with qosStatus not "AVAILABLE" ... passed in 0.004s
+    And the path parameter "sessionId" is set to the value for that QoS session ... passed in 0.000s
+    And the request body is set to a valid request body ... passed in 0.000s
+    When the request "extendQosSessionDuration" is sent ... passed in 0.002s
+    Then the response status code is 409 ... passed in 0.000s
+    And the response header "x-correlator" has same value as the request header "x-correlator" ... passed in 0.000s
+    And the response header "Content-Type" is "application/json" ... passed in 0.000s
+    And the response property "$.status" is 409 ... passed in 0.000s
+    And the response property "$.code" is "QUALITY_ON_DEMAND.SESSION_EXTENSION_NOT_ALLOWED" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase><testcase classname="quality-on-demand-extendQosSessionDuration.CAMARA Quality On Demand API, v1.2.0 - Operation extendQosSessionDuration" name="Request is rejected due to threshold policy" status="passed" time="0.504754"><system-out>
+<![CDATA[
+@scenario.begin
+
+  @quality_on_demand_extendQosSessionDuration_429.1_too_many_requests
+  Scenario: Request is rejected due to threshold policy
+    Given an environment at "apiRoot" ... passed in 0.000s
+    And the resource "/quality-on-demand/v1/sessions/{sessionId}/extend" ... passed in 0.000s
+    And the header "Content-Type" is set to "application/json" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator" ... passed in 0.000s
+    And the request body is set by default to a request body compliant with the schema at "#/components/schemas/ExtendSessionDuration" ... passed in 0.000s
+    And the path parameter "sessionId" is set by default to a existing QoS session sessionId ... passed in 0.000s
+    Given a valid request for "extendQosSessionDuration" ... passed in 0.000s
+    And the header "Authorization" is set to a valid access token ... passed in 0.000s
+    And the threshold of requests has been reached ... passed in 0.000s
+    When the request "extendQosSessionDuration" is sent ... passed in 0.504s
+    Then the response status code is 429 ... passed in 0.000s
+    And the response property "$.status" is 429 ... passed in 0.000s
+    And the response property "$.code" is "TOO_MANY_REQUESTS" ... passed in 0.000s
+    And the response property "$.message" contains a user friendly text ... passed in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+</system-out></testcase></testsuite>

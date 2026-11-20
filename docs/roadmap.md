@@ -3,7 +3,7 @@
 > Status per 18 Nov 2026 07:57 WIB. Tanggal setelah Fase 0 adalah **estimasi**.
 > Label: **[Fakta]** = bersumber dan link dicek; **[Asumsi]** = belum divalidasi; **[Keputusan]** = sudah diputuskan; **[Dilaporkan PoC Architect]** = belum diverifikasi independen.
 
-Status Fase 0 yang sedang berjalan: [fase0-status.md](fase0-status.md).
+Status Fase 0: [fase0-status.md](fase0-status.md). **Fase 1 CLOSED 20 Nov 2026**: [fase1-status.md](fase1-status.md).
 
 ## Visi
 
@@ -62,6 +62,8 @@ Status Fase 0 yang sedang berjalan: [fase0-status.md](fase0-status.md).
 - **Risiko:** UPF Open5GS dinilai tidak memprioritaskan per QFI [Dilaporkan PoC Architect, belum diverifikasi], sehingga hasil bergantung pada bottleneck `tc`
 
 ### Fase 1 — QoD MVP (Des 2026 – Jan 2027, estimasi)
+
+> **[Fakta] CLOSED 2026-11-20** (lebih awal dari estimasi untuk lingkup lab/PoC): gate r4 FROZEN v1.1 G1–G8 lulus, G9 tidak dilakukan. Detail dan disclosure: [fase1-status.md](fase1-status.md). Private beta developer mitra belum dimulai.
 
 - **Horizon:** Now
 - **Tujuan:** developer mitra bisa memanggil CAMARA QoD dan melihat efeknya pada demo game dan video.
