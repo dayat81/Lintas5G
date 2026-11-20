@@ -108,7 +108,7 @@ Rasio sim/real = **1,00** di semua run. RTT dihitung di flow aplikasi itu sendir
 Audit gcloud setelah destroy:
 - Instance hanya `build-vm-01` (TERMINATED, tidak disentuh). Disk hanya `build-vm-01`. Snapshot hanya milik build-vm-01 (pra-ada).
 - Network hanya `default`. Router 0, resource-policy 0.
-- Address hanya netprobe ×3 + magnon ×1 (pra-ada). Firewall hanya default-* + magnon/netprobe (pra-ada).
+- Address hanya netprobe ×3 + booster ×1 (pra-ada). Firewall hanya default-* + booster/netprobe (pra-ada).
 - Bucket: state + netprobe ×2 + cloudbuild (pra-ada). Bucket runs lab terhapus.
 - Service account lab (`lab5g-core-ran`/`-emu`/`-obs`) tidak ada. Yang tersisa: SA terraform, netprobe, hermes, compute default (pra-ada).
 

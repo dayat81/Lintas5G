@@ -1,0 +1,7 @@
+/var/log/lab5g/booster/runs/r3b-apiprio/adapter.win.log:0
+/var/log/lab5g/booster/runs/r3b-apiprio/amf.win.log:0
+/var/log/lab5g/booster/runs/r3b-apiprio/backend.win.log:0
+/var/log/lab5g/booster/runs/r3b-apiprio/gnb.win.log:0
+/var/log/lab5g/booster/runs/r3b-apiprio/pcf.win.log:0
+/var/log/lab5g/booster/runs/r3b-apiprio/smf.win.log:0
+/var/log/lab5g/booster/runs/r3b-apiprio/upf.win.log:0

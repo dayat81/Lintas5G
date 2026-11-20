@@ -1,0 +1,414 @@
+{
+ "pcap_gtpu_packets": 1415130,
+ "api_to_first_boost_qfi_ms(client create t0)": {
+  "DL_udp": 73.1,
+  "DL_tcp": 2009.9,
+  "UL_udp": 78.1,
+  "UL_tcp": 2009.9
+ },
+ "delete_to_qfi1_ms": {
+  "DL_udp": {
+   "last_boost_qfi_ms": 30.9,
+   "first_qfi1_ms": 102.7
+  },
+  "DL_tcp": {
+   "last_boost_qfi_ms": -459.0,
+   "first_qfi1_ms": 429.4
+  },
+  "UL_udp": {
+   "last_boost_qfi_ms": 30.6,
+   "first_qfi1_ms": 102.6
+  },
+  "UL_tcp": {
+   "last_boost_qfi_ms": -459.4,
+   "first_qfi1_ms": 429.4
+  }
+ },
+ "target_on_window_after_own_apply": {
+  "DL_udp": {
+   "12": 896
+  },
+  "DL_tcp": {
+   "12": 882
+  },
+  "UL_udp": {
+   "12": 896
+  },
+  "UL_tcp": {
+   "12": 1937
+  }
+ },
+ "target_qfi_counts(proto,dir,phase)->{qfi:n}": {
+  "tcp DL on": {
+   "12": 1227
+  },
+  "tcp DL post": {
+   "1": 153
+  },
+  "tcp DL pre": {
+   "1": 152
+  },
+  "tcp UL on": {
+   "12": 2561
+  },
+  "tcp UL post": {
+   "1": 193
+  },
+  "tcp UL pre": {
+   "1": 180
+  },
+  "udp DL on": {
+   "1": 3,
+   "12": 907
+  },
+  "udp DL post": {
+   "12": 3,
+   "1": 932
+  },
+  "udp DL pre": {
+   "1": 653
+  },
+  "udp UL on": {
+   "1": 4,
+   "12": 906
+  },
+  "udp UL post": {
+   "12": 3,
+   "1": 932
+  },
+  "udp UL pre": {
+   "1": 653
+  }
+ },
+ "target_on_window_after_apply": {
+  "UL_udp": {
+   "12": 896
+  },
+  "DL_udp": {
+   "12": 896
+  },
+  "UL_tcp": {
+   "12": 2561
+  },
+  "DL_tcp": {
+   "12": 1227
+  }
+ },
+ "controls": {
+  "ue1 icmp:0 DL on": {
+   "QFI1": 19
+  },
+  "ue1 icmp:0 DL post": {
+   "QFI1": 21
+  },
+  "ue1 icmp:0 DL pre": {
+   "QFI1": 15
+  },
+  "ue1 icmp:0 UL on": {
+   "QFI1": 19
+  },
+  "ue1 icmp:0 UL post": {
+   "QFI1": 21
+  },
+  "ue1 icmp:0 UL pre": {
+   "QFI1": 15
+  },
+  "ue1 tcp:5202 DL post": {
+   "QFI1": 9
+  },
+  "ue1 tcp:5202 DL pre": {
+   "QFI1": 9
+  },
+  "ue1 tcp:5202 UL post": {
+   "QFI1": 6
+  },
+  "ue1 tcp:5202 UL pre": {
+   "QFI1": 11
+  },
+  "ue1 tcp:8080 DL on": {
+   "QFI2": 125
+  },
+  "ue1 tcp:8080 DL post": {
+   "QFI2": 2
+  },
+  "ue1 tcp:8080 DL pre": {
+   "QFI2": 6
+  },
+  "ue1 tcp:8080 UL on": {
+   "QFI2": 126
+  },
+  "ue1 tcp:8080 UL post": {
+   "QFI2": 3
+  },
+  "ue1 tcp:8080 UL pre": {
+   "QFI2": 5
+  },
+  "ue1 udp:5202 DL on": {
+   "QFI1": 262832
+  },
+  "ue1 udp:5202 DL post": {
+   "QFI1": 249942
+  },
+  "ue1 udp:5202 DL pre": {
+   "QFI1": 179988
+  },
+  "ue1 udp:5202 UL pre": {
+   "QFI1": 1
+  },
+  "ue1 udp:18081 DL on": {
+   "QFI1": 364
+  },
+  "ue1 udp:18081 DL post": {
+   "QFI1": 377
+  },
+  "ue1 udp:18081 DL pre": {
+   "QFI1": 259
+  },
+  "ue1 udp:18081 UL on": {
+   "QFI1": 364
+  },
+  "ue1 udp:18081 UL post": {
+   "QFI1": 377
+  },
+  "ue1 udp:18081 UL pre": {
+   "QFI1": 259
+  },
+  "ue2 icmp:0 DL on": {
+   "QFI1": 18
+  },
+  "ue2 icmp:0 DL post": {
+   "QFI1": 21
+  },
+  "ue2 icmp:0 DL pre": {
+   "QFI1": 15
+  },
+  "ue2 icmp:0 UL on": {
+   "QFI1": 18
+  },
+  "ue2 icmp:0 UL post": {
+   "QFI1": 21
+  },
+  "ue2 icmp:0 UL pre": {
+   "QFI1": 15
+  },
+  "ue2 tcp:5201 DL post": {
+   "QFI1": 7
+  },
+  "ue2 tcp:5201 DL pre": {
+   "QFI1": 9
+  },
+  "ue2 tcp:5201 UL post": {
+   "QFI1": 5
+  },
+  "ue2 tcp:5201 UL pre": {
+   "QFI1": 11
+  },
+  "ue2 udp:5201 DL on": {
+   "QFI1": 262832
+  },
+  "ue2 udp:5201 DL post": {
+   "QFI1": 263815
+  },
+  "ue2 udp:5201 DL pre": {
+   "QFI1": 181705
+  },
+  "ue2 udp:5201 UL pre": {
+   "QFI1": 1
+  },
+  "ue2 udp:18080 DL on": {
+   "QFI1": 364
+  },
+  "ue2 udp:18080 DL post": {
+   "QFI1": 380
+  },
+  "ue2 udp:18080 DL pre": {
+   "QFI1": 256
+  },
+  "ue2 udp:18080 UL on": {
+   "QFI1": 364
+  },
+  "ue2 udp:18080 UL post": {
+   "QFI1": 380
+  },
+  "ue2 udp:18080 UL pre": {
+   "QFI1": 256
+  }
+ },
+ "verdict": {
+  "target_boost_qfi_only_while_boosted": true,
+  "boost_qfi": 12,
+  "target_qfi1_before": true,
+  "target_qfi1_after_delete": true,
+  "controls_always_qfi1": true,
+  "violations": [],
+  "target_delivered_while_boosted": true,
+  "prio_flow_ok": true,
+  "boost_protos": [
+   "udp",
+   "tcp"
+  ],
+  "target_boost_qfi_only_after_own_apply": true,
+  "PASS": true,
+  "PASS_per_flow_apply": true
+ },
+ "rtt_ms": {
+  "rtt_target": {
+   "before": {
+    "n": 654,
+    "loss_pct": 0.9,
+    "p50": 6126.8,
+    "p90": 6957.4,
+    "p99": 7294.6,
+    "max": 7398.8
+   },
+   "boosted": {
+    "n": 882,
+    "loss_pct": 0.0,
+    "p50": 32.4,
+    "p90": 42.9,
+    "p99": 60.5,
+    "max": 70.6
+   },
+   "after": {
+    "n": 885,
+    "loss_pct": 28.7,
+    "p50": 6073.9,
+    "p90": 6781.9,
+    "p99": 7660.7,
+    "max": 7770.6
+   }
+  },
+  "rtt_ue1_other_port": {
+   "before": {
+    "n": 259,
+    "loss_pct": 0.8,
+    "p50": 6134.0,
+    "p90": 6980.1,
+    "p99": 7288.5,
+    "max": 7372.6
+   },
+   "boosted": {
+    "n": 353,
+    "loss_pct": 1.4,
+    "p50": 7978.9,
+    "p90": 8076.9,
+    "p99": 8129.6,
+    "max": 8150.4
+   },
+   "after": {
+    "n": 357,
+    "loss_pct": 28.0,
+    "p50": 6074.3,
+    "p90": 6806.2,
+    "p99": 7767.5,
+    "max": 7874.7
+   }
+  },
+  "rtt_ue2_same_port": {
+   "before": {
+    "n": 256,
+    "loss_pct": 0.0,
+    "p50": 6136.7,
+    "p90": 6924.3,
+    "p99": 7284.6,
+    "max": 7317.9
+   },
+   "boosted": {
+    "n": 353,
+    "loss_pct": 0.0,
+    "p50": 7957.4,
+    "p90": 8051.2,
+    "p99": 8101.8,
+    "max": 8118.8
+   },
+   "after": {
+    "n": 359,
+    "loss_pct": 27.6,
+    "p50": 6078.6,
+    "p90": 6820.2,
+    "p99": 7800.2,
+    "max": 7890.8
+   }
+  }
+ },
+ "prio_flow_qfi": {
+  "ue1 UL pre": {
+   "2": 5
+  },
+  "ue1 DL pre": {
+   "2": 6
+  },
+  "ue1 UL on": {
+   "2": 126
+  },
+  "ue1 DL on": {
+   "2": 125
+  },
+  "ue1 UL post": {
+   "2": 3
+  },
+  "ue1 DL post": {
+   "2": 2
+  }
+ },
+ "client": {
+  "examine_start": {},
+  "detect": {
+   "detect_ms": 23.5
+  },
+  "token": {
+   "ms": 64.22
+  },
+  "create": {
+   "status": 201,
+   "api_ms": 53.97,
+   "qosStatus": "REQUESTED"
+  },
+  "status": {
+   "qosStatus": "AVAILABLE",
+   "create_to_status_ms": 175.0
+  },
+  "extend": {
+   "status": 200,
+   "api_ms": 49.07,
+   "duration": 120
+  },
+  "delete": {
+   "status": 204,
+   "api_ms": 49.31
+  }
+ },
+ "adapter": [
+  {
+   "ev": "session_created",
+   "api_ms": 16.28,
+   "mongo_ms": 2.83,
+   "template": "written",
+   "bsf_ms": 2.58,
+   "n5_create_ms": 2.39,
+   "n_flows": 4,
+   "sb_total_ms": 7.87
+  },
+  {
+   "ev": "session_available",
+   "confirmed": true,
+   "api_to_first_qfi_ms": 80.85,
+   "dir": "UL",
+   "qfi": 2
+  },
+  {
+   "ev": "session_extended",
+   "duration": 120
+  },
+  {
+   "ev": "n5_delete",
+   "status": 204,
+   "ms": 1.51,
+   "reason": "DELETE_REQUESTED"
+  },
+  {
+   "ev": "session_deleted",
+   "api_ms": 1.94
+  }
+ ]
+}

@@ -1,6 +1,6 @@
 # Sesi D v4 — matriks transport penuh dengan APK v0.10.2 + filter BPF N3
 
-Tanggal: 19 Nov 2026 (WIB, Asia/Jakarta UTC+7). Lab Lintas5G sama dengan v2/v3 (CPU only, tanpa VNC/tunnel publik). APK `magnon-poc-examine` v0.10.2 (sha256 `fcc5e8a7…cc622c`). 3 mode × 3 rep × idle/load/load+qod × 180 s. Tidak ada commit/push.
+Tanggal: 19 Nov 2026 (WIB, Asia/Jakarta UTC+7). Lab Lintas5G sama dengan v2/v3 (CPU only, tanpa VNC/tunnel publik). APK `booster-poc-examine` v0.10.2 (sha256 `fcc5e8a7…cc622c`). 3 mode × 3 rep × idle/load/load+qod × 180 s. Tidak ada commit/push.
 
 ## 1. Linimasa (WIB)
 | Waktu | Kejadian |
@@ -109,4 +109,4 @@ P5 (sesuai definisi: p99 DL satu-arah di N6, load+qod ≤ 50% load) **tidak lagi
 Verdict (USULAN): playback aman di semua mode; QoD efektif menurunkan antrean HTB (P5′ PASS untuk quic-only/tcp-only; auto marginal ≈ 53%); coverage MGLT UE/N6 terpenuhi, N3 belum di bawah beban. P5 klasik FAIL karena artefak penempatan tap dan galat skew, bukan karena QoD gagal.
 
 ## 9. Biaya, destroy, deviasi
-Biaya: apply 07:40:45 → destroy selesai ≈09:51 WIB (≈2,2 jam × ≈USD 0,82/jam) ≈ USD 1,8 (estimasi; kumulatif hari ini ≈ USD 9,6). Destroy: 152 resource dihancurkan, state kosong, tanpa proses/lock terraform; sisa hanya build-vm-01 (TERMINATED), alamat/firewall netprobe & magnon, jaringan `default`, bucket state privat. Log redaksi: box `/workspace/sesi-d-yt4/`, bucket privat state `logs/sesi-d-yt4/20261119/`. Deviasi: IP emu 10.10.0.3 (core 10.10.0.2, kebalikan dari run sebelumnya) sehingga kunci SSH core→emu diset ulang; analisis offline dengan `analysis/an4.py` (ClickHouse tidak dimuat); pktlat2 per paket hanya QUIC sehingga tcp-only tak punya coverage MGLT; 
+Biaya: apply 07:40:45 → destroy selesai ≈09:51 WIB (≈2,2 jam × ≈USD 0,82/jam) ≈ USD 1,8 (estimasi; kumulatif hari ini ≈ USD 9,6). Destroy: 152 resource dihancurkan, state kosong, tanpa proses/lock terraform; sisa hanya build-vm-01 (TERMINATED), alamat/firewall netprobe & booster, jaringan `default`, bucket state privat. Log redaksi: box `/workspace/sesi-d-yt4/`, bucket privat state `logs/sesi-d-yt4/20261119/`. Deviasi: IP emu 10.10.0.3 (core 10.10.0.2, kebalikan dari run sebelumnya) sehingga kunci SSH core→emu diset ulang; analisis offline dengan `analysis/an4.py` (ClickHouse tidak dimuat); pktlat2 per paket hanya QUIC sehingga tcp-only tak punya coverage MGLT; 

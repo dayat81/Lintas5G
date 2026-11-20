@@ -1,0 +1,5 @@
+{"captured": "2026-11-20 09:06 WIB, vm-core-ran mongo (redacted: no IMSI)",
+ "subscriber_internet_session": {"default_5qi": 9, "pcc_rule": [{"qi": 69, "arp": 1, "n_flow": 2, "marker": "api-prio", "origin": "booster-up.sh apiprio() static, applied at bring-up (booster-up.out line 15)"}, {"qi": 4, "arp": 6, "n_flow": 0, "marker": null, "origin": "flowless 5QI template written by qod-adapter MongoBridge.ensure_template on the first QoD request (s0/s0b adapter log template=written; all later sessions template=exists)"}]},
+ "pcf_yaml_qos_profiles_entries": 5,
+ "upfd_patched": true,
+ "gnb_slice_conf": {"enabled": 1, "qod_5qi": "80,4,69,7,1", "qod_max_pct": 70, "be_max_pct": 100, "pbr_pct": 20}}

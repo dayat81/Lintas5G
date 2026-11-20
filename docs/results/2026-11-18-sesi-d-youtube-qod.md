@@ -1,4 +1,4 @@
-# Lintas5G Sesi D: YouTube + QoD + Magnon examine v0.10.0 (18 Nov 2026)
+# Lintas5G Sesi D: YouTube + QoD + Booster examine v0.10.0 (18 Nov 2026)
 
 Semua angka **FAKTA** hasil ukur di lab GCP (asia-southeast2-a), kecuali bagian bertanda **USULAN** atau **DUGAAN**.
 Waktu di zona **Asia/Bangkok (WIB, UTC+7)**. Profil sama dengan Sesi D sebelumnya: vm-core-ran n2-standard-4
@@ -8,7 +8,7 @@ Kuota 12 vCPU; vm-obs tidak dinyalakan. ClickHouse batch di box.
 
 Apply 20:21–20:23 WIB, tes resmi `ytqod-20261118-134705` 20:47–21:19 WIB, destroy 21:28–21:31 WIB (147 resource, rc=0).
 Biaya sesi ini **~USD 1,1** (VM ~1,1 jam × ~USD 0,82/jam + disk/NAT/egress kecil). Kumulatif hari ini
-**~USD 4,5**, di bawah batas USD 12. Resource `build-vm-01` dan netprobe/magnon tidak disentuh.
+**~USD 4,5**, di bawah batas USD 12. Resource `build-vm-01` dan netprobe/booster tidak disentuh.
 
 ## 1. Timeline (WIB)
 
@@ -140,7 +140,7 @@ Destroy 21:28:07–21:30:45 WIB, rc=0, **147 resource** (sama dengan plan/apply)
 | State terraform | 0 resource |
 | vm-core-ran / vm-emu | tidak ada |
 | `build-vm-01` | **TERMINATED**, tidak diubah |
-| Firewall netprobe / magnon (v4, v6, tcp-18771) | tetap ada |
+| Firewall netprobe / booster (v4, v6, tcp-18771) | tetap ada |
 | Jaringan `lab5g` | tidak ada (hanya `default`) |
 | Bucket sesi emulator (di luar terraform) | tidak dihapus (log merah di `logs/sesi-d-yt/20261118/`) |
 | Git commit/push/PR | tidak ada |

@@ -1,0 +1,4 @@
+64 bytes from 10.45.x.x: icmp_seq=1705 ttl=127 time=31.8 ms
+64 bytes from 10.45.x.x: icmp_seq=1706 ttl=127 time=16.9 ms
+64 bytes from 10.45.x.x: icmp_seq=1698 ttl=127 time=46.3 ms
+64 bytes from 10.45.x.x: icmp_seq=1699 ttl=127 time=18.3 ms

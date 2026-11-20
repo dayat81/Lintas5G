@@ -1,0 +1,12 @@
+gnb_running=true gnb_restarted=no
+rrc_setup_or_reest=0 drb_already_exists=0 ul_failure=0 pdcp_no_rb=7
+gnb_assert_or_crash=0
+gnb_tbs_null=5
+gnb_pdu_release=0
+amf_release=0
+error_indication_upf=0 error_indication_gnb=0
+ue1_ip_same=yes
+ue2_ip_same=yes
+ue1_keepalive rx=864 expected=864 lost=0
+ue2_keepalive rx=864 expected=864 lost=0
+delivery_verdict PASS max_dl_loss 0.7 max_ul_loss 0.4

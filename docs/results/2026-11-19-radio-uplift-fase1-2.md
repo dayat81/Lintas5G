@@ -34,7 +34,7 @@ Lab hidup ~09:54-10:21 (27 menit, 12 vCPU, ~USD 0,8/jam) = **~USD 0,4**; total h
 ## Destroy audit
 - `terraform destroy`: 162 resource, rc=0; `terraform state list` kosong; tidak ada lock atau proses.
 - gcloud: instance tersisa hanya `build-vm-01` (TERMINATED, tidak disentuh); disk hanya `build-vm-01`; jaringan hanya `default`; router 0; resource-policy 0; bucket `lab5g-*` 0; service account lab (`lab5g-core-ran`, `lab5g-emu`) tidak ada.
-- Tidak ada perubahan VNC, tunnel publik, atau IAM di luar yang dikelola Terraform lab. netprobe/magnon tidak disentuh.
+- Tidak ada perubahan VNC, tunnel publik, atau IAM di luar yang dikelola Terraform lab. netprobe/booster tidak disentuh.
 
 ## Langkah berikutnya (USULAN, butuh persetujuan)
 1. Diagnosis offline (nol biaya): bangun srsRAN_4G `release_23_11` lokal dan tinjau jalur SA (`ue_stack_lte`, `nas_5g`, `rrc_nr`) untuk memahami kenapa `plmn_search` tidak dipanggil; cek apakah `srate` tetap dan `base_srate` memerlukan opsi lain, atau apakah tag atau commit perlu diganti (mis. master srsRAN_4G).

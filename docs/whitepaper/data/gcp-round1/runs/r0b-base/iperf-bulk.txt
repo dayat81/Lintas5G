@@ -1,0 +1,29 @@
+Connecting to host 10.45.x.x, port 5201
+Reverse mode, remote host 10.45.x.x is sending
+[  5] local 10.45.x.x port 42293 connected to 10.45.x.x port 5201
+[ ID] Interval           Transfer     Bitrate         Jitter    Lost/Total Datagrams
+[  5]   0.00-5.00   sec  88.7 MBytes   149 Mbits/sec  0.032 ms  16241/87793 (18%)  
+[  5]   5.00-10.00  sec  53.1 MBytes  89.1 Mbits/sec  0.023 ms  68136/110966 (61%)  
+[  5]  10.00-15.00  sec  54.6 MBytes  91.5 Mbits/sec  0.017 ms  148042/192050 (77%)  
+[  5]  15.00-20.00  sec  49.9 MBytes  83.7 Mbits/sec  0.047 ms  157099/197360 (80%)  
+[  5]  20.00-25.00  sec  50.3 MBytes  84.4 Mbits/sec  0.013 ms  147652/188226 (78%)  
+[  5]  25.00-30.00  sec  52.4 MBytes  88.0 Mbits/sec  0.053 ms  151474/193773 (78%)  
+[  5]  30.00-35.00  sec  48.9 MBytes  82.1 Mbits/sec  0.006 ms  152588/192044 (79%)  
+[  5]  35.00-40.00  sec  47.7 MBytes  80.0 Mbits/sec  0.017 ms  155149/193629 (80%)  
+[  5]  40.00-45.00  sec  52.4 MBytes  88.0 Mbits/sec  0.025 ms  154671/196959 (79%)  
+[  5]  45.00-50.00  sec  52.5 MBytes  88.0 Mbits/sec  0.041 ms  150299/192609 (78%)  
+[  5]  50.00-55.00  sec  52.5 MBytes  88.0 Mbits/sec  0.010 ms  146898/189212 (78%)  
+[  5]  55.00-60.00  sec  48.5 MBytes  81.4 Mbits/sec  0.039 ms  151281/190397 (79%)  
+[  5]  60.00-65.00  sec  52.1 MBytes  87.4 Mbits/sec  0.058 ms  155849/197882 (79%)  
+[  5]  65.00-70.00  sec  50.1 MBytes  84.0 Mbits/sec  0.012 ms  145401/185793 (78%)  
+[  5]  70.00-75.00  sec  51.6 MBytes  86.5 Mbits/sec  0.009 ms  156636/198233 (79%)  
+[  5]  75.00-80.00  sec  53.7 MBytes  90.0 Mbits/sec  0.015 ms  145623/188915 (77%)  
+[  5]  80.00-85.00  sec  46.0 MBytes  77.2 Mbits/sec  0.009 ms  154464/191585 (81%)  
+[  5]  85.00-90.00  sec  49.7 MBytes  83.4 Mbits/sec  0.025 ms  150471/190571 (79%)  
+[  5]  90.00-93.00  sec  31.8 MBytes  88.8 Mbits/sec  0.024 ms  88707/114342 (78%)  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate         Jitter    Lost/Total Datagrams
+[  5]   0.00-93.14  sec  4.34 GBytes   400 Mbits/sec  0.000 ms  0/3582201 (0%)  sender
+[  5]   0.00-93.00  sec   986 MBytes  89.0 Mbits/sec  0.024 ms  2596681/3392339 (77%)  receiver
+
+iperf Done.

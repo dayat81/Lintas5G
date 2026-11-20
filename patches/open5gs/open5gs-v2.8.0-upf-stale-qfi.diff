@@ -1,0 +1,53 @@
+diff --git a/src/upf/gtp-path.c b/src/upf/gtp-path.c
+index a8c920c..50d300a 100644
+--- a/src/upf/gtp-path.c
++++ b/src/upf/gtp-path.c
+@@ -474,6 +474,48 @@ static void _gtpv1_u_recv_cb(short when, ogs_socket_t fd, void *data)
+                 break;
+             }
+ 
++            /*
++             * Lintas5G (N1 release race): the TEID belongs to a live session,
++             * so never answer with a GTP-U Error Indication (that makes the
++             * gNB tear down the whole PDU session). A packet carrying a QFI
++             * that is no longer bound to any PDR of this TEID (QoS flow just
++             * removed by the SMF while the RAN still marks UL with the old
++             * QFI) is forwarded on the session's default UL PDR (lowest
++             * priority = highest precedence value). Anything else that matches
++             * no PDR is dropped silently (TS 29.244 5.2.1).
++             */
++            if (!pdr) {
++                ogs_pfcp_pdr_t *dflt = NULL, *p2 = NULL;
++                bool qfi_bound = false;
++
++                ogs_list_for_each(&pfcp_sess->pdr_list, p2) {
++                    if (header_desc.teid != p2->f_teid.teid)
++                        continue;
++                    if (p2->qfi &&
++                        p2->qfi == header_desc.qos_flow_identifier)
++                        qfi_bound = true;
++                    if (p2->src_if != OGS_PFCP_INTERFACE_ACCESS)
++                        continue;
++                    if (!dflt || p2->precedence > dflt->precedence)
++                        dflt = p2;
++                }
++
++                if (dflt && !qfi_bound) {
++                    ogs_debug("[%s] stale QFI %d on TEID 0x%x: "
++                            "forward on default PDR %d",
++                            OGS_ADDR(&from, buf2),
++                            header_desc.qos_flow_identifier,
++                            header_desc.teid, dflt->id);
++                    pdr = dflt;
++                } else if (dflt) {
++                    ogs_debug("[%s] no PDR match on known TEID 0x%x QFI %d: "
++                            "drop (no Error Indication)",
++                            OGS_ADDR(&from, buf2), header_desc.teid,
++                            header_desc.qos_flow_identifier);
++                    goto cleanup;
++                }
++            }
++
+             if (!pdr) {
+                 /*
+                  * TS23.527 Restoration procedures
